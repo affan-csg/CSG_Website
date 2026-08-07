@@ -68,6 +68,7 @@ function GlobalDeliveryIndex() {
         title={globalDeliveryPage.title}
         body={globalDeliveryPage.intro}
         showParticles={true}
+        showRing={true}
       />
 
       <Section>

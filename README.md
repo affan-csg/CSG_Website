@@ -1,24 +1,74 @@
-# Ready to Code
+# Career Source Group Website
 
-ans brefily i have connected my repo, can u work on it?
+Modern staffing website for Career Source Group, LLC - a US staffing and talent delivery firm.
 
-This project was built with [Lovable](https://lovable.dev).
+## Tech Stack
 
-## Build with Lovable
+- **Framework:** TanStack Start (React SSR)
+- **Styling:** Tailwind CSS
+- **Animation:** Framer Motion + GSAP
+- **3D Effects:** Three.js particles
+- **Forms:** React Hook Form + Zod
 
-Continue developing this project in the [Lovable editor](https://lovable.dev/projects/521bf006-561c-4308-be63-872b4ffdc42b).
+## Features
 
-- **Ship faster**: describe what you want to build and Lovable handles the code.
-- **Stay in sync**: every change made in Lovable is committed straight to this repository.
-- **Full ownership**: this code is yours. Push to `main` on GitHub and your changes sync back into Lovable, ready for your next prompt.
+- Responsive design (mobile-first)
+- SEO optimized with JSON-LD structured data
+- Three.js animated particles
+- Smooth scroll animations
+- Dynamic routing for services and global delivery
+- Contact and requirement forms
+- Blog with CMS-ready structure
 
-## Development
+## Getting Started
 
-Prefer working locally? You need Node.js and npm — [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating).
+```bash
+# Install dependencies
+npm install
 
-```sh
-git clone <this-repository-url>
-cd <repository-name>
-npm i
+# Start development server
 npm run dev
+
+# Build for production
+npm run build
+
+# Preview production build
+npm run preview
 ```
+
+## Project Structure
+
+```
+src/
+├── components/     # Reusable UI components
+│   ├── site/       # Site-specific components
+│   └── ui/         # shadcn/ui components
+├── content/        # Static content data
+├── lib/            # Utilities and helpers
+├── routes/         # Page routes (file-based routing)
+└── styles.css      # Global styles
+
+public/
+├── images/         # Static images
+└── favicon.svg     # Site favicon
+```
+
+## Environment Variables
+
+Copy `.env.example` to `.env.local` and configure:
+
+```env
+VITE_FORMSPREE_ENDPOINT=your_formspree_id
+```
+
+## Deployment
+
+This project can be deployed to:
+- Vercel
+- Netlify
+- Cloudflare Workers
+- Any Node.js hosting
+
+## License
+
+© 2024 Career Source Group, LLC. All rights reserved.

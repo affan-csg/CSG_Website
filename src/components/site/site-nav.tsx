@@ -53,7 +53,10 @@ export function SiteNav() {
   }, []);
 
   useEffect(() => {
-    document.body.style.overflow = open ? "hidden" : "";
+    // Only prevent scroll on desktop when menu is open
+    if (window.innerWidth >= 1024) {
+      document.body.style.overflow = open ? "hidden" : "";
+    }
     return () => {
       document.body.style.overflow = "";
     };
@@ -193,7 +196,7 @@ export function SiteNav() {
         <div className="flex shrink-0 items-center gap-3">
           <Link
             to="/get-started"
-            className="hidden items-center gap-2 rounded-md bg-cream px-5 py-2.5 font-display text-[0.82rem] font-semibold text-navy transition-all duration-300 hover:bg-gold sm:inline-flex"
+            className="hidden items-center gap-2 rounded-md bg-cream px-5 py-2.5 font-display text-[0.82rem] font-semibold text-navy transition-all duration-300 hover:bg-gold xl:inline-flex"
           >
             Submit a Requirement
           </Link>
@@ -217,7 +220,7 @@ export function SiteNav() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -12 }}
             transition={{ duration: 0.32, ease: [0.22, 1, 0.36, 1] }}
-            className="border-t border-border bg-background/98 backdrop-blur-xl lg:hidden"
+            className="border-t border-border bg-background/98 backdrop-blur-xl lg:hidden max-h-[85vh] overflow-y-auto"
           >
             <div className="container-page flex flex-col gap-1 py-6">
               {navItemsWithDropdowns.map((item) => {

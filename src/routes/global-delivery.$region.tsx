@@ -100,6 +100,7 @@ function RegionDeliveryPage() {
         title={regionData.title}
         body={regionData.intro}
         showParticles={true}
+        showRing={false}
       >
         {/* Breadcrumb */}
         <nav className="flex items-center gap-2 text-sm text-muted-foreground">

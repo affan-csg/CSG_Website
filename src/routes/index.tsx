@@ -101,9 +101,9 @@ function Hero() {
         className="pointer-events-none absolute inset-x-0 bottom-0 h-60 bg-gradient-to-t from-background to-transparent"
       />
 
-      <div className="container-page relative w-full py-16 text-center">
+      <div className="container-page relative w-full py-10 text-center sm:py-16">
         <Reveal y={12}>
-          <Link to="/" ref={logoRef} className="mx-auto mb-8 block w-40 transition-opacity duration-300 md:w-48">
+          <Link to="/" ref={logoRef} className="mx-auto mb-6 block w-28 transition-opacity duration-300 sm:w-36 md:w-40 lg:w-48">
             <img
               src="/images/brand/CSG.png"
               alt="Career Source Group"
@@ -117,7 +117,7 @@ function Hero() {
 
         <h1
           ref={wordsRef}
-          className="mt-8 font-display text-4xl font-semibold leading-[1.05] tracking-tight sm:text-5xl lg:text-6xl"
+          className="mt-6 font-display text-3xl font-semibold leading-[1.05] tracking-tight sm:text-4xl md:text-5xl lg:text-6xl"
         >
           {home.hero.words.map((word) => (
             <span key={word} className="block overflow-hidden pb-1">
@@ -128,7 +128,7 @@ function Hero() {
           ))}
         </h1>
 
-        <Reveal delay={0.35} className="mt-10 max-w-xl mx-auto">
+        <Reveal delay={0.35} className="mt-6 max-w-xl mx-auto">
           <p className="text-[1.05rem] leading-relaxed text-muted-foreground">
             {home.hero.sub}
           </p>
@@ -154,7 +154,7 @@ function HomePage() {
       <Hero />
 
       <Section>
-        <div className="grid gap-12 lg:grid-cols-[1fr_1fr] lg:items-center">
+        <div className="grid gap-8 lg:gap-12 lg:grid-cols-[1fr_1fr] lg:items-center">
           <Reveal>
             <div className="group relative overflow-hidden rounded-md border border-border transition-all duration-500 hover:border-gold/40 hover:shadow-lg hover:shadow-gold/5">
               <img
@@ -229,10 +229,10 @@ function HomePage() {
       </Section>
 
       <Section className="border-t border-border">
-        <div className="grid gap-12 lg:grid-cols-[1fr_1.2fr] lg:items-center">
+        <div className="grid gap-8 lg:gap-12 lg:grid-cols-[1fr_1.2fr] lg:items-center">
           <div>
             <SectionHeading eyebrow="Specialties" title="What we place" />
-            <div className="mt-8 grid gap-px overflow-hidden rounded-md border border-border bg-border md:grid-cols-1 lg:grid-cols-2">
+            <div className="mt-6 grid gap-px overflow-hidden rounded-md border border-border bg-border md:grid-cols-1 lg:grid-cols-2">
               {specialties.slice(0, 4).map((s) => (
                 <Link
                   key={s.slug}
@@ -269,7 +269,7 @@ function HomePage() {
       </Section>
 
       <Section className="border-t border-border">
-        <div className="grid gap-12 lg:grid-cols-[1fr_1fr] lg:items-center">
+        <div className="grid gap-8 lg:gap-12 lg:grid-cols-[1fr_1fr] lg:items-center">
           <Reveal>
             <div className="overflow-hidden rounded-md border border-border">
               <img
@@ -303,7 +303,7 @@ function HomePage() {
       </Section>
 
       <Section className="border-t border-border">
-        <div className="grid gap-12 lg:grid-cols-[1fr_1fr] lg:items-center">
+        <div className="grid gap-8 lg:gap-12 lg:grid-cols-[1fr_1fr] lg:items-center">
           <div>
             <SectionHeading eyebrow="Differentiators" title={home.whyCsg.heading} />
             <div className="mt-12">

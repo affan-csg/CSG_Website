@@ -6,7 +6,7 @@ const HeroCanvas = lazy(() => import("@/components/site/hero-canvas"));
 /**
  * HeroParticles — Reusable particle effect for hero sections
  */
-export function HeroParticles() {
+export function HeroParticles({ showRing = true }: { showRing?: boolean }) {
   return (
     <div
       aria-hidden
@@ -14,7 +14,7 @@ export function HeroParticles() {
     >
       <ClientOnly fallback={null}>
         <Suspense fallback={null}>
-          <HeroCanvas />
+          <HeroCanvas showRing={showRing} />
         </Suspense>
       </ClientOnly>
     </div>

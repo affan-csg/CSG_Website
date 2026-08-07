@@ -93,7 +93,26 @@ export function buildLocalBusinessJsonLd() {
     },
     "telephone": "+1-443-875-9677",
     "priceRange": "$$",
-    "openingHours": "Mo-Fr 09:00-18:00"
+    "openingHours": "Mo-Fr 09:00-18:00",
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": 34.0754,
+      "longitude": -84.2941
+    },
+    "areaServed": [
+      {
+        "@type": "Country",
+        "name": "United States"
+      },
+      {
+        "@type": "Country",
+        "name": "Mexico"
+      },
+      {
+        "@type": "Country",
+        "name": "Pakistan"
+      }
+    ]
   };
 }
 

@@ -44,7 +44,7 @@ export function SiteFooter() {
             </div>
           </div>
 
-          <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="grid gap-8 sm:gap-10 sm:grid-cols-2 lg:grid-cols-4">
             {footerColumns.map((col) => (
               <div key={col.title} className="min-w-0">
                 <h3 className="eyebrow">{col.title}</h3>

@@ -22,10 +22,9 @@ export const home = {
   whyCsg: {
     heading: "Why CSG",
     items: [
-      "We're the only partner you don't have to lie to about geography. We sell all three regions, so our incentive is to put the work where it belongs.",
-      "We charge 10% for direct hire. The market charges 20-30%. Same vetting, same guarantee.",
-      "We score communication before we score anything else. Communication-critical seats are staffed differently than execution seats, on purpose.",
-      "Enterprise delivery history — Synovus, Deloitte, BCBS, M3, TK Elevators.",
+      "Three regions, one partner. We place talent where it fits best — not where our commission is highest.",
+      "10% direct hire fee. Industry charges 20-30%. Same vetting, same guarantee.",
+      "Trusted by Synovus, Deloitte, BCBS, M3, and TK Elevators.",
     ],
     cta: { label: "Why companies work with us", to: "/why-csg" },
   },

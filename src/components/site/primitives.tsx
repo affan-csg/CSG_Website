@@ -74,12 +74,14 @@ export function PageHero({
   body,
   children,
   showParticles = false,
+  showRing = true,
 }: {
   eyebrow: string;
   title: string;
   body?: string | string[];
   children?: ReactNode;
   showParticles?: boolean;
+  showRing?: boolean;
 }) {
   const paragraphs = Array.isArray(body) ? body : body ? [body] : [];
   return (
@@ -88,7 +90,7 @@ export function PageHero({
       showParticles ? "min-h-[92vh] flex items-center pt-28" : "pt-36 pb-16 md:pt-44 md:pb-24"
     )}>
       {showParticles && (
-        <HeroParticles />
+        <HeroParticles showRing={showRing} />
       )}
       {showParticles && (
         <div
