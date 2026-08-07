@@ -1,5 +1,4 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
-import { ClientOnly } from "@tanstack/react-router";
+import { createFileRoute, Link, ClientOnly } from "@tanstack/react-router";
 import { ArrowUpRight } from "lucide-react";
 import { Suspense, lazy, useEffect, useRef } from "react";
 
@@ -17,60 +16,79 @@ import {
 } from "@/components/site/primitives";
 import { home } from "@/content/pages";
 import { regionCards, specialties, specialtyTags } from "@/content/site";
+import { FloatingConsultCTA } from "@/components/site/floating-consult-cta";
+import { buildSeoMeta, buildFaqJsonLd } from "@/lib/seo";
 
 const HeroCanvas = lazy(() => import("@/components/site/hero-canvas"));
 
 export const Route = createFileRoute("/")({
   head: () => ({
-    meta: [
-      {
-        title: "Career Source Group — US, LATAM & Pakistan Staffing, One Contract",
-      },
-      {
-        name: "description",
-        content:
-          "US staffing and talent delivery across the US, LATAM and Pakistan. Direct hire at 10%, contract and contract-to-hire — one contract, one invoice, one point of contact.",
-      },
-      {
-        property: "og:title",
-        content: "Career Source Group — Three countries. One contract.",
-      },
-      {
-        property: "og:description",
-        content:
-          "US, LATAM and Pakistan talent under a single relationship — so you stop managing four vendors to build one team.",
-      },
-    ],
-  }),
+    meta: buildSeoMeta({
+      title: "Career Source Group — US, LATAM & Pakistan Staffing, One Contract",
+      description: "US | LATAM | Pakistan. Direct hire at 10%, contract and contract-to-hire — one contract, one invoice, one point of contact.",
+      path: "/",
+      keywords: "US staffing, LATAM nearshore, Pakistan offshore, direct hire 10%, contract staffing, contract-to-hire, staff augmentation, IT staffing, AI ML engineering, DevOps, data engineering"
+    }) }),
   component: HomePage,
 });
 
 function Hero() {
   const wordsRef = useRef<HTMLHeadingElement>(null);
+  const logoRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const onScroll = () => {
+      if (logoRef.current) {
+        const scrollY = window.scrollY;
+        const opacity = Math.max(0, 1 - scrollY / 300);
+        const scale = Math.max(0.5, 1 - scrollY / 600);
+        logoRef.current.style.opacity = String(opacity);
+        logoRef.current.style.transform = `scale(${scale})`;
+      }
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   useEffect(() => {
     const el = wordsRef.current;
     if (!el) return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
+    const words = el.querySelectorAll("[data-word]");
+    
+    // Reset words to initial hidden state
+    words.forEach((word) => {
+      (word as HTMLElement).style.transform = "translateY(118%)";
+      (word as HTMLElement).style.opacity = "0";
+    });
+
     let ctx: { revert: () => void } | undefined;
     void import("gsap").then(({ gsap }) => {
       ctx = gsap.context(() => {
-        gsap.from(el.querySelectorAll("[data-word]"), {
-          yPercent: 118,
-          opacity: 0,
+        gsap.to(words, {
+          yPercent: 0,
+          opacity: 1,
           duration: 1.15,
           ease: "expo.out",
           stagger: 0.12,
+          clearProps: "transform,opacity",
         });
       }, el);
     });
 
-    return () => ctx?.revert();
+    return () => {
+      ctx?.revert();
+      // Ensure words are visible after cleanup
+      words.forEach((word) => {
+        (word as HTMLElement).style.transform = "";
+        (word as HTMLElement).style.opacity = "";
+      });
+    };
   }, []);
 
   return (
-    <section className="grain relative flex min-h-[92vh] items-center overflow-hidden border-b border-border pt-28">
+    <section className="grain relative flex min-h-[92vh] items-center overflow-hidden border-b border-border pt-12">
       <div aria-hidden className="absolute inset-0 opacity-70">
         <ClientOnly fallback={null}>
           <Suspense fallback={null}>
@@ -83,14 +101,23 @@ function Hero() {
         className="pointer-events-none absolute inset-x-0 bottom-0 h-60 bg-gradient-to-t from-background to-transparent"
       />
 
-      <div className="container-page relative w-full py-16">
+      <div className="container-page relative w-full py-16 text-center">
         <Reveal y={12}>
-          <p className="eyebrow">US · LATAM · Pakistan</p>
+          <Link to="/" ref={logoRef} className="mx-auto mb-8 block w-40 transition-opacity duration-300 md:w-48">
+            <img
+              src="/images/brand/CSG.png"
+              alt="Career Source Group"
+              className="w-full drop-shadow-[0_0_20px_rgba(200,171,110,0.3)] transition-all duration-500 ease-out [filter:invert(68%)_sepia(60%)_saturate(50%)_hue-rotate(5deg)_brightness(105%)] hover:scale-110 hover:drop-shadow-[0_0_40px_rgba(200,171,110,0.6)] hover:[filter:invert(80%)_sepia(70%)_saturate(60%)_hue-rotate(0deg)_brightness(120%)]"
+            />
+          </Link>
+        </Reveal>
+        <Reveal y={12}>
+          <p className="eyebrow">US | LATAM | Pakistan</p>
         </Reveal>
 
         <h1
           ref={wordsRef}
-          className="mt-8 font-display text-[2.5rem] font-semibold leading-[1.02] tracking-tight sm:text-[4rem] lg:text-[5.4rem]"
+          className="mt-8 font-display text-4xl font-semibold leading-[1.05] tracking-tight sm:text-5xl lg:text-6xl"
         >
           {home.hero.words.map((word) => (
             <span key={word} className="block overflow-hidden pb-1">
@@ -101,13 +128,13 @@ function Hero() {
           ))}
         </h1>
 
-        <Reveal delay={0.35} className="mt-10 max-w-xl">
+        <Reveal delay={0.35} className="mt-10 max-w-xl mx-auto">
           <p className="text-[1.05rem] leading-relaxed text-muted-foreground">
             {home.hero.sub}
           </p>
         </Reveal>
 
-        <Reveal delay={0.45} className="mt-10 flex flex-wrap gap-4">
+        <Reveal delay={0.45} className="mt-10 flex flex-wrap justify-center gap-4">
           <ButtonLink to={home.hero.primary.to} label={home.hero.primary.label} />
           <ButtonLink
             to={home.hero.secondary.to}
@@ -123,15 +150,23 @@ function Hero() {
 function HomePage() {
   return (
     <>
+      <div className="relative z-10">
       <Hero />
 
       <Section>
-        <div className="grid gap-12 lg:grid-cols-[0.8fr_1.2fr]">
+        <div className="grid gap-12 lg:grid-cols-[1fr_1fr] lg:items-center">
           <Reveal>
-            <p className="eyebrow">{home.who.heading}</p>
+            <div className="group relative overflow-hidden rounded-md border border-border transition-all duration-500 hover:border-gold/40 hover:shadow-lg hover:shadow-gold/5">
+              <img
+                src="/images/who-we-are.png"
+                alt="Career Source Group team collaborating"
+                className="aspect-[4/3] w-full object-cover transition-transform duration-700 hover:scale-[1.02]"
+              />
+            </div>
           </Reveal>
           <Reveal delay={0.08}>
-            <p className="text-balance font-display text-xl leading-[1.5] md:text-[1.75rem]">
+            <p className="eyebrow">{home.who.heading}</p>
+            <p className="mt-6 text-balance text-[1.05rem] leading-[1.75] text-muted-foreground">
               {home.who.body}
             </p>
           </Reveal>
@@ -174,7 +209,7 @@ function HomePage() {
         <div className="mt-14 grid gap-6 lg:grid-cols-3">
           {regionCards.map((card, i) => (
             <Reveal key={card.to} delay={i * 0.08}>
-              <Link to={card.to} className="group block h-full">
+              <Link to={card.to} className="group block h-full transition-transform duration-300 hover:-translate-y-1">
                 <Panel className="flex h-full flex-col">
                   <div className="flex items-start justify-between gap-4">
                     <h3 className="font-display text-xl font-semibold">{card.title}</h3>
@@ -194,44 +229,56 @@ function HomePage() {
       </Section>
 
       <Section className="border-t border-border">
-        <SectionHeading eyebrow="Specialties" title="What we place" />
-        <div className="mt-14 grid gap-px overflow-hidden rounded-md border border-border bg-border md:grid-cols-2">
-          {specialties.map((s) => (
-            <Link
-              key={s.slug}
-              to="/services/$slug"
-              params={{ slug: s.slug }}
-              className="group bg-card p-7 transition-colors duration-500 hover:bg-navy-soft md:p-9"
-            >
-              <div className="flex items-start justify-between gap-4">
-                <h3 className="font-display text-lg font-semibold leading-snug">
-                  {s.title}
-                </h3>
-                <ArrowUpRight className="h-5 w-5 shrink-0 text-muted-foreground transition-all duration-300 group-hover:-translate-y-0.5 group-hover:text-gold" />
-              </div>
-              <p className="mt-4 text-[0.96rem] leading-relaxed text-muted-foreground">
-                {s.tagline}
-              </p>
-              <div className="mt-6 flex flex-wrap gap-2">
-                {specialtyTags.map((tag) => (
-                  <Pill key={tag}>{tag}</Pill>
-                ))}
-              </div>
-            </Link>
-          ))}
-        </div>
-        <div className="mt-10">
-          <ArrowLink to="/services" label="See all specialties" />
+        <div className="grid gap-12 lg:grid-cols-[1fr_1.2fr] lg:items-center">
+          <div>
+            <SectionHeading eyebrow="Specialties" title="What we place" />
+            <div className="mt-8 grid gap-px overflow-hidden rounded-md border border-border bg-border md:grid-cols-1 lg:grid-cols-2">
+              {specialties.slice(0, 4).map((s) => (
+                <Link
+                  key={s.slug}
+                  to="/services/$slug"
+                  params={{ slug: s.slug }}
+                  className="group bg-card p-5 transition-all duration-500 hover:bg-navy-soft hover:shadow-lg hover:shadow-gold/5"
+                >
+                  <div className="flex items-start justify-between gap-3">
+                    <h3 className="font-display text-base font-semibold leading-snug">
+                      {s.title}
+                    </h3>
+                    <ArrowUpRight className="h-4 w-4 shrink-0 text-muted-foreground transition-all duration-300 group-hover:-translate-y-0.5 group-hover:text-gold" />
+                  </div>
+                  <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+                    {s.tagline}
+                  </p>
+                </Link>
+              ))}
+            </div>
+            <div className="mt-6">
+              <ArrowLink to="/services" label="See all specialties" />
+            </div>
+          </div>
+          <Reveal delay={0.1}>
+            <div className="overflow-hidden rounded-md border border-border">
+              <img
+                src="/images/services.png"
+                alt="Career Source Group services overview"
+                className="aspect-[4/3] w-full object-cover transition-transform duration-700 hover:scale-[1.02]"
+              />
+            </div>
+          </Reveal>
         </div>
       </Section>
 
       <Section className="border-t border-border">
-        <div className="grid gap-12 lg:grid-cols-2 lg:items-center">
-          <SectionHeading
-            eyebrow="The pod model"
-            title={home.pods.heading}
-            body={home.pods.body}
-          />
+        <div className="grid gap-12 lg:grid-cols-[1fr_1fr] lg:items-center">
+          <Reveal>
+            <div className="overflow-hidden rounded-md border border-border">
+              <img
+                src="/images/how-pod-models-work.png"
+                alt="How CSG Pod models work"
+                className="aspect-[4/3] w-full object-cover transition-transform duration-700 hover:scale-[1.02]"
+              />
+            </div>
+          </Reveal>
           <Reveal delay={0.1}>
             <div className="glass-panel rounded-md p-8">
               <p className="eyebrow">Sized against four variables</p>
@@ -256,20 +303,33 @@ function HomePage() {
       </Section>
 
       <Section className="border-t border-border">
-        <SectionHeading eyebrow="Differentiators" title={home.whyCsg.heading} />
-        <div className="mt-12">
-          {home.whyCsg.items.map((item, i) => (
-            <Reveal key={item} delay={i * 0.05}>
-              <NumberedItem index={i + 1} body={item} />
-            </Reveal>
-          ))}
-        </div>
-        <div className="mt-10">
-          <ArrowLink to={home.whyCsg.cta.to} label={home.whyCsg.cta.label} />
+        <div className="grid gap-12 lg:grid-cols-[1fr_1fr] lg:items-center">
+          <div>
+            <SectionHeading eyebrow="Differentiators" title={home.whyCsg.heading} />
+            <div className="mt-12">
+              {home.whyCsg.items.map((item, i) => (
+                <Reveal key={item} delay={i * 0.05}>
+                  <NumberedItem index={i + 1} body={item} />
+                </Reveal>
+              ))}
+            </div>
+            <div className="mt-10">
+              <ArrowLink to={home.whyCsg.cta.to} label={home.whyCsg.cta.label} />
+            </div>
+          </div>
+          <Reveal delay={0.1}>
+            <div className="overflow-hidden rounded-md border border-border">
+              <img
+                src="/images/how-we-differ.png"
+                alt="How Career Source Group differs from competitors"
+                className="aspect-[4/3] w-full object-cover transition-transform duration-700 hover:scale-[1.02]"
+              />
+            </div>
+          </Reveal>
         </div>
       </Section>
 
-      <FaqSection questions={home.faqQuestions} />
+      </div>
       <CtaBand />
     </>
   );

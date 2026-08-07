@@ -1,0 +1,114 @@
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { ClientOnly } from "@tanstack/react-router";
+import { ArrowUpRight } from "lucide-react";
+import { Suspense, lazy, useEffect, useRef } from "react";
+
+import { Reveal } from "@/components/site/reveal";
+import {
+  ArrowLink,
+  ButtonLink,
+  CtaBand,
+  FaqSection,
+  NumberedItem,
+  Panel,
+  Pill,
+  Section,
+  SectionHeading,
+} from "@/components/site/primitives";
+import { home } from "@/content/pages";
+import { regionCards, specialties, specialtyTags } from "@/content/site";
+import { FloatingConsultCTA } from "@/components/site/floating-consult-cta";
+
+const HeroCanvas = lazy(() => import("@/components/site/hero-canvas"));
+
+export const Route = createFileRoute("/")({
+  head: () => ({
+    meta: [
+      {
+        title: "Career Source Group — US, LATAM & Pakistan Staffing, One Contract",
+      },
+      {
+        name: "description",
+        content:
+          "US staffing and talent delivery across the US, LATAM and Pakistan. Direct hire at 10%, contract and contract-to-hire — one contract, one invoice, one point of contact.",
+      },
+      {
+        property: "og:title",
+        content: "Career Source Group — Three countries. One contract.",
+      },
+      {
+        property: "og:description",
+        content:
+          "US, LATAM and Pakistan talent under a single relationship — so you stop managing four vendors to build one team.",
+      },
+    ],
+  }),
+  component: HomePage,
+});
+
+function Hero() {
+  const wordsRef = useRef<HTMLHeadingElement>(null);
+
+  useEffect(() => {
+    const el = wordsRef.current;
+    if (!el) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    const words = el.querySelectorAll("[data-word]");
+    
+    // Reset words to initial hidden state
+    words.forEach((word) => {
+      (word as HTMLElement).style.transform = "translateY(118%)";
+      (word as HTMLElement).style.opacity = "0";
+    });
+
+    let ctx: { revert: () => void } | undefined;
+    void import("gsap").then(({ gsap }) => {
+      ctx = gsap.context(() => {
+        gsap.to(words, {
+          yPercent: 0,
+          opacity: 1,
+          duration: 1.15,
+          ease: "expo.out",
+          stagger: 0.12,
+          clearProps: "transform,opacity",
+        });
+      }, el);
+    });
+
+    return () => {
+      ctx?.revert();
+      // Ensure words are visible after cleanup
+      words.forEach((word) => {
+        (word as HTMLElement).style.transform = "";
+        (word as HTMLElement).style.opacity = "";
+      });
+    };
+  }, []);
+
+  return (
+    <section className="grain relative flex min-h-[92vh] items-center overflow-hidden border-b border-border pt-12">
+      <div aria-hidden className="absolute inset-0 opacity-70">
+        <ClientOnly fallback={null}>
+          <Suspense fallback={null}>
+            <HeroCanvas />
+          </Suspense>
+        </ClientOnly>
+      </div>
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-x-0 bottom-0 h-60 bg-gradient-to-t from-background to-transparent"
+      />
+
+      <div className="container-page relative w-full py-16 text-center">
+        <Reveal y={12}>
+          <div className="mx-auto mb-8 w-32 md:w-40">
+            <img
+              src="/images/brand/CSG.png"
+              alt="Career Source Group"
+              className="w-full drop-shadow-[0_0_20px_rgba(200,171,110,0.3)] [filter:brightness(0)_sepia(1)_saturate(5)_hue-rotate(-10deg)_brightness(1.2)]"
+            />
+          </div>
+        </Reveal>
+        <Reveal y={12}>
+          <p className="eyebrow">US 

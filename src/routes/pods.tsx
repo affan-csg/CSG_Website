@@ -12,34 +12,26 @@ import {
   SectionHeading,
 } from "@/components/site/primitives";
 import { pods } from "@/content/pods";
+import { buildSeoMeta } from "@/lib/seo";
 
 export const Route = createFileRoute("/pods")({
   head: () => ({
-    meta: [
-      { title: "The Pod Model — Purpose-Built Teams | Career Source Group" },
-      {
-        name: "description",
-        content:
-          "A CSG Pod is a complete, purpose-built team delivered under one contract, one invoice and one point of contact — sized by experience, communication, technical skill and cost.",
-      },
-      {
-        property: "og:title",
-        content: "The Pod Model: We Don't Fill Seats. We Stand Up Teams.",
-      },
-      {
-        property: "og:description",
-        content:
-          "One SOW. One invoice. One person you call. Engineering, data and AI, cloud and DevOps, security, product and non-tech operations pods.",
-      },
-    ],
-  }),
+    meta: buildSeoMeta({
+      title: "The Pod Model — Purpose-Built Teams | Career Source Group",
+      description: "A CSG Pod is a complete, purpose-built team delivered under one contract, one invoice and one point of contact.",
+      path: "/pods"
+    }) }),
   component: PodsPage,
 });
 
 function PodsPage() {
   return (
     <>
-      <PageHero eyebrow="The pod model" title={pods.title} />
+      <PageHero
+        eyebrow="The pod model"
+        title={pods.title}
+        showParticles={true}
+      />
 
       <Section>
         <SectionHeading eyebrow={pods.problem.heading} title={pods.problem.answer} />

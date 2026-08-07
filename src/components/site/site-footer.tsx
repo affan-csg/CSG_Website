@@ -10,9 +10,11 @@ export function SiteFooter() {
         <div className="grid gap-12 lg:grid-cols-[1.15fr_2fr]">
           <div className="min-w-0">
             <Link to="/" className="flex items-center gap-3">
-              <span className="grid h-10 w-10 shrink-0 place-items-center rounded-sm border border-gold/50 font-display text-[0.85rem] font-semibold text-gold">
-                CSG
-              </span>
+              <img
+                src="/images/brand/CSG.png"
+                alt="CSG"
+                className="h-10 w-auto shrink-0 object-contain [filter:invert(68%)_sepia(60%)_saturate(50%)_hue-rotate(5deg)_brightness(105%)]"
+              />
               <span className="font-display text-base font-semibold">
                 Career Source Group
               </span>
@@ -67,7 +69,7 @@ export function SiteFooter() {
           <p>
             © {new Date().getFullYear()} {company.legalName}. All rights reserved.
           </p>
-          <div className="flex flex-wrap gap-x-6 gap-y-2">
+          <div className="flex flex-wrap items-center gap-x-6 gap-y-2">
             <Link to="/legal-notice" className="hover:text-foreground">
               Legal Notice
             </Link>
@@ -77,6 +79,10 @@ export function SiteFooter() {
             <Link to="/privacy" className="hover:text-foreground">
               Privacy Policy
             </Link>
+            <span aria-hidden="true" className="text-border">|</span>
+            <span className="text-gold">
+              powered by <span className="font-bold">AJ</span>
+            </span>
           </div>
         </div>
       </div>

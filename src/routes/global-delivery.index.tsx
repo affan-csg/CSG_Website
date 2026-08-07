@@ -18,27 +18,15 @@ import {
   prosCons,
 } from "@/content/delivery";
 import { regionCards } from "@/content/site";
+import { buildSeoMeta } from "@/lib/seo";
 
 export const Route = createFileRoute("/global-delivery/")({
   head: () => ({
-    meta: [
-      { title: "US vs LATAM vs Pakistan — The Honest Comparison | CSG" },
-      {
-        name: "description",
-        content:
-          "Cost, time zone overlap, engagement models and speed to start compared across US staffing, LATAM nearshore and Pakistan offshore delivery.",
-      },
-      {
-        property: "og:title",
-        content: "US vs. LATAM vs. Pakistan: The Honest Comparison",
-      },
-      {
-        property: "og:description",
-        content:
-          "We sell all three regions, which means we have no reason to lie to you about any of them.",
-      },
-    ],
-  }),
+    meta: buildSeoMeta({
+      title: "US vs LATAM vs Pakistan — The Honest Comparison | CSG",
+      description: "Cost, time zone overlap, engagement models and speed to start compared across US staffing, LATAM nearshore and Pakistan offshore.",
+      path: "/global-delivery"
+    }) }),
   component: GlobalDeliveryIndex,
 });
 
@@ -79,6 +67,7 @@ function GlobalDeliveryIndex() {
         eyebrow="Global delivery"
         title={globalDeliveryPage.title}
         body={globalDeliveryPage.intro}
+        showParticles={true}
       />
 
       <Section>

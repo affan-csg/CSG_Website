@@ -1,4 +1,5 @@
 import { Link } from "@tanstack/react-router";
+
 import { ArrowRight } from "lucide-react";
 import type { ReactNode } from "react";
 
@@ -10,6 +11,7 @@ import {
 } from "@/components/ui/accordion";
 import { Reveal } from "@/components/site/reveal";
 import { ctaBand, faqsByQuestion, type Faq } from "@/content/site";
+import { HeroParticles } from "@/components/site/hero-particles";
 import { cn } from "@/lib/utils";
 
 export function Section({
@@ -46,7 +48,7 @@ export function SectionHeading({
       {eyebrow ? <p className="eyebrow">{eyebrow}</p> : null}
       <h2
         className={cn(
-          "mt-4 text-balance text-3xl font-semibold leading-[1.08] md:text-[2.7rem]",
+          "mt-4 text-balance text-2xl font-semibold leading-[1.1] md:text-3xl",
           align === "center" && "mx-auto max-w-3xl",
         )}
       >
@@ -71,35 +73,48 @@ export function PageHero({
   title,
   body,
   children,
+  showParticles = false,
 }: {
   eyebrow: string;
   title: string;
   body?: string | string[];
   children?: ReactNode;
+  showParticles?: boolean;
 }) {
   const paragraphs = Array.isArray(body) ? body : body ? [body] : [];
   return (
-    <section className="grain relative overflow-hidden border-b border-border pt-36 pb-16 md:pt-44 md:pb-24">
-      <div
-        aria-hidden
-        className="pointer-events-none absolute -top-40 left-1/2 h-[34rem] w-[34rem] -translate-x-1/2 rounded-full opacity-[0.16] blur-[110px]"
-        style={{ background: "var(--electric)" }}
-      />
+    <section className={cn(
+      "grain relative overflow-hidden border-b border-border",
+      showParticles ? "min-h-[92vh] flex items-center pt-28" : "pt-36 pb-16 md:pt-44 md:pb-24"
+    )}>
+      {showParticles && (
+        <HeroParticles />
+      )}
+      {showParticles && (
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-x-0 bottom-0 h-60 bg-gradient-to-t from-background to-transparent"
+        />
+      )}
+
       <div className="container-page relative">
-        <Reveal>
+        <Reveal delay={0.2}>
           <p className="eyebrow">{eyebrow}</p>
-          <h1 className="mt-6 max-w-4xl text-balance font-display text-[2.1rem] font-semibold leading-[1.06] md:text-[3.4rem]">
+        </Reveal>
+        <Reveal delay={0.35}>
+          <h1 className="mt-6 max-w-4xl text-balance font-display text-3xl font-semibold leading-[1.1] md:text-4xl lg:text-5xl">
             {title}
           </h1>
-          {paragraphs.map((p) => (
+        </Reveal>
+        {paragraphs.map((p, i) => (
+          <Reveal key={p} delay={0.45 + i * 0.1}>
             <p
-              key={p}
               className="mt-6 max-w-2xl text-[1.05rem] leading-relaxed text-muted-foreground"
             >
               {p}
             </p>
-          ))}
-        </Reveal>
+          </Reveal>
+        ))}
         {children ? <div className="mt-10">{children}</div> : null}
       </div>
     </section>
@@ -119,7 +134,7 @@ export function ArrowLink({
     <Link
       to={to as never}
       className={cn(
-        "group inline-flex items-center gap-2 font-display text-sm font-semibold text-gold",
+        "group inline-flex items-center gap-2 font-display text-sm font-semibold text-gold transition-all duration-300 hover:gap-3",
         className,
       )}
     >
@@ -142,10 +157,10 @@ export function ButtonLink({
     <Link
       to={to as never}
       className={cn(
-        "inline-flex items-center justify-center gap-2 rounded-sm px-6 py-3.5 font-display text-[0.88rem] font-semibold transition-all duration-300",
+        "inline-flex items-center justify-center gap-2 rounded-md px-6 py-3.5 font-display text-[0.88rem] font-semibold transition-all duration-300 active:scale-95",
         variant === "solid"
-          ? "bg-cream text-navy hover:bg-gold"
-          : "border border-border text-foreground hover:border-gold hover:text-gold",
+          ? "bg-cream text-navy hover:bg-gold hover:shadow-md hover:shadow-gold/20"
+          : "border border-border text-foreground hover:border-gold hover:text-gold hover:shadow-md hover:shadow-gold/10",
       )}
     >
       {label}
@@ -171,7 +186,7 @@ export function Panel({
   return (
     <div
       className={cn(
-        "glass-panel rounded-md p-7 transition-colors duration-500 hover:border-gold/40",
+        "glass-panel rounded-md p-7 transition-all duration-500 hover:border-gold/40 hover:shadow-lg hover:shadow-gold/5 hover:-translate-y-0.5",
         className,
       )}
     >
@@ -190,7 +205,7 @@ export function NumberedItem({
   body: string;
 }) {
   return (
-    <div className="grid gap-5 border-t border-border py-8 md:grid-cols-[5rem_1fr]">
+    <div className="grid gap-5 border-t border-border py-8 transition-colors duration-300 hover:border-gold/30 md:grid-cols-[5rem_1fr]">
       <span className="font-mono text-sm text-gold">
         {String(index).padStart(2, "0")}
       </span>
@@ -213,7 +228,7 @@ export function NumberedItem({
 
 export function PullQuote({ children }: { children: ReactNode }) {
   return (
-    <Reveal className="my-4 border-l-2 border-gold pl-7">
+    <Reveal className="my-4 border-l-2 border-gold pl-7 transition-all duration-300 hover:border-l-4 hover:pl-6">
       <p className="font-display text-xl leading-relaxed text-foreground md:text-[1.6rem]">
         {children}
       </p>
@@ -229,7 +244,7 @@ export function StatGrid({
   return (
     <div className="grid gap-px overflow-hidden rounded-md border border-border bg-border sm:grid-cols-2 lg:grid-cols-4">
       {stats.map((s) => (
-        <div key={s.label} className="bg-card p-7">
+        <div key={s.label} className="bg-card p-7 transition-colors duration-300 hover:bg-navy-soft">
           <p className="font-display text-3xl font-semibold text-gold md:text-4xl">
             {s.value}
           </p>
@@ -260,7 +275,7 @@ export function FaqSection({
       <Accordion type="single" collapsible className="mt-12">
         {list.map((faq) => (
           <AccordionItem key={faq.q} value={faq.q} className="border-border">
-            <AccordionTrigger className="py-6 text-left font-display text-[1.05rem] font-medium hover:no-underline md:text-lg">
+            <AccordionTrigger className="py-6 text-left font-display text-[1.05rem] font-medium transition-colors duration-300 hover:no-underline hover:text-gold md:text-lg">
               {faq.q}
             </AccordionTrigger>
             <AccordionContent className="max-w-3xl pb-7 text-[0.98rem] leading-relaxed text-muted-foreground">
@@ -288,7 +303,7 @@ export function CtaBand() {
       />
       <div className="container-page relative text-center">
         <Reveal>
-          <h2 className="mx-auto max-w-3xl text-balance font-display text-3xl font-semibold leading-tight md:text-[2.75rem]">
+          <h2 className="mx-auto max-w-3xl text-balance font-display text-2xl font-semibold leading-tight md:text-3xl">
             {ctaBand.title}
           </h2>
           <p className="mx-auto mt-6 max-w-xl text-[1.02rem] leading-relaxed text-muted-foreground">
@@ -321,7 +336,7 @@ export function Prose({ content }: { content: string }) {
           return (
             <h3
               key={i}
-              className="mt-12 font-display text-xl font-semibold md:text-2xl"
+              className="mt-12 font-display text-lg font-semibold md:text-xl"
             >
               {trimmed.slice(4)}
             </h3>
@@ -331,7 +346,7 @@ export function Prose({ content }: { content: string }) {
           return (
             <h2
               key={i}
-              className="mt-14 font-display text-2xl font-semibold md:text-3xl"
+              className="mt-14 font-display text-xl font-semibold md:text-2xl"
             >
               {trimmed.slice(3)}
             </h2>

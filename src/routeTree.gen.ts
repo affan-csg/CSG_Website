@@ -10,8 +10,23 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AboutRouteImport } from './routes/about'
+import { Route as BlogRouteImport } from './routes/blog'
+import { Route as ContactRouteImport } from './routes/contact'
+import { Route as FaqRouteImport } from './routes/faq'
+import { Route as GetStartedRouteImport } from './routes/get-started'
+import { Route as JoinOurBenchRouteImport } from './routes/join-our-bench'
+import { Route as LegalNoticeRouteImport } from './routes/legal-notice'
+import { Route as MerchantPoliciesRouteImport } from './routes/merchant-policies'
+import { Route as OfferCalibrationRouteImport } from './routes/offer-calibration'
 import { Route as PodsRouteImport } from './routes/pods'
+import { Route as PrivacyRouteImport } from './routes/privacy'
+import { Route as RefundRouteImport } from './routes/refund'
+import { Route as TermsRouteImport } from './routes/terms'
+import { Route as WhyCsgRouteImport } from './routes/why-csg'
+import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
 import { Route as GlobalDeliveryIndexRouteImport } from './routes/global-delivery.index'
+import { Route as GlobalDeliveryRegionRouteImport } from './routes/global-delivery.$region'
 import { Route as ServicesIndexRouteImport } from './routes/services.index'
 import { Route as ServicesSlugRouteImport } from './routes/services.$slug'
 
@@ -20,14 +35,89 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AboutRoute = AboutRouteImport.update({
+  id: '/about',
+  path: '/about',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BlogRoute = BlogRouteImport.update({
+  id: '/blog',
+  path: '/blog',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ContactRoute = ContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FaqRoute = FaqRouteImport.update({
+  id: '/faq',
+  path: '/faq',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GetStartedRoute = GetStartedRouteImport.update({
+  id: '/get-started',
+  path: '/get-started',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const JoinOurBenchRoute = JoinOurBenchRouteImport.update({
+  id: '/join-our-bench',
+  path: '/join-our-bench',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LegalNoticeRoute = LegalNoticeRouteImport.update({
+  id: '/legal-notice',
+  path: '/legal-notice',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MerchantPoliciesRoute = MerchantPoliciesRouteImport.update({
+  id: '/merchant-policies',
+  path: '/merchant-policies',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OfferCalibrationRoute = OfferCalibrationRouteImport.update({
+  id: '/offer-calibration',
+  path: '/offer-calibration',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PodsRoute = PodsRouteImport.update({
   id: '/pods',
   path: '/pods',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PrivacyRoute = PrivacyRouteImport.update({
+  id: '/privacy',
+  path: '/privacy',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RefundRoute = RefundRouteImport.update({
+  id: '/refund',
+  path: '/refund',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TermsRoute = TermsRouteImport.update({
+  id: '/terms',
+  path: '/terms',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const WhyCsgRoute = WhyCsgRouteImport.update({
+  id: '/why-csg',
+  path: '/why-csg',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BlogSlugRoute = BlogSlugRouteImport.update({
+  id: '/$slug',
+  path: '/$slug',
+  getParentRoute: () => BlogRoute,
+} as any)
 const GlobalDeliveryIndexRoute = GlobalDeliveryIndexRouteImport.update({
   id: '/global-delivery/',
   path: '/global-delivery/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GlobalDeliveryRegionRoute = GlobalDeliveryRegionRouteImport.update({
+  id: '/global-delivery/$region',
+  path: '/global-delivery/$region',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ServicesIndexRoute = ServicesIndexRouteImport.update({
@@ -43,14 +133,44 @@ const ServicesSlugRoute = ServicesSlugRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/blog': typeof BlogRouteWithChildren
+  '/contact': typeof ContactRoute
+  '/faq': typeof FaqRoute
+  '/get-started': typeof GetStartedRoute
+  '/join-our-bench': typeof JoinOurBenchRoute
+  '/legal-notice': typeof LegalNoticeRoute
+  '/merchant-policies': typeof MerchantPoliciesRoute
+  '/offer-calibration': typeof OfferCalibrationRoute
   '/pods': typeof PodsRoute
+  '/privacy': typeof PrivacyRoute
+  '/refund': typeof RefundRoute
+  '/terms': typeof TermsRoute
+  '/why-csg': typeof WhyCsgRoute
+  '/blog/$slug': typeof BlogSlugRoute
+  '/global-delivery/$region': typeof GlobalDeliveryRegionRoute
   '/services/$slug': typeof ServicesSlugRoute
   '/global-delivery/': typeof GlobalDeliveryIndexRoute
   '/services/': typeof ServicesIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/blog': typeof BlogRouteWithChildren
+  '/contact': typeof ContactRoute
+  '/faq': typeof FaqRoute
+  '/get-started': typeof GetStartedRoute
+  '/join-our-bench': typeof JoinOurBenchRoute
+  '/legal-notice': typeof LegalNoticeRoute
+  '/merchant-policies': typeof MerchantPoliciesRoute
+  '/offer-calibration': typeof OfferCalibrationRoute
   '/pods': typeof PodsRoute
+  '/privacy': typeof PrivacyRoute
+  '/refund': typeof RefundRoute
+  '/terms': typeof TermsRoute
+  '/why-csg': typeof WhyCsgRoute
+  '/blog/$slug': typeof BlogSlugRoute
+  '/global-delivery/$region': typeof GlobalDeliveryRegionRoute
   '/services/$slug': typeof ServicesSlugRoute
   '/global-delivery': typeof GlobalDeliveryIndexRoute
   '/services': typeof ServicesIndexRoute
@@ -58,7 +178,22 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/blog': typeof BlogRouteWithChildren
+  '/contact': typeof ContactRoute
+  '/faq': typeof FaqRoute
+  '/get-started': typeof GetStartedRoute
+  '/join-our-bench': typeof JoinOurBenchRoute
+  '/legal-notice': typeof LegalNoticeRoute
+  '/merchant-policies': typeof MerchantPoliciesRoute
+  '/offer-calibration': typeof OfferCalibrationRoute
   '/pods': typeof PodsRoute
+  '/privacy': typeof PrivacyRoute
+  '/refund': typeof RefundRoute
+  '/terms': typeof TermsRoute
+  '/why-csg': typeof WhyCsgRoute
+  '/blog/$slug': typeof BlogSlugRoute
+  '/global-delivery/$region': typeof GlobalDeliveryRegionRoute
   '/services/$slug': typeof ServicesSlugRoute
   '/global-delivery/': typeof GlobalDeliveryIndexRoute
   '/services/': typeof ServicesIndexRoute
@@ -66,13 +201,67 @@ export interface FileRoutesById {
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    '/' | '/pods' | '/services/$slug' | '/global-delivery/' | '/services/'
+    | '/'
+    | '/about'
+    | '/blog'
+    | '/contact'
+    | '/faq'
+    | '/get-started'
+    | '/join-our-bench'
+    | '/legal-notice'
+    | '/merchant-policies'
+    | '/offer-calibration'
+    | '/pods'
+    | '/privacy'
+    | '/refund'
+    | '/terms'
+    | '/why-csg'
+    | '/blog/$slug'
+    | '/global-delivery/$region'
+    | '/services/$slug'
+    | '/global-delivery/'
+    | '/services/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/pods' | '/services/$slug' | '/global-delivery' | '/services'
+  to:
+    | '/'
+    | '/about'
+    | '/blog'
+    | '/contact'
+    | '/faq'
+    | '/get-started'
+    | '/join-our-bench'
+    | '/legal-notice'
+    | '/merchant-policies'
+    | '/offer-calibration'
+    | '/pods'
+    | '/privacy'
+    | '/refund'
+    | '/terms'
+    | '/why-csg'
+    | '/blog/$slug'
+    | '/global-delivery/$region'
+    | '/services/$slug'
+    | '/global-delivery'
+    | '/services'
   id:
     | '__root__'
     | '/'
+    | '/about'
+    | '/blog'
+    | '/contact'
+    | '/faq'
+    | '/get-started'
+    | '/join-our-bench'
+    | '/legal-notice'
+    | '/merchant-policies'
+    | '/offer-calibration'
     | '/pods'
+    | '/privacy'
+    | '/refund'
+    | '/terms'
+    | '/why-csg'
+    | '/blog/$slug'
+    | '/global-delivery/$region'
     | '/services/$slug'
     | '/global-delivery/'
     | '/services/'
@@ -80,7 +269,21 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AboutRoute: typeof AboutRoute
+  BlogRoute: typeof BlogRouteWithChildren
+  ContactRoute: typeof ContactRoute
+  FaqRoute: typeof FaqRoute
+  GetStartedRoute: typeof GetStartedRoute
+  JoinOurBenchRoute: typeof JoinOurBenchRoute
+  LegalNoticeRoute: typeof LegalNoticeRoute
+  MerchantPoliciesRoute: typeof MerchantPoliciesRoute
+  OfferCalibrationRoute: typeof OfferCalibrationRoute
   PodsRoute: typeof PodsRoute
+  PrivacyRoute: typeof PrivacyRoute
+  RefundRoute: typeof RefundRoute
+  TermsRoute: typeof TermsRoute
+  WhyCsgRoute: typeof WhyCsgRoute
+  GlobalDeliveryRegionRoute: typeof GlobalDeliveryRegionRoute
   ServicesSlugRoute: typeof ServicesSlugRoute
   GlobalDeliveryIndexRoute: typeof GlobalDeliveryIndexRoute
   ServicesIndexRoute: typeof ServicesIndexRoute
@@ -95,6 +298,69 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/about': {
+      id: '/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof AboutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/blog': {
+      id: '/blog'
+      path: '/blog'
+      fullPath: '/blog'
+      preLoaderRoute: typeof BlogRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/contact': {
+      id: '/contact'
+      path: '/contact'
+      fullPath: '/contact'
+      preLoaderRoute: typeof ContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/faq': {
+      id: '/faq'
+      path: '/faq'
+      fullPath: '/faq'
+      preLoaderRoute: typeof FaqRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/get-started': {
+      id: '/get-started'
+      path: '/get-started'
+      fullPath: '/get-started'
+      preLoaderRoute: typeof GetStartedRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/join-our-bench': {
+      id: '/join-our-bench'
+      path: '/join-our-bench'
+      fullPath: '/join-our-bench'
+      preLoaderRoute: typeof JoinOurBenchRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/legal-notice': {
+      id: '/legal-notice'
+      path: '/legal-notice'
+      fullPath: '/legal-notice'
+      preLoaderRoute: typeof LegalNoticeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/merchant-policies': {
+      id: '/merchant-policies'
+      path: '/merchant-policies'
+      fullPath: '/merchant-policies'
+      preLoaderRoute: typeof MerchantPoliciesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/offer-calibration': {
+      id: '/offer-calibration'
+      path: '/offer-calibration'
+      fullPath: '/offer-calibration'
+      preLoaderRoute: typeof OfferCalibrationRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/pods': {
       id: '/pods'
       path: '/pods'
@@ -102,11 +368,53 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PodsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/privacy': {
+      id: '/privacy'
+      path: '/privacy'
+      fullPath: '/privacy'
+      preLoaderRoute: typeof PrivacyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/refund': {
+      id: '/refund'
+      path: '/refund'
+      fullPath: '/refund'
+      preLoaderRoute: typeof RefundRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/terms': {
+      id: '/terms'
+      path: '/terms'
+      fullPath: '/terms'
+      preLoaderRoute: typeof TermsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/why-csg': {
+      id: '/why-csg'
+      path: '/why-csg'
+      fullPath: '/why-csg'
+      preLoaderRoute: typeof WhyCsgRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/blog/$slug': {
+      id: '/blog/$slug'
+      path: '/$slug'
+      fullPath: '/blog/$slug'
+      preLoaderRoute: typeof BlogSlugRouteImport
+      parentRoute: typeof BlogRoute
+    }
     '/global-delivery/': {
       id: '/global-delivery/'
       path: '/global-delivery'
       fullPath: '/global-delivery/'
       preLoaderRoute: typeof GlobalDeliveryIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/global-delivery/$region': {
+      id: '/global-delivery/$region'
+      path: '/global-delivery/$region'
+      fullPath: '/global-delivery/$region'
+      preLoaderRoute: typeof GlobalDeliveryRegionRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/services/': {
@@ -126,9 +434,33 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface BlogRouteChildren {
+  BlogSlugRoute: typeof BlogSlugRoute
+}
+
+const BlogRouteChildren: BlogRouteChildren = {
+  BlogSlugRoute: BlogSlugRoute,
+}
+
+const BlogRouteWithChildren = BlogRoute._addFileChildren(BlogRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AboutRoute: AboutRoute,
+  BlogRoute: BlogRouteWithChildren,
+  ContactRoute: ContactRoute,
+  FaqRoute: FaqRoute,
+  GetStartedRoute: GetStartedRoute,
+  JoinOurBenchRoute: JoinOurBenchRoute,
+  LegalNoticeRoute: LegalNoticeRoute,
+  MerchantPoliciesRoute: MerchantPoliciesRoute,
+  OfferCalibrationRoute: OfferCalibrationRoute,
   PodsRoute: PodsRoute,
+  PrivacyRoute: PrivacyRoute,
+  RefundRoute: RefundRoute,
+  TermsRoute: TermsRoute,
+  WhyCsgRoute: WhyCsgRoute,
+  GlobalDeliveryRegionRoute: GlobalDeliveryRegionRoute,
   ServicesSlugRoute: ServicesSlugRoute,
   GlobalDeliveryIndexRoute: GlobalDeliveryIndexRoute,
   ServicesIndexRoute: ServicesIndexRoute,
@@ -136,3 +468,13 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}

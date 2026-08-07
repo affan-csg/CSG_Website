@@ -13,8 +13,12 @@ import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { SiteNav } from "@/components/site/site-nav";
 import { SiteFooter } from "@/components/site/site-footer";
+import { FloatingConsultCTA } from "@/components/site/floating-consult-cta";
 import { SmoothScroll } from "@/components/site/smooth-scroll";
 import { ScrollProgress } from "@/components/site/scroll-progress";
+import { CustomCursor } from "@/components/site/custom-cursor";
+import { HomeParticlesBg } from "@/components/site/home-particles-bg";
+import { buildOrganizationJsonLd, buildLocalBusinessJsonLd } from "@/lib/seo";
 
 function NotFoundComponent() {
   return (
@@ -28,7 +32,7 @@ function NotFoundComponent() {
         <div className="mt-8">
           <Link
             to="/"
-            className="inline-flex items-center justify-center rounded-sm bg-cream px-6 py-3 font-display text-sm font-semibold text-navy transition-colors hover:bg-gold"
+            className="inline-flex items-center justify-center rounded-md bg-cream px-6 py-3 font-display text-sm font-semibold text-navy transition-colors hover:bg-gold"
           >
             Go home
           </Link>
@@ -58,13 +62,13 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
               router.invalidate();
               reset();
             }}
-            className="rounded-sm bg-cream px-6 py-3 font-display text-sm font-semibold text-navy transition-colors hover:bg-gold"
+            className="rounded-md bg-cream px-6 py-3 font-display text-sm font-semibold text-navy transition-colors hover:bg-gold"
           >
             Try again
           </button>
           <a
             href="/"
-            className="rounded-sm border border-border px-6 py-3 font-display text-sm transition-colors hover:border-gold hover:text-gold"
+            className="rounded-md border border-border px-6 py-3 font-display text-sm transition-colors hover:border-gold hover:text-gold"
           >
             Go home
           </a>
@@ -80,10 +84,15 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { name: "author", content: "Career Source Group, LLC" },
+      { name: "theme-color", content: "#0F172A" },
+      { name: "keywords", content: "staffing, talent acquisition, US staffing, LATAM nearshore, Pakistan offshore, direct hire, contract staffing, contract-to-hire, staff augmentation, IT staffing, healthcare staffing" },
       { property: "og:type", content: "website" },
       { property: "og:site_name", content: "Career Source Group" },
+      { property: "og:locale", content: "en_US" },
+      { property: "og:image", content: "https://careersourcegroup.com/images/brand/CSG.png" },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "theme-color", content: "#0F172A" },
+      { name: "twitter:site", content: "@careersourcegrp" },
+      { name: "twitter:image", content: "https://careersourcegroup.com/images/brand/CSG.png" },
     ],
     links: [
       { rel: "stylesheet", href: appCss },
@@ -94,6 +103,18 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         href: "https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&family=Manrope:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap",
       },
       { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
+      { rel: "apple-touch-icon", href: "/images/brand/CSG.png" },
+      { rel: "canonical", href: "https://careersourcegroup.com" },
+    ],
+    scripts: [
+      {
+        type: "application/ld+json",
+        JSON: JSON.stringify(buildOrganizationJsonLd()),
+      },
+      {
+        type: "application/ld+json",
+        JSON: JSON.stringify(buildLocalBusinessJsonLd()),
+      },
     ],
   }),
   shellComponent: RootShell,
@@ -125,7 +146,7 @@ function RootComponent() {
       <ScrollProgress />
       <a
         href="#main-content"
-        className="sr-only focus:not-sr-only focus:fixed focus:left-6 focus:top-6 focus:z-[60] focus:rounded-sm focus:bg-cream focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-navy"
+        className="sr-only focus:not-sr-only focus:fixed focus:left-6 focus:top-6 focus:z-[60]      focus:rounded-md focus:bg-cream focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-navy"
       >
         Skip to main content
       </a>
@@ -135,6 +156,9 @@ function RootComponent() {
         <Outlet />
       </main>
       <SiteFooter />
+      <FloatingConsultCTA />
+      <CustomCursor />
+      <HomeParticlesBg />
     </QueryClientProvider>
   );
 }

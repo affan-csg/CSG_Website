@@ -85,7 +85,7 @@ export function FormShell({
           <button
             type="submit"
             disabled
-            className="mt-5 inline-flex cursor-not-allowed items-center justify-center rounded-sm bg-cream px-7 py-3.5 font-display text-[0.88rem] font-semibold text-navy opacity-60"
+            className="mt-5 inline-flex cursor-not-allowed items-center justify-center rounded-md bg-cream px-7 py-3.5 font-display text-[0.88rem] font-semibold text-navy opacity-60"
           >
             {submitLabel}
           </button>

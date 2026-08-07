@@ -7,7 +7,7 @@ function ParticleField() {
   const ref = useRef<Points>(null);
 
   const positions = useMemo(() => {
-    const count = 1400;
+    const count = 2000;
     const arr = new Float32Array(count * 3);
     for (let i = 0; i < count; i += 1) {
       const radius = 3.4 + Math.random() * 4.2;
@@ -37,11 +37,11 @@ function ParticleField() {
         />
       </bufferGeometry>
       <pointsMaterial
-        size={0.022}
+        size={0.027}
         sizeAttenuation
         color="#c8ab6e"
         transparent
-        opacity={0.85}
+        opacity={1}
         depthWrite={false}
       />
     </points>
@@ -51,21 +51,22 @@ function ParticleField() {
 function Ring() {
   const ref = useRef<Points>(null);
   const positions = useMemo(() => {
-    const count = 520;
+    const count = 1200;
     const arr = new Float32Array(count * 3);
     for (let i = 0; i < count; i += 1) {
       const a = (i / count) * Math.PI * 2;
       const r = 6.1;
-      arr[i * 3] = Math.cos(a) * r;
-      arr[i * 3 + 1] = Math.sin(a) * r * 0.28;
-      arr[i * 3 + 2] = Math.sin(a * 3) * 0.5;
+      const spread = 0.6;
+      arr[i * 3] = Math.cos(a) * r + (Math.random() - 0.5) * spread;
+      arr[i * 3 + 1] = Math.sin(a) * r * 0.35 + (Math.random() - 0.5) * spread * 0.5;
+      arr[i * 3 + 2] = Math.sin(a * 3) * 0.9 + (Math.random() - 0.5) * spread;
     }
     return arr;
   }, []);
 
   useFrame((state) => {
     if (!ref.current) return;
-    ref.current.rotation.z = state.clock.getElapsedTime() * 0.09;
+    ref.current.rotation.z = state.clock.getElapsedTime() * 0.15;
   });
 
   return (
@@ -78,18 +79,18 @@ function Ring() {
         />
       </bufferGeometry>
       <pointsMaterial
-        size={0.03}
+        size={0.05}
         sizeAttenuation
-        color="#6f9dff"
+        color="#a8cfff"
         transparent
-        opacity={0.75}
+        opacity={1}
         depthWrite={false}
       />
     </points>
   );
 }
 
-export default function HeroCanvas() {
+export default function HeroCanvas({ showRing = true }: { showRing?: boolean }) {
   return (
     <Canvas
       dpr={[1, 1.75]}
@@ -98,7 +99,7 @@ export default function HeroCanvas() {
       style={{ pointerEvents: "none" }}
     >
       <ParticleField />
-      <Ring />
+      {showRing && <Ring />}
     </Canvas>
   );
 }

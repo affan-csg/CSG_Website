@@ -3,7 +3,6 @@ import { ArrowUpRight } from "lucide-react";
 
 import { Reveal } from "@/components/site/reveal";
 import {
-  CtaBand,
   FaqSection,
   PageHero,
   Panel,
@@ -13,6 +12,7 @@ import {
 } from "@/components/site/primitives";
 import type { Service } from "@/content/services";
 import { getService, otherServices, services } from "@/content/services";
+import { buildSeoMeta } from "@/lib/seo";
 
 export const Route = createFileRoute("/services/$slug")({
   loader: ({ params }) => {
@@ -30,14 +30,13 @@ export const Route = createFileRoute("/services/$slug")({
       };
     }
     const { service } = loaderData;
-    const title = `${service.title} Staffing | Career Source Group`;
     return {
-      meta: [
-        { title },
-        { name: "description", content: service.tagline },
-        { property: "og:title", content: `${service.title} — ${service.tagline}` },
-        { property: "og:description", content: service.blocks[0]?.body ?? service.tagline },
-      ],
+      meta: buildSeoMeta({
+        title: `${service.title} Staffing | Career Source Group`,
+        description: service.tagline,
+        path: `/services/${service.slug}`,
+        noindex: false,
+      }),
     };
   },
   component: ServiceDetail,
@@ -87,6 +86,26 @@ function ServiceDetail() {
       </Section>
 
       <Section className="border-t border-border">
+        <SectionHeading eyebrow="Next steps" title="Ready to get started?" />
+        <div className="mt-10 flex flex-wrap gap-4">
+          <Link
+            to="/get-started"
+            search={{ skill: service.slug }}
+            className="inline-flex items-center justify-center rounded-md bg-cream px-6 py-3.5 font-display text-[0.88rem] font-semibold text-navy transition-all duration-300 hover:bg-gold"
+          >
+            Submit a requirement
+          </Link>
+          <Link
+            to="/join-our-bench"
+            search={{ skill: service.slug }}
+            className="inline-flex items-center justify-center rounded-md border border-border px-6 py-3.5 font-display text-[0.88rem] font-semibold text-foreground transition-all duration-300 hover:border-gold hover:text-gold"
+          >
+            Apply as specialist
+          </Link>
+        </div>
+      </Section>
+
+      <Section className="border-t border-border">
         <SectionHeading eyebrow="Related" title="Other practices" />
         <div className="mt-12 grid gap-px overflow-hidden rounded-md border border-border bg-border md:grid-cols-3">
           {otherServices(service.slug).map((s) => (
@@ -113,7 +132,6 @@ function ServiceDetail() {
       {service.faqQuestions.length ? (
         <FaqSection questions={service.faqQuestions} />
       ) : null}
-      <CtaBand />
     </>
   );
 }

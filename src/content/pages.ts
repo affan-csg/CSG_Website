@@ -1,6 +1,6 @@
 export const home = {
   hero: {
-    words: ["Three countries.", "One contract.", "One person to call."],
+    words: ["Three countries. One contract.", "One person to call."],
     sub: "US, LATAM, and Pakistan talent under a single relationship — so you stop managing four vendors to build one team.",
     primary: { label: "Submit a Requirement", to: "/get-started" },
     secondary: { label: "Join our bench", to: "/join-our-bench" },
@@ -87,6 +87,7 @@ export const about = {
   founder: {
     name: "Zohaib Khawaja",
     role: "CEO and Founder",
+    image: "/images/team/profile_picture.jpg",
     links: [
       { label: "LinkedIn", href: "https://www.linkedin.com/in/zohaibkhawaja/" },
       { label: "Facebook", href: "https://www.facebook.com/61559974043500" },
@@ -102,21 +103,25 @@ export const about = {
       name: "Anum Yaqub",
       role: "Talent Acquisition Manager",
       href: "https://www.linkedin.com/in/anum-yaqub-26bb9338/",
+      image: "/images/team/profile_picture.jpg",
     },
     {
       name: "Romaisa Shah, MPH",
       role: "Team Member",
       href: "https://www.linkedin.com/in/romaisa-shah-mph-50791852",
+      image: "/images/team/profile_picture.jpg",
     },
     {
       name: "Señorita Joyce Lobo",
       role: "Team Member",
       href: "https://www.linkedin.com/in/senoritalobo/",
+      image: "/images/team/profile_picture.jpg",
     },
     {
       name: "Huda Qureshi",
       role: "Team Member",
       href: "https://www.linkedin.com/in/huda-qureshi/",
+      image: "/images/team/profile_picture.jpg",
     },
   ],
 };

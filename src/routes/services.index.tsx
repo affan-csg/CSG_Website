@@ -15,34 +15,26 @@ import {
 } from "@/components/site/primitives";
 import { servicesPage } from "@/content/services";
 import { specialties, specialtyTags } from "@/content/site";
+import { buildSeoMeta } from "@/lib/seo";
 
 export const Route = createFileRoute("/services/")({
   head: () => ({
-    meta: [
-      { title: "Specialized Technical Roles We Fill | Career Source Group" },
-      {
-        name: "description",
-        content:
-          "AI/ML, MLOps, data, DevOps, DevSecOps, cloud, software development and product roles — placed as specialists or pods across the US, LATAM and Pakistan.",
-      },
-      {
-        property: "og:title",
-        content: "Specialized Roles: The Ones Everyone Else Is Struggling to Fill",
-      },
-      {
-        property: "og:description",
-        content:
-          "We don't sell resumes. We sell the right seat, in the right region, at the right number.",
-      },
-    ],
-  }),
+    meta: buildSeoMeta({
+      title: "Specialized Technical Roles We Fill | Career Source Group",
+      description: "AI/ML, MLOps, data, DevOps, DevSecOps, cloud, software development and product roles — placed as specialists or pods.",
+      path: "/services"
+    }) }),
   component: ServicesIndex,
 });
 
 function ServicesIndex() {
   return (
     <>
-      <PageHero eyebrow="Specialties" title={servicesPage.title} />
+      <PageHero
+        eyebrow="Specialties"
+        title={servicesPage.title}
+        showParticles={true}
+      />
 
       <Section>
         <SectionHeading
