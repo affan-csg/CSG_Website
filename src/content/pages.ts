@@ -1,0 +1,205 @@
+export const home = {
+  hero: {
+    words: ["Three countries.", "One contract.", "One person to call."],
+    sub: "US, LATAM, and Pakistan talent under a single relationship — so you stop managing four vendors to build one team.",
+    primary: { label: "Submit a Requirement", to: "/get-started" },
+    secondary: { label: "Join our bench", to: "/join-our-bench" },
+  },
+  who: {
+    heading: "Who we are",
+    body: "Career Source Group is a US staffing and talent delivery firm built for companies that need to move faster than a four-to-six month hiring cycle allows. We place tech and non-tech talent across direct hire, contract, and contract-to-hire in the US, and we deliver dedicated nearshore talent from LATAM and offshore talent from Pakistan on a contract basis. One contract, one invoice, one point of contact. And we charge 10% of annual salary for direct hire — not the 20-30% the rest of the market charges.",
+  },
+  fee: {
+    heading: "We Charge 10%. The Industry Charges 20-30%.",
+    body: "Standard direct-hire fees in US staffing run 15-30% of first-year salary. On a $150,000 hire, that's $30,000-$45,000 to a staffing firm for one placement. We charge 10% — on that same hire, $15,000. On five hires a year, that's a quarter of a million dollars back in your budget.",
+    cta: { label: "Learn how we do it", to: "/why-csg" },
+  },
+  pods: {
+    heading: "We Don't Fill Seats. We Stand Up Teams.",
+    body: "A CSG Pod is a complete, purpose-built team — sized by experience, communication skill, technical skill, and cost — delivered under one contract, one invoice, one point of contact.",
+    cta: { label: "Explore Pods", to: "/pods" },
+  },
+  whyCsg: {
+    heading: "Why CSG",
+    items: [
+      "We're the only partner you don't have to lie to about geography. We sell all three regions, so our incentive is to put the work where it belongs.",
+      "We charge 10% for direct hire. The market charges 20-30%. Same vetting, same guarantee.",
+      "We score communication before we score anything else. Communication-critical seats are staffed differently than execution seats, on purpose.",
+      "Enterprise delivery history — Synovus, Deloitte, BCBS, M3, TK Elevators.",
+    ],
+    cta: { label: "Why companies work with us", to: "/why-csg" },
+  },
+  faqQuestions: [
+    "Why do you charge 10% for direct hire when the industry charges 20-30%?",
+    "What's the difference between a single specialist and a consulting pod?",
+    "Do you place contract or full-time talent, or both?",
+    "What's the difference between nearshore (LATAM) and offshore (Pakistan) staffing?",
+  ],
+};
+
+export const whyCsg = {
+  title: "Why Companies Work With Us",
+  reasons: [
+    {
+      heading: "We're the only partner you don't have to lie to about geography.",
+      body: "A US-only staffing firm will always tell you the answer is US talent. An offshore shop will always tell you it's offshore. We sell all three regions, so our incentive is to put the work where it actually belongs. That's a structural advantage, not a marketing claim.",
+    },
+    {
+      heading: "We charge 10% for direct hire. The market charges 20-30%.",
+      body: "Same vetting. Same guarantee. A third of the fee.",
+    },
+    {
+      heading: "We score communication before we score anything else.",
+      body: "Most offshore engagements don't fail on technical skill. They fail because nobody designed for how the work would actually get discussed. We staff communication-critical seats differently than execution seats, on purpose.",
+    },
+    {
+      heading: "One contract, one invoice, one point of contact.",
+      body: "Across three countries and six service lines. While the market consolidates from twelve vendors down to three, we're built to be one of the three.",
+    },
+    {
+      heading: "Enterprise delivery history.",
+      body: "Synovus. Deloitte. BCBS. M3. TK Elevators. We're not a low-cost offshore reseller that learned staffing last year.",
+    },
+  ],
+  cta: { label: "Compare all three regions", to: "/global-delivery" },
+  faqQuestions: [
+    "Why do you charge 10% for direct hire when the industry charges 20-30%?",
+  ],
+};
+
+export const about = {
+  title: "About Career Source Group",
+  lead: "Career Source Group is a US staffing and talent delivery firm built for companies that need to move faster than a four-to-six month hiring cycle allows. We place tech and non-tech talent across direct hire, contract, and contract-to-hire in the US, and we deliver dedicated nearshore talent from LATAM and offshore talent from Pakistan on a contract basis. We do it under one contract, one invoice, and one point of contact. And we charge 10% of annual salary for direct hire — not the 20-30% the rest of the market charges.",
+  howWeWork: {
+    heading: "How we work",
+    paragraphs: [
+      "Career Source Group, LLC, located in Alpharetta, GA, is your premier provider of HR consulting, staffing solutions, and talent acquisition services. Our deep industry expertise and innovative technology set us apart in the crowded market, ensuring we not only address immediate needs but also prepare our clients for future challenges. With a remote-first approach and a proven track record of success, we are committed to transforming businesses through personalized, results-oriented solutions.",
+      "We pride ourselves on our client-centric focus and commitment to excellence and integrity. Our approach to HR and staffing is to provide customized strategies that drive long-term success for our clients. With a global network and extensive experience across various industries, we leverage cutting-edge tools and data analytics to optimize your recruitment process.",
+      "We set ourselves apart through a combination of deep industry expertise, personalized solutions, and innovative technology. Our flexibility allows us to scale solutions for businesses of all sizes, leveraging cutting-edge tools and data analytics for efficient recruitment, AI-driven candidate matching, and process optimization.",
+      "With an international presence, we source the best talent regardless of location, expertly navigating remote recruitment and workforce management. Clients choose Career Source Group for our personalized, results-oriented approach, dedicated support, and continuous improvement to exceed expectations. Join us in transforming your workforce and achieving long-term success.",
+    ],
+  },
+  delivered: {
+    heading: "Who We've Delivered For",
+    body: "Synovus. Deloitte. BCBS. M3. TK Elevators. We're not a low-cost offshore reseller that learned staffing last year.",
+    logos: ["Synovus", "Deloitte", "BCBS", "M3", "TK Elevators"],
+  },
+  founder: {
+    name: "Zohaib Khawaja",
+    role: "CEO and Founder",
+    links: [
+      { label: "LinkedIn", href: "https://www.linkedin.com/in/zohaibkhawaja/" },
+      { label: "Facebook", href: "https://www.facebook.com/61559974043500" },
+      { label: "Instagram", href: "https://www.instagram.com/careersourcegroup" },
+    ],
+    bio: [
+      "Zohaib Khawaja is the CEO and Founder of Career Source Group, LLC, bringing over 14 years of talent acquisition experience to the company. His expertise spans cost-effective and high-quality staff augmentation, onshore and offshore recruiting services for startups to enterprises.",
+      "His passion lies in attracting and retaining top talent for his clients through innovative sourcing strategies that enhance recruiting efficiency and effectiveness. He has successfully built and led global talent acquisition teams across India, Pakistan, Germany, Romania, Canada, and the United States, consistently delivering high-performing and diverse teams. Zohaib is dedicated to driving organizational success by identifying and attracting the best talent in the market.",
+    ],
+  },
+  team: [
+    {
+      name: "Anum Yaqub",
+      role: "Talent Acquisition Manager",
+      href: "https://www.linkedin.com/in/anum-yaqub-26bb9338/",
+    },
+    {
+      name: "Romaisa Shah, MPH",
+      role: "Team Member",
+      href: "https://www.linkedin.com/in/romaisa-shah-mph-50791852",
+    },
+    {
+      name: "Señorita Joyce Lobo",
+      role: "Team Member",
+      href: "https://www.linkedin.com/in/senoritalobo/",
+    },
+    {
+      name: "Huda Qureshi",
+      role: "Team Member",
+      href: "https://www.linkedin.com/in/huda-qureshi/",
+    },
+  ],
+};
+
+export const specialtyOptions = [
+  "AI & ML Engineering",
+  "MLOps Engineering",
+  "Data Engineering, Data Science & Analytics",
+  "DevOps Engineering",
+  "DevSecOps & Platform Engineering",
+  "Cloud Engineering & Architecture",
+  "Software Development",
+  "Product & Project Management",
+] as const;
+
+export const bench = {
+  title: "Get vetted once. Get matched to work that's actually a fit.",
+  lead: "We place specialists and pods with clients who need AI/ML, MLOps, Data, DevOps, DevSecOps, Cloud, Software Development, and Product talent — on a contract or full-time basis. Apply once and we'll match you as opportunities open.",
+  what: {
+    heading: "What working with us looks like",
+    items: [
+      "One vetting process, multiple opportunities — not a one-off placement and radio silence after.",
+      "Both contract and full-time roles, so you're not locked into one type of engagement.",
+      "Pod placements mean you may be matched alongside other specialists you'll actually work with, not dropped into a team alone.",
+    ],
+  },
+  locationHint:
+    "Wherever you're based — our clients hire across the US, LATAM, and Pakistan.",
+  portfolioHint: "Optional — a personal site, GitHub, or work samples.",
+  resumeHint: "PDF or Word document, 5 MB max.",
+  availability: ["Immediately", "2–4 weeks", "1–3 months"],
+};
+
+export const getStarted = {
+  title: "Submit a Requirement",
+  lead: "Send us one open req you've been sitting on. We'll have profiles in front of you this week, before you commit to anything. No commitment, no retainer.",
+  benchNote: "Looking for work instead?",
+  faqQuestions: [
+    "Why do you charge 10% for direct hire when the industry charges 20-30%?",
+    "Do you place contract or full-time talent, or both?",
+    "How fast can you deliver a shortlist?",
+  ],
+};
+
+export const contact = {
+  title: "Contact us",
+  lead: "General inquiries. For a staffing requirement or a bench application, use the links below instead.",
+  subjects: [
+    "I need to hire talent",
+    "I'm looking for work",
+    "Something else",
+  ],
+  botNotice:
+    "Bot verification is not configured yet — this form cannot be submitted until it is.",
+};
+
+export const legalPages = {
+  terms: {
+    title: "Terms & Conditions",
+    body: "Please contact us for our full Terms & Conditions.",
+  },
+  refund: {
+    title: "Refund Policy",
+    body: "Please contact us for our full Refunds & Returns Policy.",
+  },
+  legalNotice: {
+    title: "Legal Notice",
+    rows: [
+      ["Business Name", "Career Source Group, LLC"],
+      ["Address", "6040 Yorkridge Dr, Alpharetta, Georgia, 30005, United States"],
+      ["Registered Company Name", "Career Source Group, LLC"],
+      ["Phone Number", "+14438759677"],
+      [
+        "Registered Office Address",
+        "6040 Yorkridge Dr, Alpharetta, Georgia, 30005, United States",
+      ],
+    ] as const,
+  },
+  merchant: {
+    title: "Merchant Policies",
+    rows: [
+      ["Delivery methods", "Collection — Free"],
+      ["Payment options", "Payment methods accepted: Cash"],
+    ] as const,
+  },
+};
