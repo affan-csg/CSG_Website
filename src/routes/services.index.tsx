@@ -16,7 +16,7 @@ import {
 import { servicesPage } from "@/content/services";
 import { specialties, specialtyTags } from "@/content/site";
 
-export const Route = createFileRoute("/services")({
+export const Route = createFileRoute("/services/")({
   head: () => ({
     meta: [
       { title: "Specialized Technical Roles We Fill | Career Source Group" },

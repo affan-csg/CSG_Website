@@ -11,6 +11,7 @@ import {
   Section,
   SectionHeading,
 } from "@/components/site/primitives";
+import type { Service } from "@/content/services";
 import { getService, otherServices, services } from "@/content/services";
 
 export const Route = createFileRoute("/services/$slug")({
@@ -43,7 +44,7 @@ export const Route = createFileRoute("/services/$slug")({
 });
 
 function ServiceDetail() {
-  const { service } = Route.useLoaderData();
+  const { service } = Route.useLoaderData() as { service: Service };
 
   return (
     <>
