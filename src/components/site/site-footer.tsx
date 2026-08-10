@@ -19,24 +19,24 @@ export function SiteFooter() {
                 Career Source Group
               </span>
             </Link>
-            <p className="mt-5 max-w-sm text-sm leading-relaxed text-muted-foreground">
+            <p className="mt-5 max-w-sm footer-text text-muted-foreground">
               {company.tagline}
             </p>
-            <div className="mt-7 space-y-3 text-sm">
-              <p className="flex gap-3 text-muted-foreground">
+            <div className="mt-7 space-y-3">
+              <p className="footer-text flex gap-3 text-muted-foreground">
                 <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-gold" />
                 <span>{company.address}</span>
               </p>
               <a
                 href={company.phoneHref}
-                className="flex items-center gap-3 text-muted-foreground transition-colors hover:text-foreground"
+                className="footer-text flex items-center gap-3 text-muted-foreground transition-colors hover:text-foreground"
               >
                 <Phone className="h-4 w-4 shrink-0 text-gold" />
                 {company.phone}
               </a>
               <a
                 href={`mailto:${company.email}`}
-                className="flex items-center gap-3 text-muted-foreground transition-colors hover:text-foreground"
+                className="footer-text flex items-center gap-3 text-muted-foreground transition-colors hover:text-foreground"
               >
                 <Mail className="h-4 w-4 shrink-0 text-gold" />
                 {company.email}
@@ -53,7 +53,7 @@ export function SiteFooter() {
                     <li key={link.to}>
                       <Link
                         to={link.to}
-                        className="text-sm text-muted-foreground transition-colors hover:text-foreground"
+                        className="footer-text text-muted-foreground transition-colors hover:text-foreground"
                       >
                         {link.label}
                       </Link>
@@ -65,7 +65,7 @@ export function SiteFooter() {
           </div>
         </div>
 
-        <div className="mt-14 flex flex-col gap-4 border-t border-border pt-7 text-xs text-muted-foreground sm:flex-row sm:items-center sm:justify-between">
+        <div className="mt-14 flex flex-col gap-4 border-t border-border pt-7 caption-text text-muted-foreground sm:flex-row sm:items-center sm:justify-between">
           <p>
             © {new Date().getFullYear()} {company.legalName}. All rights reserved.
           </p>

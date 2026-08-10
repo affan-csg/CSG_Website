@@ -1,49 +1,115 @@
-# Dependencies
+# ============================================================================
+# DEPENDENCIES
+# ============================================================================
 node_modules/
 .pnp
 .pnp.js
-
-# Build outputs
-dist/
 dist-ssr/
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# ============================================================================
+# BUILD OUTPUTS & CACHE
+# ============================================================================
+dist/
 build/
 .output/
 .vinxi/
 .nitro/
 .tanstack/
+.cache/
+.next/
+out/
 
-# Environment files
+# ============================================================================
+# ENVIRONMENT FILES (NEVER COMMIT SECRETS)
+# ============================================================================
 .env
 .env.local
+.env.*.local
 .env.development.local
 .env.test.local
 .env.production.local
+.env.production
+.env.development
 
-# IDE
+# ============================================================================
+# IDE & EDITOR
+# ============================================================================
 .vscode/
 .idea/
 *.swp
 *.swo
+*.swn
 *~
-
-# OS
 .DS_Store
+.AppleDouble
+.LSOverride
+*.sublime-workspace
+*.sublime-project
+.vscode-test
+.history/
+.elixir_ls/
+
+# ============================================================================
+# OS SPECIFIC
+# ============================================================================
 Thumbs.db
 desktop.ini
+.windows/
+.osx/
 
-# Debug logs
+# ============================================================================
+# DEBUG & LOG FILES
+# ============================================================================
 npm-debug.log*
+npm-error.log*
 yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
+pnpm-error.log*
 lerna-debug.log*
+*.log
+debug.log
+.npm
+.eslintcache
 
-# Testing
+# ============================================================================
+# TESTING & COVERAGE
+# ============================================================================
 coverage/
+.nyc_output/
+.mocha/
+test-results/
+*.lcov
 
-# Wrangler / Cloudflare
+# ============================================================================
+# DEPLOYMENT & HOSTING
+# ============================================================================
+.vercel/
+.netlify/
 .wrangler/
+.env.*.local
 
-# Misc
+# ============================================================================
+# LOCAL DEVELOPMENT
+# ============================================================================
+.turbo/
+.env.example.local
+.vscode/launch.json
+.vscode/settings.json
+.vscode/extensions.json
+
+# ============================================================================
+# MISC
+# ============================================================================
 *.local
-.cache/
+*.bak
+*.tmp
+*.temp
+.DS_Store
+Thumbs.db
+.git/
+.gitkeep
+.editorconfig.local

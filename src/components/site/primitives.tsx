@@ -48,7 +48,7 @@ export function SectionHeading({
       {eyebrow ? <p className="eyebrow">{eyebrow}</p> : null}
       <h2
         className={cn(
-          "mt-4 text-balance text-2xl font-semibold leading-[1.1] md:text-3xl",
+          "mt-4 text-balance heading-section",
           align === "center" && "mx-auto max-w-3xl",
         )}
       >
@@ -57,7 +57,7 @@ export function SectionHeading({
       {body ? (
         <p
           className={cn(
-            "mt-5 max-w-2xl text-[1.02rem] leading-relaxed text-muted-foreground",
+            "mt-5 max-w-2xl body-copy text-muted-foreground",
             align === "center" && "mx-auto",
           )}
         >
@@ -99,23 +99,12 @@ export function PageHero({
         />
       )}
 
-      <div className="container-page relative">
-        <Reveal delay={0.2}>
-          <p className="eyebrow">{eyebrow}</p>
-        </Reveal>
-        <Reveal delay={0.35}>
-          <h1 className="mt-6 max-w-4xl text-balance font-display text-3xl font-semibold leading-[1.1] md:text-4xl lg:text-5xl">
-            {title}
-          </h1>
-        </Reveal>
-        {paragraphs.map((p, i) => (
-          <Reveal key={p} delay={0.45 + i * 0.1}>
-            <p
-              className="mt-6 max-w-2xl text-[1.05rem] leading-relaxed text-muted-foreground"
-            >
-              {p}
-            </p>
-          </Reveal>
+      <div className="container-page relative z-10">
+        {/* Render hero copy immediately to avoid flash/hide on hydration */}
+        <p className="eyebrow">{eyebrow}</p>
+        <h1 className="mt-6 max-w-4xl text-balance heading-hero">{title}</h1>
+        {paragraphs.map((p) => (
+          <p key={p} className="mt-6 max-w-2xl body-copy text-muted-foreground">{p}</p>
         ))}
         {children ? <div className="mt-10">{children}</div> : null}
       </div>
@@ -136,7 +125,7 @@ export function ArrowLink({
     <Link
       to={to as never}
       className={cn(
-        "group inline-flex items-center gap-2 font-display text-sm font-semibold text-gold transition-all duration-300 hover:gap-3",
+        "group inline-flex items-center gap-2 button-text text-gold transition-all duration-300 hover:gap-3",
         className,
       )}
     >
@@ -159,7 +148,7 @@ export function ButtonLink({
     <Link
       to={to as never}
       className={cn(
-        "inline-flex items-center justify-center gap-2 rounded-md px-6 py-3.5 font-display text-[0.88rem] font-semibold transition-all duration-300 active:scale-95",
+        "inline-flex items-center justify-center gap-2 rounded-md px-6 py-3.5 button-text transition-all duration-300 active:scale-95",
         variant === "solid"
           ? "bg-cream text-navy hover:bg-gold hover:shadow-md hover:shadow-gold/20"
           : "border border-border text-foreground hover:border-gold hover:text-gold hover:shadow-md hover:shadow-gold/10",
@@ -172,7 +161,7 @@ export function ButtonLink({
 
 export function Pill({ children }: { children: ReactNode }) {
   return (
-    <span className="rounded-full border border-border px-3 py-1 font-mono text-[0.62rem] uppercase tracking-[0.16em] text-muted-foreground">
+    <span className="badge-text rounded-full border border-border px-3 py-1 text-muted-foreground">
       {children}
     </span>
   );
@@ -208,16 +197,16 @@ export function NumberedItem({
 }) {
   return (
     <div className="grid gap-5 border-t border-border py-8 transition-colors duration-300 hover:border-gold/30 md:grid-cols-[5rem_1fr]">
-      <span className="font-mono text-sm text-gold">
+      <span className="label-small text-gold">
         {String(index).padStart(2, "0")}
       </span>
       <div className="min-w-0">
         {heading ? (
-          <h3 className="text-xl font-semibold leading-snug">{heading}</h3>
+          <h3 className="card-title">{heading}</h3>
         ) : null}
         <p
           className={cn(
-            "text-[1.02rem] leading-relaxed text-muted-foreground",
+            "body-copy text-muted-foreground",
             heading && "mt-3",
           )}
         >
@@ -231,9 +220,7 @@ export function NumberedItem({
 export function PullQuote({ children }: { children: ReactNode }) {
   return (
     <Reveal className="my-4 border-l-2 border-gold pl-7 transition-all duration-300 hover:border-l-4 hover:pl-6">
-      <p className="font-display text-xl leading-relaxed text-foreground md:text-[1.6rem]">
-        {children}
-      </p>
+      <p className="testimonial-quote text-foreground font-semibold">{children}</p>
     </Reveal>
   );
 }
@@ -247,10 +234,8 @@ export function StatGrid({
     <div className="grid gap-px overflow-hidden rounded-md border border-border bg-border sm:grid-cols-2 lg:grid-cols-4">
       {stats.map((s) => (
         <div key={s.label} className="bg-card p-7 transition-colors duration-300 hover:bg-navy-soft">
-          <p className="font-display text-3xl font-semibold text-gold md:text-4xl">
-            {s.value}
-          </p>
-          <p className="mt-3 text-sm leading-snug text-muted-foreground">{s.label}</p>
+          <p className="stat-value text-gold">{s.value}</p>
+          <p className="stat-label mt-3 text-muted-foreground">{s.label}</p>
         </div>
       ))}
     </div>
@@ -277,10 +262,10 @@ export function FaqSection({
       <Accordion type="single" collapsible className="mt-12">
         {list.map((faq) => (
           <AccordionItem key={faq.q} value={faq.q} className="border-border">
-            <AccordionTrigger className="py-6 text-left font-display text-[1.05rem] font-medium transition-colors duration-300 hover:no-underline hover:text-gold md:text-lg">
+            <AccordionTrigger className="py-6 text-left form-label transition-colors duration-300 hover:no-underline hover:text-gold">
               {faq.q}
             </AccordionTrigger>
-            <AccordionContent className="max-w-3xl pb-7 text-[0.98rem] leading-relaxed text-muted-foreground">
+            <AccordionContent className="max-w-3xl pb-7 body-copy text-muted-foreground">
               {faq.a}
             </AccordionContent>
           </AccordionItem>
@@ -305,10 +290,10 @@ export function CtaBand() {
       />
       <div className="container-page relative text-center">
         <Reveal>
-          <h2 className="mx-auto max-w-3xl text-balance font-display text-2xl font-semibold leading-tight md:text-3xl">
+          <h2 className="mx-auto max-w-3xl text-balance heading-section">
             {ctaBand.title}
           </h2>
-          <p className="mx-auto mt-6 max-w-xl text-[1.02rem] leading-relaxed text-muted-foreground">
+          <p className="mx-auto mt-6 max-w-xl body-copy text-muted-foreground">
             {ctaBand.body}
           </p>
           <div className="mt-10 flex flex-wrap justify-center gap-4">
@@ -336,20 +321,14 @@ export function Prose({ content }: { content: string }) {
 
         if (trimmed.startsWith("### ")) {
           return (
-            <h3
-              key={i}
-              className="mt-12 font-display text-lg font-semibold md:text-xl"
-            >
+            <h3 key={i} className="mt-12 heading-subsection">
               {trimmed.slice(4)}
             </h3>
           );
         }
         if (trimmed.startsWith("## ")) {
           return (
-            <h2
-              key={i}
-              className="mt-14 font-display text-xl font-semibold md:text-2xl"
-            >
+            <h2 key={i} className="mt-14 heading-section">
               {trimmed.slice(3)}
             </h2>
           );
@@ -361,7 +340,7 @@ export function Prose({ content }: { content: string }) {
               {lines.map((line, j) => (
                 <li
                   key={j}
-                  className="flex gap-3 text-[1.02rem] leading-relaxed text-muted-foreground"
+                  className="flex gap-3 body-copy text-muted-foreground"
                 >
                   <span aria-hidden className="mt-2.5 h-px w-4 shrink-0 bg-gold" />
                   <span>{line.trim().replace(/^[-*] /, "")}</span>
@@ -373,7 +352,7 @@ export function Prose({ content }: { content: string }) {
         return (
           <p
             key={i}
-            className="mt-6 text-[1.04rem] leading-[1.75] text-muted-foreground"
+            className="mt-6 body-copy text-muted-foreground"
           >
             {trimmed}
           </p>

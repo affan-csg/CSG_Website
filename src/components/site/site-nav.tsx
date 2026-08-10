@@ -127,7 +127,7 @@ export function SiteNav() {
                   <Link
                     to={item.to}
                     className={cn(
-                      "gold-underline flex items-center gap-1 px-3 py-2 text-[0.9rem] text-muted-foreground transition-colors hover:text-gold",
+                      "gold-underline nav-text flex items-center gap-1 px-3 py-2 text-muted-foreground transition-colors hover:text-gold",
                       openDropdown === item.label && "text-foreground",
                     )}
                     activeProps={{ className: "text-foreground", "data-active": "true" }}
@@ -156,7 +156,7 @@ export function SiteNav() {
                           <Link
                             to={item.to}
                             onClick={() => setOpenDropdown(null)}
-                            className="block rounded-md px-3 py-2 text-sm font-semibold text-foreground transition-colors hover:bg-accent"
+                            className="block rounded-md px-3 py-2 button-text text-foreground transition-colors hover:bg-accent"
                           >
                             View All
                           </Link>
@@ -166,7 +166,7 @@ export function SiteNav() {
                               key={child.to}
                               to={child.to}
                               onClick={() => setOpenDropdown(null)}
-                              className="block rounded-md px-3 py-2 text-sm text-muted-foreground transition-colors hover:bg-accent hover:text-navy"
+                              className="block rounded-md px-3 py-2 form-input text-muted-foreground transition-colors hover:bg-accent hover:text-navy"
                               activeProps={{ className: "text-gold" }}
                             >
                               {child.label}
@@ -184,7 +184,7 @@ export function SiteNav() {
               <Link
                 key={item.label}
                 to={item.to}
-                className="gold-underline px-3 py-2 text-[0.9rem] text-muted-foreground transition-colors hover:text-gold"
+                className="gold-underline nav-text px-3 py-2 text-muted-foreground transition-colors hover:text-gold"
                 activeProps={{ className: "text-foreground", "data-active": "true" }}
               >
                 {item.label}
@@ -196,7 +196,7 @@ export function SiteNav() {
         <div className="flex shrink-0 items-center gap-3">
           <Link
             to="/get-started"
-            className="hidden items-center gap-2 rounded-md bg-cream px-5 py-2.5 font-display text-[0.82rem] font-semibold text-navy transition-all duration-300 hover:bg-gold xl:inline-flex"
+            className="hidden button-text items-center gap-2 rounded-md bg-cream px-5 py-2.5 font-display text-navy transition-all duration-300 hover:bg-gold xl:inline-flex"
           >
             Submit a Requirement
           </Link>
@@ -241,7 +241,7 @@ export function SiteNav() {
                   key={item.label}
                   to={item.to}
                   onClick={() => setOpen(false)}
-                  className="border-b border-border/60 py-3.5 font-display text-lg"
+                  className="border-b border-border/60 py-3.5 heading-subsection"
                   activeProps={{ className: "text-gold" }}
                 >
                   {item.label}
@@ -252,14 +252,14 @@ export function SiteNav() {
                 <Link
                   to="/get-started"
                   onClick={() => setOpen(false)}
-                  className="rounded-md bg-cream px-5 py-3 text-center font-display text-sm font-semibold text-navy"
+                  className="rounded-md bg-cream px-5 py-3 text-center button-text font-display text-navy"
                 >
                   Submit a Requirement
                 </Link>
                 <Link
                   to="/join-our-bench"
                   onClick={() => setOpen(false)}
-                  className="rounded-md border border-border px-5 py-3 text-center font-display text-sm"
+                  className="rounded-md border border-border px-5 py-3 text-center button-text font-display"
                 >
                   Join our bench
                 </Link>
@@ -287,7 +287,7 @@ function MobileDropdown({
         <Link
           to={item.to}
           onClick={onClose}
-          className="font-display text-lg"
+          className="heading-subsection font-display"
         >
           {item.label}
         </Link>
@@ -320,7 +320,7 @@ function MobileDropdown({
                   key={child.to}
                   to={child.to}
                   onClick={onClose}
-                  className="rounded-md py-2.5 text-sm text-muted-foreground transition-colors hover:text-gold"
+                  className="rounded-md py-2.5 form-input text-muted-foreground transition-colors hover:text-gold"
                   activeProps={{ className: "text-gold" }}
                 >
                   {child.label}

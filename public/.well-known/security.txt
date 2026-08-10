@@ -1,0 +1,4 @@
+Contact: security@careersourcegroup.com
+Expires: 2027-08-10T00:00:00Z
+Preferred-Languages: en
+Canonical: https://careersourcegroup.com/.well-known/security.txt

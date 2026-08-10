@@ -1,6 +1,6 @@
 export const home = {
   hero: {
-    words: ["Three countries. One contract.", "One person to call."],
+    words: ["Three continents. One contract.", "One person to call."],
     sub: "US, LATAM, and Pakistan talent under a single relationship — so you stop managing four vendors to build one team.",
     primary: { label: "Submit a Requirement", to: "/get-started" },
     secondary: { label: "Join our bench", to: "/join-our-bench" },

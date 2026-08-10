@@ -34,7 +34,7 @@ export const Route = createFileRoute("/")({
       },
       {
         property: "og:title",
-        content: "Career Source Group — Three countries. One contract.",
+        content: "Career Source Group — Three continents. One contract.",
       },
       {
         property: "og:description",

@@ -76,16 +76,16 @@ export function BenchForm({ defaultSkill, className }: BenchFormProps) {
   if (status === "success") {
     return (
       <div className="rounded-md border border-green-500/30 bg-green-500/10 p-6 text-center">
-        <p className="font-display text-lg font-semibold text-green-400">
+        <p className="heading-subsection font-display text-green-400">
           Application received!
         </p>
-        <p className="mt-2 text-sm text-muted-foreground">
+        <p className="mt-2 body-small text-muted-foreground">
           Thanks for applying â we&apos;ll be in touch when opportunities open.
         </p>
         <button
           type="button"
           onClick={() => setStatus("idle")}
-          className="mt-4 text-sm text-gold hover:text-gold/80"
+          className="mt-4 button-text text-gold hover:text-gold/80"
         >
           Submit another application
         </button>
@@ -99,7 +99,7 @@ export function BenchForm({ defaultSkill, className }: BenchFormProps) {
         <div>
           <label
             htmlFor="firstName"
-            className="mb-2 block font-mono text-[0.66rem] uppercase tracking-[0.18em] text-muted-foreground"
+            className="form-label-small mb-2 block text-muted-foreground"
           >
             First name <span className="text-gold">*</span>
           </label>
@@ -112,13 +112,13 @@ export function BenchForm({ defaultSkill, className }: BenchFormProps) {
             onChange={handleChange}
             placeholder="Jane"
             autoComplete="given-name"
-            className="w-full rounded-md border border-input bg-background px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground/70 transition-colors focus:border-gold focus:ring-2 focus:ring-gold/30 focus:outline-none"
+            className="form-input w-full rounded-md border border-input bg-background px-4 py-3 text-foreground placeholder:text-muted-foreground/70 transition-colors focus:border-gold focus:ring-2 focus:ring-gold/30 focus:outline-none"
           />
         </div>
         <div>
           <label
             htmlFor="lastName"
-            className="mb-2 block font-mono text-[0.66rem] uppercase tracking-[0.18em] text-muted-foreground"
+            className="form-label-small mb-2 block text-muted-foreground"
           >
             Last name <span className="text-gold">*</span>
           </label>
@@ -131,7 +131,7 @@ export function BenchForm({ defaultSkill, className }: BenchFormProps) {
             onChange={handleChange}
             placeholder="Doe"
             autoComplete="family-name"
-            className="w-full rounded-md border border-input bg-background px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground/70 transition-colors focus:border-gold focus:ring-2 focus:ring-gold/30 focus:outline-none"
+            className="form-input w-full rounded-md border border-input bg-background px-4 py-3 text-foreground placeholder:text-muted-foreground/70 transition-colors focus:border-gold focus:ring-2 focus:ring-gold/30 focus:outline-none"
           />
         </div>
       </div>
@@ -140,7 +140,7 @@ export function BenchForm({ defaultSkill, className }: BenchFormProps) {
         <div>
           <label
             htmlFor="email"
-            className="mb-2 block font-mono text-[0.66rem] uppercase tracking-[0.18em] text-muted-foreground"
+            className="form-label-small mb-2 block text-muted-foreground"
           >
             Email <span className="text-gold">*</span>
           </label>
@@ -153,13 +153,13 @@ export function BenchForm({ defaultSkill, className }: BenchFormProps) {
             onChange={handleChange}
             placeholder="jane@company.com"
             autoComplete="email"
-            className="w-full rounded-md border border-input bg-background px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground/70 transition-colors focus:border-gold focus:ring-2 focus:ring-gold/30 focus:outline-none"
+            className="form-input w-full rounded-md border border-input bg-background px-4 py-3 text-foreground placeholder:text-muted-foreground/70 transition-colors focus:border-gold focus:ring-2 focus:ring-gold/30 focus:outline-none"
           />
         </div>
         <div>
           <label
             htmlFor="phone"
-            className="mb-2 block font-mono text-[0.66rem] uppercase tracking-[0.18em] text-muted-foreground"
+            className="form-label-small mb-2 block text-muted-foreground"
           >
             Phone <span className="text-gold">*</span>
           </label>
@@ -172,7 +172,7 @@ export function BenchForm({ defaultSkill, className }: BenchFormProps) {
             onChange={handleChange}
             placeholder="(443) 875-9677"
             autoComplete="tel"
-            className="w-full rounded-md border border-input bg-background px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground/70 transition-colors focus:border-gold focus:ring-2 focus:ring-gold/30 focus:outline-none"
+            className="form-input w-full rounded-md border border-input bg-background px-4 py-3 text-foreground placeholder:text-muted-foreground/70 transition-colors focus:border-gold focus:ring-2 focus:ring-gold/30 focus:outline-none"
           />
         </div>
       </div>
@@ -180,7 +180,7 @@ export function BenchForm({ defaultSkill, className }: BenchFormProps) {
       <div>
         <label
           htmlFor="location"
-          className="mb-2 block font-mono text-[0.66rem] uppercase tracking-[0.18em] text-muted-foreground"
+          className="form-label-small mb-2 block text-muted-foreground"
         >
           Location <span className="text-gold">*</span>
         </label>
@@ -193,7 +193,7 @@ export function BenchForm({ defaultSkill, className }: BenchFormProps) {
           onChange={handleChange}
           placeholder="City, Country"
           autoComplete="address-level2"
-          className="w-full rounded-md border border-input bg-background px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground/70 transition-colors focus:border-gold focus:ring-2 focus:ring-gold/30 focus:outline-none"
+          className="form-input w-full rounded-md border border-input bg-background px-4 py-3 text-foreground placeholder:text-muted-foreground/70 transition-colors focus:border-gold focus:ring-2 focus:ring-gold/30 focus:outline-none"
         />
         <p className="mt-1 text-xs text-muted-foreground">
           Wherever you&apos;re based â our clients hire across the US, LATAM, and Pakistan.
@@ -204,7 +204,7 @@ export function BenchForm({ defaultSkill, className }: BenchFormProps) {
         <div>
           <label
             htmlFor="specialty"
-            className="mb-2 block font-mono text-[0.66rem] uppercase tracking-[0.18em] text-muted-foreground"
+            className="form-label-small mb-2 block text-muted-foreground"
           >
             Specialty <span className="text-gold">*</span>
           </label>
@@ -214,7 +214,7 @@ export function BenchForm({ defaultSkill, className }: BenchFormProps) {
             required
             value={formData.specialty}
             onChange={handleChange}
-            className="w-full appearance-none rounded-md border border-input bg-background px-4 py-3 pr-10 text-sm text-foreground transition-colors focus:border-gold focus:ring-2 focus:ring-gold/30 focus:outline-none"
+            className="form-input w-full appearance-none rounded-md border border-input bg-background px-4 py-3 pr-10 text-foreground transition-colors focus:border-gold focus:ring-2 focus:ring-gold/30 focus:outline-none"
           >
             <option value="" disabled>
               Select your specialty
@@ -229,7 +229,7 @@ export function BenchForm({ defaultSkill, className }: BenchFormProps) {
         <div>
           <label
             htmlFor="basis"
-            className="mb-2 block font-mono text-[0.66rem] uppercase tracking-[0.18em] text-muted-foreground"
+            className="form-label-small mb-2 block text-muted-foreground"
           >
             Basis <span className="text-gold">*</span>
           </label>
@@ -239,7 +239,7 @@ export function BenchForm({ defaultSkill, className }: BenchFormProps) {
             required
             value={formData.basis}
             onChange={handleChange}
-            className="w-full appearance-none rounded-md border border-input bg-background px-4 py-3 pr-10 text-sm text-foreground transition-colors focus:border-gold focus:ring-2 focus:ring-gold/30 focus:outline-none"
+            className="form-input w-full appearance-none rounded-md border border-input bg-background px-4 py-3 pr-10 text-foreground transition-colors focus:border-gold focus:ring-2 focus:ring-gold/30 focus:outline-none"
           >
             <option value="" disabled>
               Contract or full-time?
@@ -256,7 +256,7 @@ export function BenchForm({ defaultSkill, className }: BenchFormProps) {
       <div>
         <label
           htmlFor="availability"
-          className="mb-2 block font-mono text-[0.66rem] uppercase tracking-[0.18em] text-muted-foreground"
+          className="form-label-small mb-2 block text-muted-foreground"
         >
           Availability
         </label>
@@ -265,7 +265,7 @@ export function BenchForm({ defaultSkill, className }: BenchFormProps) {
           name="availability"
           value={formData.availability}
           onChange={handleChange}
-          className="w-full appearance-none rounded-md border border-input bg-background px-4 py-3 pr-10 text-sm text-foreground transition-colors focus:border-gold focus:ring-2 focus:ring-gold/30 focus:outline-none"
+          className="form-input w-full appearance-none rounded-md border border-input bg-background px-4 py-3 pr-10 text-foreground transition-colors focus:border-gold focus:ring-2 focus:ring-gold/30 focus:outline-none"
         >
           <option value="" disabled>
             When could you start?
@@ -282,7 +282,7 @@ export function BenchForm({ defaultSkill, className }: BenchFormProps) {
         <div>
           <label
             htmlFor="portfolioUrl"
-            className="mb-2 block font-mono text-[0.66rem] uppercase tracking-[0.18em] text-muted-foreground"
+            className="form-label-small mb-2 block text-muted-foreground"
           >
             Portfolio URL
           </label>
@@ -294,7 +294,7 @@ export function BenchForm({ defaultSkill, className }: BenchFormProps) {
             onChange={handleChange}
             placeholder="https://yourportfolio.com"
             autoComplete="url"
-            className="w-full rounded-md border border-input bg-background px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground/70 transition-colors focus:border-gold focus:ring-2 focus:ring-gold/30 focus:outline-none"
+            className="form-input w-full rounded-md border border-input bg-background px-4 py-3 text-foreground placeholder:text-muted-foreground/70 transition-colors focus:border-gold focus:ring-2 focus:ring-gold/30 focus:outline-none"
           />
           <p className="mt-1 text-xs text-muted-foreground">
             Optional â a personal site, GitHub, or work samples.
@@ -303,7 +303,7 @@ export function BenchForm({ defaultSkill, className }: BenchFormProps) {
         <div>
           <label
             htmlFor="linkedinUrl"
-            className="mb-2 block font-mono text-[0.66rem] uppercase tracking-[0.18em] text-muted-foreground"
+            className="form-label-small mb-2 block text-muted-foreground"
           >
             LinkedIn URL
           </label>
@@ -315,7 +315,7 @@ export function BenchForm({ defaultSkill, className }: BenchFormProps) {
             onChange={handleChange}
             placeholder="https://linkedin.com/in/your-name"
             autoComplete="url"
-            className="w-full rounded-md border border-input bg-background px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground/70 transition-colors focus:border-gold focus:ring-2 focus:ring-gold/30 focus:outline-none"
+            className="form-input w-full rounded-md border border-input bg-background px-4 py-3 text-foreground placeholder:text-muted-foreground/70 transition-colors focus:border-gold focus:ring-2 focus:ring-gold/30 focus:outline-none"
           />
         </div>
       </div>
@@ -323,7 +323,7 @@ export function BenchForm({ defaultSkill, className }: BenchFormProps) {
       <div>
         <label
           htmlFor="resume"
-          className="mb-2 block font-mono text-[0.66rem] uppercase tracking-[0.18em] text-muted-foreground"
+          className="form-label-small mb-2 block text-muted-foreground"
         >
           Résumé <span className="text-gold">*</span>
         </label>
@@ -349,7 +349,7 @@ export function BenchForm({ defaultSkill, className }: BenchFormProps) {
       <div>
         <label
           htmlFor="message"
-          className="mb-2 block font-mono text-[0.66rem] uppercase tracking-[0.18em] text-muted-foreground"
+          className="form-label-small mb-2 block text-muted-foreground"
         >
           Additional information
         </label>
@@ -375,7 +375,7 @@ export function BenchForm({ defaultSkill, className }: BenchFormProps) {
       </div>
 
       {errorMessage && (
-        <p className="text-sm text-red-400" role="alert">
+        <p className="body-small text-red-400" role="alert">
           {errorMessage}
         </p>
       )}
@@ -383,7 +383,7 @@ export function BenchForm({ defaultSkill, className }: BenchFormProps) {
       <button
         type="submit"
         disabled={status === "submitting"}
-        className="w-full rounded-md bg-cream px-6 py-3.5 font-display text-[0.88rem] font-semibold text-navy transition-all duration-300 hover:bg-gold disabled:opacity-50 disabled:cursor-not-allowed"
+        className="button-text w-full rounded-md bg-cream px-6 py-3.5 font-display text-navy transition-all duration-300 hover:bg-gold disabled:opacity-50 disabled:cursor-not-allowed"
       >
         {status === "submitting" ? "Submitting application..." : "Submit application"}
       </button>

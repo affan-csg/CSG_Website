@@ -10,7 +10,7 @@ export function HeroParticles({ showRing = true }: { showRing?: boolean }) {
   return (
     <div
       aria-hidden
-      className="pointer-events-none absolute inset-0 opacity-70"
+      className="pointer-events-none absolute inset-0 opacity-70 -z-10"
     >
       <ClientOnly fallback={null}>
         <Suspense fallback={null}>

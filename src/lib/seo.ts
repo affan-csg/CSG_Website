@@ -130,3 +130,176 @@ export function buildFaqJsonLd(questions: Array<{ question: string; answer: stri
     }))
   };
 }
+
+export function buildServiceJsonLd(service: {
+  name: string;
+  description: string;
+  image?: string;
+  price?: string;
+  region?: string;
+}) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "name": service.name,
+    "description": service.description,
+    "image": service.image ? SITE_URL + service.image : DEFAULT_OG_IMAGE,
+    "provider": {
+      "@type": "Organization",
+      "name": "Career Source Group, LLC",
+      "url": SITE_URL
+    },
+    "areaServed": service.region || "United States",
+    ...(service.price && { "priceRange": service.price })
+  };
+}
+
+export function buildBreadcrumbJsonLd(items: Array<{ name: string; url: string }>) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": items.map((item, index) => ({
+      "@type": "ListItem",
+      "position": index + 1,
+      "name": item.name,
+      "item": SITE_URL + item.url
+    }))
+  };
+}
+
+export function buildRegionalBusinessJsonLd(region: "us" | "latam" | "pakistan") {
+  const regionData = {
+    us: {
+      name: "Career Source Group - United States",
+      country: "US",
+      description: "Direct hire staffing, contract staffing, and contract-to-hire talent acquisition across the United States.",
+      geo: { latitude: 34.0754, longitude: -84.2941 },
+      regions: ["United States"]
+    },
+    latam: {
+      name: "Career Source Group - LATAM Nearshore",
+      country: "Mexico",
+      description: "Nearshore talent delivery and staffing solutions across Latin America with 30-70% cost savings.",
+      geo: { latitude: 23.6345, longitude: -102.5528 },
+      regions: ["Mexico", "Colombia", "Argentina", "Brazil"]
+    },
+    pakistan: {
+      name: "Career Source Group - Pakistan Offshore",
+      country: "Pakistan",
+      description: "Offshore talent delivery and staffing solutions from Pakistan with 50-70% cost savings.",
+      geo: { latitude: 30.3753, longitude: 69.3451 },
+      regions: ["Pakistan"]
+    }
+  };
+
+  const data = regionData[region];
+
+  return {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "name": data.name,
+    "url": SITE_URL,
+    "logo": SITE_URL + DEFAULT_OG_IMAGE,
+    "description": data.description,
+    "telephone": "+1-443-875-9677",
+    "priceRange": "$$",
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": data.geo.latitude,
+      "longitude": data.geo.longitude
+    },
+    "areaServed": data.regions.map(r => ({
+      "@type": "Country",
+      "name": r
+    })),
+    "address": {
+      "@type": "PostalAddress",
+      "addressCountry": data.country
+    }
+  };
+}
+
+export function buildArticleJsonLd(article: {
+  title: string;
+  description: string;
+  image?: string;
+  author?: string;
+  publishedDate?: string;
+  modifiedDate?: string;
+}) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": article.title,
+    "description": article.description,
+    "image": article.image ? SITE_URL + article.image : DEFAULT_OG_IMAGE,
+    "author": {
+      "@type": "Organization",
+      "name": article.author || "Career Source Group, LLC"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Career Source Group, LLC",
+      "logo": {
+        "@type": "ImageObject",
+        "url": SITE_URL + DEFAULT_OG_IMAGE
+      }
+    },
+    ...(article.publishedDate && { "datePublished": article.publishedDate }),
+    ...(article.modifiedDate && { "dateModified": article.modifiedDate })
+  };
+}
+
+export function buildAggregateRatingJsonLd(
+  rating: number,
+  reviewCount: number,
+  bestRating: number = 5,
+  worstRating: number = 1
+) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "AggregateRating",
+    "ratingValue": rating,
+    "bestRating": bestRating,
+    "worstRating": worstRating,
+    "reviewCount": reviewCount
+  };
+}
+
+export function buildGeoTargetingMeta(region: "us" | "latam" | "pakistan") {
+  const regionData = {
+    us: {
+      geoPosition: "34.0754, -84.2941",
+      placeType: "Country",
+      placeName: "United States"
+    },
+    latam: {
+      geoPosition: "23.6345, -102.5528",
+      placeType: "Region",
+      placeName: "Latin America"
+    },
+    pakistan: {
+      geoPosition: "30.3753, 69.3451",
+      placeType: "Country",
+      placeName: "Pakistan"
+    }
+  };
+
+  const data = regionData[region];
+
+  return [
+    { name: "geo.position", content: data.geoPosition },
+    { name: "geo.placename", content: data.placeName },
+    { name: "geo.region", content: `geo.${region}` }
+  ];
+}
+
+export function buildHreflangLinks(currentPath: string) {
+  return [
+    { rel: "canonical", href: SITE_URL + currentPath },
+    { rel: "alternate", hrefLang: "en-US", href: SITE_URL + (currentPath.includes("/us") ? currentPath : "/") },
+    { rel: "alternate", hrefLang: "es-MX", href: SITE_URL + "/global-delivery/latam" },
+    { rel: "alternate", hrefLang: "en-PK", href: SITE_URL + "/global-delivery/pakistan" },
+    { rel: "alternate", hrefLang: "x-default", href: SITE_URL + currentPath }
+  ];
+}
