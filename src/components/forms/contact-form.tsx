@@ -1,12 +1,8 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 import { cn } from "@/lib/utils";
-import {
-  type ContactFormData,
-  type FormStatus,
-  inquiryTypeOptions,
-  submitViaEmail,
-} from "@/lib/forms";
+import { type ContactFormData, type FormStatus, inquiryTypeOptions } from "@/lib/forms";
+import { submitContactForm } from "@/lib/form-actions";
 
 interface ContactFormProps {
   className?: string;
@@ -15,6 +11,7 @@ interface ContactFormProps {
 export function ContactForm({ className }: ContactFormProps) {
   const [status, setStatus] = useState<FormStatus>("idle");
   const [errorMessage, setErrorMessage] = useState("");
+  const honeypotRef = useRef<HTMLInputElement>(null);
   const [formData, setFormData] = useState<ContactFormData>({
     firstName: "",
     lastName: "",
@@ -38,7 +35,9 @@ export function ContactForm({ className }: ContactFormProps) {
     setErrorMessage("");
 
     try {
-      const result = await submitViaEmail("contact", formData);
+      const result = await submitContactForm({
+        data: { ...formData, honeypot: honeypotRef.current?.value ?? "" },
+      });
       if (result.success) {
         setStatus("success");
         setFormData({
@@ -211,6 +210,7 @@ export function ContactForm({ className }: ContactFormProps) {
       {/* Honeypot */}
       <div className="absolute left-[-9999px]" aria-hidden="true">
         <input
+          ref={honeypotRef}
           type="text"
           name="company_name"
           tabIndex={-1}

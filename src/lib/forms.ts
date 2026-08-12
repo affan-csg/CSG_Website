@@ -28,7 +28,9 @@ export interface BenchFormData {
   phone: string;
   location: string;
   specialty: string;
+  seniority: string;
   basis: string;
+  expectedMonthlyRate: string;
   availability: string;
   portfolioUrl: string;
   linkedinUrl: string;
@@ -37,14 +39,22 @@ export interface BenchFormData {
 }
 
 export const specialtyOptions = [
-  { value: "ai-ml", label: "AI & ML Engineering" },
-  { value: "mlops", label: "MLOps Engineering" },
-  { value: "data", label: "Data Engineering, Data Science & Analytics" },
-  { value: "devops", label: "DevOps Engineering" },
-  { value: "devsecops", label: "DevSecOps & Platform Engineering" },
-  { value: "cloud", label: "Cloud Engineering & Architecture" },
-  { value: "software-dev", label: "Software Development" },
-  { value: "product", label: "Product & Project Management" },
+  { value: "ai-ml", label: "AI/ML Engineer" },
+  { value: "mlops", label: "MLOps Engineer" },
+  { value: "data", label: "Data Engineer / Data Scientist" },
+  { value: "devops", label: "DevOps Engineer" },
+  { value: "devsecops", label: "DevSecOps / Platform Engineer" },
+  { value: "cloud", label: "Cloud Engineer / Architect" },
+  { value: "software-dev", label: "Software Engineer" },
+  { value: "product", label: "Product / Project Manager" },
+] as const;
+
+export const seniorityOptions = [
+  { value: "junior", label: "Junior" },
+  { value: "mid-level", label: "Mid-Level" },
+  { value: "senior", label: "Senior" },
+  { value: "lead", label: "Lead" },
+  { value: "principal", label: "Principal" },
 ] as const;
 
 export const engagementOptions = [
@@ -69,45 +79,3 @@ export const inquiryTypeOptions = [
   { value: "job_application", label: "I'm looking for work" },
   { value: "general", label: "Something else" },
 ] as const;
-
-/**
- * Submit form data via email (mailto) as a simple fallback.
- * For production, you'd want to use a backend API with Supabase/Resend.
- */
-export function submitViaEmail(
-  type: "contact" | "requirement" | "bench",
-  data: ContactFormData | RequirementFormData | BenchFormData,
-): Promise<{ success: boolean; message: string }> {
-  return new Promise((resolve) => {
-    // Simulate API delay
-    setTimeout(() => {
-      // In a real implementation, this would call an API endpoint
-      // For now, we'll create a mailto link
-      const subject = encodeURIComponent(
-        type === "contact"
-          ? `Contact Form: ${(data as ContactFormData).inquiryType}`
-          : type === "requirement"
-            ? `Staffing Requirement from ${(data as RequirementFormData).companyName || "Client"}`
-            : `Bench Application from ${(data as BenchFormData).firstName} ${(data as BenchFormData).lastName}`,
-      );
-
-      const body = encodeURIComponent(
-        Object.entries(data)
-          .filter(([key]) => key !== "turnstileToken" && key !== "company_name" && key !== "website")
-          .map(([key, value]) => `${key}: ${value}`)
-          .join("\n"),
-      );
-
-      // Open mailto link
-      window.open(
-        `mailto:hello@careersourcegroup.com?subject=${subject}&body=${body}`,
-        "_blank",
-      );
-
-      resolve({
-        success: true,
-        message: "Form submitted successfully! We'll be in touch soon.",
-      });
-    }, 1000);
-  });
-}

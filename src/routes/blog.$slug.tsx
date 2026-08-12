@@ -2,18 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 
 import { Reveal } from "@/components/site/reveal";
 import { ArrowLink, CtaBand, PageHero, Prose, Section } from "@/components/site/primitives";
-import { buildSeoMeta } from "@/lib/seo";
-
-export const Route = createFileRoute("/blog/$slug")({
-  head: () => ({
-    meta: buildSeoMeta({
-      title: "Blog Post | Career Source Group",
-      description: "Insights on staffing, talent acquisition, and workforce strategy from Career Source Group.",
-      path: "/blog"
-    }),
-  }),
-  component: BlogPostPage,
-});
+import { buildArticleJsonLd, buildBreadcrumbJsonLd, buildSeoMeta } from "@/lib/seo";
 
 const blogContent: Record<string, { title: string; date: string; readTime: string; content: string }> = {
   "the-hidden-costs-of-a-bad-hire": {
@@ -227,6 +216,53 @@ Implement these best practices:
 - Measure and optimize your recruitment metrics`,
   },
 };
+
+export const Route = createFileRoute("/blog/$slug")({
+  head: ({ params }) => {
+    const post = blogContent[params.slug];
+    if (!post) {
+      return {
+        meta: [
+          { title: "Post Not Found | Career Source Group" },
+          { name: "robots", content: "noindex" },
+        ],
+      };
+    }
+    const description = post.content.split("\n\n")[0] ?? post.content;
+    const path = `/blog/${params.slug}`;
+    return {
+      ...buildSeoMeta({
+        title: post.title,
+        description,
+        path,
+        ogType: "article",
+      }),
+      scripts: [
+        {
+          type: "application/ld+json",
+          children: JSON.stringify(
+            buildArticleJsonLd({
+              title: post.title,
+              description,
+              publishedDate: post.date,
+            }),
+          ),
+        },
+        {
+          type: "application/ld+json",
+          children: JSON.stringify(
+            buildBreadcrumbJsonLd([
+              { name: "Home", url: "/" },
+              { name: "Blog", url: "/blog" },
+              { name: post.title, url: path },
+            ]),
+          ),
+        },
+      ],
+    };
+  },
+  component: BlogPostPage,
+});
 
 function BlogPostPage() {
   const { slug } = Route.useParams();

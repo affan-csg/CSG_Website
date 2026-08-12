@@ -4,13 +4,12 @@ import { PageHero, Section } from "@/components/site/primitives";
 import { buildSeoMeta } from "@/lib/seo";
 
 export const Route = createFileRoute("/privacy")({
-  head: () => ({
-    meta: buildSeoMeta({
-      title: "Privacy Policy | Career Source Group",
+  head: () =>
+    buildSeoMeta({
+      title: "Privacy Policy",
       description: "Privacy policy for Career Source Group.",
       path: "/privacy"
     }),
-  }),
   component: PrivacyPage,
 });
 

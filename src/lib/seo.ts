@@ -8,6 +8,7 @@ const SITE_NAME = "Career Source Group";
 const DEFAULT_OG_IMAGE = "/images/brand/CSG.png";
 
 export interface SeoOptions {
+  /** Page-specific title. Do not include " | Career Source Group" — it's appended automatically (see titleSuffix). */
   title: string;
   description: string;
   path: string;
@@ -15,34 +16,39 @@ export interface SeoOptions {
   ogType?: string;
   keywords?: string;
   noindex?: boolean;
+  /** Set false when `title` already stands on its own (e.g. the homepage's brand-led title). Defaults to true. */
+  titleSuffix?: boolean;
 }
 
 export function buildSeoMeta(opts: SeoOptions) {
   const url = SITE_URL + opts.path;
   const image = opts.ogImage || DEFAULT_OG_IMAGE;
   const imageUrl = image.startsWith("http") ? image : SITE_URL + image;
+  const pageTitle = opts.titleSuffix === false ? opts.title : opts.title + " | " + SITE_NAME;
 
-  return [
-    { title: opts.title + " | " + SITE_NAME },
-    { name: "description", content: opts.description },
-    { name: "keywords", content: opts.keywords || "staffing, talent acquisition, US staffing, LATAM nearshore, Pakistan offshore, direct hire, contract staffing, Career Source Group" },
-    { name: "author", content: SITE_NAME },
-    { name: "robots", content: opts.noindex ? "noindex, nofollow" : "index, follow" },
-    { name: "canonical", content: url },
-    // Open Graph
-    { property: "og:title", content: opts.title },
-    { property: "og:description", content: opts.description },
-    { property: "og:type", content: opts.ogType || "website" },
-    { property: "og:url", content: url },
-    { property: "og:image", content: imageUrl },
-    { property: "og:site_name", content: SITE_NAME },
-    { property: "og:locale", content: "en_US" },
-    // Twitter
-    { name: "twitter:card", content: "summary_large_image" },
-    { name: "twitter:title", content: opts.title },
-    { name: "twitter:description", content: opts.description },
-    { name: "twitter:image", content: imageUrl },
-  ];
+  return {
+    meta: [
+      { title: pageTitle },
+      { name: "description", content: opts.description },
+      { name: "keywords", content: opts.keywords || "staffing, talent acquisition, US staffing, LATAM nearshore, Pakistan offshore, direct hire, contract staffing, Career Source Group" },
+      { name: "author", content: SITE_NAME },
+      { name: "robots", content: opts.noindex ? "noindex, nofollow" : "index, follow" },
+      // Open Graph
+      { property: "og:title", content: opts.title },
+      { property: "og:description", content: opts.description },
+      { property: "og:type", content: opts.ogType || "website" },
+      { property: "og:url", content: url },
+      { property: "og:image", content: imageUrl },
+      { property: "og:site_name", content: SITE_NAME },
+      { property: "og:locale", content: "en_US" },
+      // Twitter
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: opts.title },
+      { name: "twitter:description", content: opts.description },
+      { name: "twitter:image", content: imageUrl },
+    ],
+    links: [{ rel: "canonical", href: url }],
+  };
 }
 
 export function buildOrganizationJsonLd() {
@@ -131,7 +137,7 @@ export function buildFaqJsonLd(questions: Array<{ question: string; answer: stri
   };
 }
 
-export function buildServiceJsonLd(service: {
+export function buildStaffingJsonLd(role: {
   name: string;
   description: string;
   image?: string;
@@ -141,16 +147,16 @@ export function buildServiceJsonLd(service: {
   return {
     "@context": "https://schema.org",
     "@type": "Service",
-    "name": service.name,
-    "description": service.description,
-    "image": service.image ? SITE_URL + service.image : DEFAULT_OG_IMAGE,
+    "name": role.name,
+    "description": role.description,
+    "image": role.image ? SITE_URL + role.image : DEFAULT_OG_IMAGE,
     "provider": {
       "@type": "Organization",
       "name": "Career Source Group, LLC",
       "url": SITE_URL
     },
-    "areaServed": service.region || "United States",
-    ...(service.price && { "priceRange": service.price })
+    "areaServed": role.region || "United States",
+    ...(role.price && { "priceRange": role.price })
   };
 }
 

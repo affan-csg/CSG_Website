@@ -147,7 +147,7 @@ export const regionPages: RegionPage[] = [
     prosConsKey: "us",
     faqQuestions: ["Do you place contract or full-time talent, or both?"],
     meta: {
-      title: "US Staffing — Direct Hire, Contract & C2H | Career Source Group",
+      title: "US Staffing — Direct Hire, Contract & C2H",
       description:
         "Direct hire at 10% of first-year salary, contract staffing, and contract-to-hire across the US — with full time zone overlap and the simplest compliance posture.",
     },
@@ -184,7 +184,7 @@ export const regionPages: RegionPage[] = [
       "What's the difference between nearshore (LATAM) and offshore (Pakistan) staffing?",
     ],
     meta: {
-      title: "LATAM Nearshore Staffing — Your Time Zone, 30-70% Less | CSG",
+      title: "LATAM Nearshore Staffing — Your Time Zone, 30-70% Less",
       description:
         "Dedicated LATAM nearshore contract talent with near-full US time zone overlap, strong mid-to-senior depth, and $35,000-$64,000 in annual savings per seat.",
     },
@@ -221,7 +221,7 @@ export const regionPages: RegionPage[] = [
       "What's the difference between nearshore (LATAM) and offshore (Pakistan) staffing?",
     ],
     meta: {
-      title: "Pakistan Offshore Staffing — 50-70% Below US Cost | CSG",
+      title: "Pakistan Offshore Staffing — 50-70% Below US Cost",
       description:
         "Contract offshore delivery from Pakistan: deep AWS, Azure, DevOps, mobile and QA benches, guaranteed daily overlap hours, and 50-70% below fully loaded US cost.",
     },

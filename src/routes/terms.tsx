@@ -5,13 +5,12 @@ import { legalPages } from "@/content/pages";
 import { buildSeoMeta } from "@/lib/seo";
 
 export const Route = createFileRoute("/terms")({
-  head: () => ({
-    meta: buildSeoMeta({
-      title: "Terms & Conditions | Career Source Group",
+  head: () =>
+    buildSeoMeta({
+      title: "Terms & Conditions",
       description: "Terms and conditions for Career Source Group.",
       path: "/terms"
     }),
-  }),
   component: TermsPage,
 });
 

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 import { cn } from "@/lib/utils";
 import {
@@ -7,8 +7,8 @@ import {
   specialtyOptions,
   engagementOptions,
   basisOptions,
-  submitViaEmail,
 } from "@/lib/forms";
+import { submitRequirementForm } from "@/lib/form-actions";
 
 interface RequirementFormProps {
   defaultSkill?: string;
@@ -18,6 +18,7 @@ interface RequirementFormProps {
 export function RequirementForm({ defaultSkill, className }: RequirementFormProps) {
   const [status, setStatus] = useState<FormStatus>("idle");
   const [errorMessage, setErrorMessage] = useState("");
+  const honeypotRef = useRef<HTMLInputElement>(null);
   const [formData, setFormData] = useState<RequirementFormData>({
     firstName: "",
     lastName: "",
@@ -44,7 +45,9 @@ export function RequirementForm({ defaultSkill, className }: RequirementFormProp
     setErrorMessage("");
 
     try {
-      const result = await submitViaEmail("requirement", formData);
+      const result = await submitRequirementForm({
+        data: { ...formData, honeypot: honeypotRef.current?.value ?? "" },
+      });
       if (result.success) {
         setStatus("success");
         setFormData({
@@ -292,6 +295,7 @@ export function RequirementForm({ defaultSkill, className }: RequirementFormProp
       {/* Honeypot */}
       <div className="absolute left-[-9999px]" aria-hidden="true">
         <input
+          ref={honeypotRef}
           type="text"
           name="website"
           tabIndex={-1}

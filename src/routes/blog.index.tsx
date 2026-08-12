@@ -11,13 +11,13 @@ import {
   SectionHeading,
 } from "@/components/site/primitives";
 
-export const Route = createFileRoute("/blog")({
-  head: () => ({
-    meta: buildSeoMeta({
-      title: "Blog | Career Source Group",
+export const Route = createFileRoute("/blog/")({
+  head: () =>
+    buildSeoMeta({
+      title: "Blog",
       description: "Insights on staffing, talent acquisition, and workforce strategy from Career Source Group.",
       path: "/blog"
-    }) }),
+    }),
   component: BlogPage,
 });
 

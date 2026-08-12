@@ -9,34 +9,32 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { specialties, regionCards } from "@/content/site";
+import { regionCards, staffingSectionCards } from "@/content/site";
 import { cn } from "@/lib/utils";
 
 const navItemsWithDropdowns = [
-  {
-    label: "Services",
-    to: "/services",
-    width: "min-w-[280px]",
-    children: [
-      ...specialties.map((s) => ({
-        label: s.title,
-        to: `/services/${s.slug}`,
-      })),
-      { label: "What your offer buys", to: "/offer-calibration" },
-    ],
-  },
-  { label: "How Pods Work", to: "/pods" },
+  { label: "Our Story", to: "/our-story" },
   {
     label: "Global Delivery",
     to: "/global-delivery",
     width: "min-w-[200px]",
     children: regionCards.map((r) => ({
       label: r.title,
-      to: r.to,
+      to: r.to as string,
     })),
   },
-  { label: "Why CSG", to: "/why-csg" },
-  { label: "About", to: "/about" },
+  {
+    label: "Staffing",
+    to: "/staffing",
+    width: "min-w-[240px]",
+    children: [
+      ...staffingSectionCards.map((c) => ({
+        label: c.title,
+        to: c.to as string,
+      })),
+      { label: "What your offer buys", to: "/offer-calibration" },
+    ],
+  },
 ] as const;
 
 export function SiteNav() {

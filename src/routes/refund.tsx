@@ -5,13 +5,12 @@ import { legalPages } from "@/content/pages";
 import { buildSeoMeta } from "@/lib/seo";
 
 export const Route = createFileRoute("/refund")({
-  head: () => ({
-    meta: buildSeoMeta({
-      title: "Refund Policy | Career Source Group",
+  head: () =>
+    buildSeoMeta({
+      title: "Refund Policy",
       description: "Refund policy for Career Source Group.",
       path: "/refund"
     }),
-  }),
   component: RefundPage,
 });
 

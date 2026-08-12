@@ -1,16 +1,16 @@
-export type ServiceBlock = { heading: string; body: string };
+export type StaffingRoleBlock = { heading: string; body: string };
 
-export type Service = {
+export type StaffingRole = {
   slug: string;
   title: string;
   tagline: string;
-  blocks: ServiceBlock[];
+  blocks: StaffingRoleBlock[];
   regions: { region: string; body: string }[];
   pullQuote?: string;
   faqQuestions: string[];
 };
 
-export const services: Service[] = [
+export const staffingRoles: StaffingRole[] = [
   {
     slug: "ai-ml",
     title: "AI & ML Engineering",
@@ -250,27 +250,34 @@ export const services: Service[] = [
   },
 ];
 
-export function getService(slug: string) {
-  return services.find((s) => s.slug === slug);
+export function getStaffingRole(slug: string) {
+  return staffingRoles.find((s) => s.slug === slug);
 }
 
-export function otherServices(slug: string) {
-  return services.filter((s) => s.slug !== slug).slice(0, 3);
+export function otherStaffingRoles(slug: string) {
+  return staffingRoles.filter((s) => s.slug !== slug).slice(0, 3);
 }
 
-export const servicesPage = {
+export const staffingHubPage = {
+  title: "One Team to Call. Three Ways to Build It.",
+  intro:
+    "Every engagement we run falls into one of three shapes: an individual specialist placed into a specific staffing role, a purpose-built pod standing up a whole function at once, or a deep technical specialty where the hire itself is the hard part. Same contract, same invoice, same point of contact, whichever shape fits.",
+};
+
+export const staffingRolesPage = {
+  title:
+    "We Don't Sell Resumes. We Sell the Right Seat, in the Right Region, at the Right Number.",
+  paragraphs: [
+    'Most staffing firms take your req, take your budget, and go looking. Then three weeks later they come back and explain why the market is "tight" and you need to raise the number.',
+    "We run it in the opposite order. Give us the offer — base, bonus, equity, remote flexibility, and how fast you need someone — and we'll tell you three things before we source a single candidate: what that offer realistically buys in the US market right now, and how long the search will take at that number; what the same offer buys in LATAM, usually two seniority levels higher, or two more people; and what the same offer buys in Pakistan, usually a small team instead of one hire.",
+    "Then you decide. Not us.",
+    "This is the conversation nobody in staffing is willing to have with you honestly, because most firms only sell one region and have to make that region be the answer. We sell three. Our incentive is to put your money where it goes furthest.",
+  ],
+  cta: { label: "See what your offer actually buys", to: "/offer-calibration" },
+};
+
+export const specializedRolesPage = {
   title: "Specialized Roles: The Ones Everyone Else Is Struggling to Fill",
-  positioning: {
-    heading:
-      "We Don't Sell Resumes. We Sell the Right Seat, in the Right Region, at the Right Number.",
-    paragraphs: [
-      'Most staffing firms take your req, take your budget, and go looking. Then three weeks later they come back and explain why the market is "tight" and you need to raise the number.',
-      "We run it in the opposite order. Give us the offer — base, bonus, equity, remote flexibility, and how fast you need someone — and we'll tell you three things before we source a single candidate: what that offer realistically buys in the US market right now, and how long the search will take at that number; what the same offer buys in LATAM, usually two seniority levels higher, or two more people; and what the same offer buys in Pakistan, usually a small team instead of one hire.",
-      "Then you decide. Not us.",
-      "This is the conversation nobody in staffing is willing to have with you honestly, because most firms only sell one region and have to make that region be the answer. We sell three. Our incentive is to put your money where it goes furthest.",
-    ],
-    cta: { label: "See what your offer actually buys", to: "/offer-calibration" },
-  },
   whyNow: {
     heading: "Why this matters right now",
     paragraphs: [

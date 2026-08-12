@@ -6,13 +6,12 @@ import { legalPages } from "@/content/pages";
 import { buildSeoMeta } from "@/lib/seo";
 
 export const Route = createFileRoute("/legal-notice")({
-  head: () => ({
-    meta: buildSeoMeta({
-      title: "Legal Notice | Career Source Group",
+  head: () =>
+    buildSeoMeta({
+      title: "Legal Notice",
       description: "Legal notice and company information for Career Source Group.",
       path: "/legal-notice"
     }),
-  }),
   component: LegalNoticePage,
 });
 

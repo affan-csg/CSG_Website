@@ -12,13 +12,12 @@ import {
 } from "@/components/site/primitives";
 
 export const Route = createFileRoute("/offer-calibration")({
-  head: () => ({
-    meta: buildSeoMeta({
-      title: "What Your Offer Actually Buys, by Region | Career Source Group",
+  head: () =>
+    buildSeoMeta({
+      title: "What Your Offer Actually Buys, by Region",
       description: "US starting-salary benchmarks for nine technical roles, and what the same budget buys in LATAM and Pakistan.",
       path: "/offer-calibration"
     }),
-  }),
   component: OfferCalibrationPage,
 });
 

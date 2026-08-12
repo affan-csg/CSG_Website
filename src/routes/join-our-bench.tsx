@@ -17,24 +17,24 @@ export const Route = createFileRoute("/join-our-bench")({
   validateSearch: (search: Record<string, unknown>) => ({
     skill: search.skill as string | undefined,
   }),
-  head: () => ({
-    meta: buildSeoMeta({
+  head: () =>
+    buildSeoMeta({
       title: "Join Our Bench | Contract & Full-Time AI, Data & Cloud Roles",
       description: "Apply to join Career Source Group bench — AI/ML, MLOps, Data, DevOps, DevSecOps, Cloud, Software Development, and Product roles.",
       path: "/join-our-bench"
-    }) }),
+    }),
   component: JoinOurBenchPage,
 });
 
 const specialties = [
-  "AI & ML Engineering",
-  "MLOps Engineering",
-  "Data Engineering, Data Science & Analytics",
-  "DevOps Engineering",
-  "DevSecOps & Platform Engineering",
-  "Cloud Engineering & Architecture",
-  "Software Development",
-  "Product & Project Management",
+  "AI/ML Engineer",
+  "MLOps Engineer",
+  "Data Engineer / Data Scientist",
+  "DevOps Engineer",
+  "DevSecOps / Platform Engineer",
+  "Cloud Engineer / Architect",
+  "Software Engineer",
+  "Product / Project Manager",
 ] as const;
 
 function JoinOurBenchPage() {

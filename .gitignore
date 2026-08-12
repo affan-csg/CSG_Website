@@ -7,7 +7,6 @@ node_modules/
 dist-ssr/
 package-lock.json
 yarn.lock
-pnpm-lock.yaml
 
 # ============================================================================
 # BUILD OUTPUTS & CACHE
@@ -83,6 +82,11 @@ coverage/
 .mocha/
 test-results/
 *.lcov
+playwright-report/
+.playwright/
+.auth/
+blob-report/
+playwright/.cache/
 
 # ============================================================================
 # DEPLOYMENT & HOSTING
@@ -90,16 +94,18 @@ test-results/
 .vercel/
 .netlify/
 .wrangler/
-.env.*.local
+
+# ============================================================================
+# SUPABASE (LOCAL CLI STATE)
+# ============================================================================
+supabase/.branches/
+supabase/.temp/
 
 # ============================================================================
 # LOCAL DEVELOPMENT
 # ============================================================================
 .turbo/
 .env.example.local
-.vscode/launch.json
-.vscode/settings.json
-.vscode/extensions.json
 
 # ============================================================================
 # MISC
@@ -108,8 +114,4 @@ test-results/
 *.bak
 *.tmp
 *.temp
-.DS_Store
-Thumbs.db
-.git/
-.gitkeep
 .editorconfig.local

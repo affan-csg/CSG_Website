@@ -16,12 +16,12 @@ export const Route = createFileRoute("/get-started")({
   validateSearch: (search: Record<string, unknown>) => ({
     skill: search.skill as string | undefined,
   }),
-  head: () => ({
-    meta: buildSeoMeta({
-      title: "Submit a Requirement | Career Source Group",
+  head: () =>
+    buildSeoMeta({
+      title: "Submit a Requirement",
       description: "Tell us what you need — AI/ML, MLOps, Data, DevOps, DevSecOps, Cloud, Software Development, or Product talent, contract or full-time.",
       path: "/get-started"
-    }) }),
+    }),
   component: GetStartedPage,
 });
 

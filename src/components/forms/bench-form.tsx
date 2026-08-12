@@ -1,14 +1,15 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 import { cn } from "@/lib/utils";
 import {
   type BenchFormData,
   type FormStatus,
   specialtyOptions,
+  seniorityOptions,
   basisOptions,
   availabilityOptions,
-  submitViaEmail,
 } from "@/lib/forms";
+import { submitBenchApplication } from "@/lib/form-actions";
 
 interface BenchFormProps {
   defaultSkill?: string;
@@ -18,6 +19,8 @@ interface BenchFormProps {
 export function BenchForm({ defaultSkill, className }: BenchFormProps) {
   const [status, setStatus] = useState<FormStatus>("idle");
   const [errorMessage, setErrorMessage] = useState("");
+  const [submittedName, setSubmittedName] = useState("");
+  const honeypotRef = useRef<HTMLInputElement>(null);
   const [formData, setFormData] = useState<BenchFormData>({
     firstName: "",
     lastName: "",
@@ -25,11 +28,12 @@ export function BenchForm({ defaultSkill, className }: BenchFormProps) {
     phone: "",
     location: "",
     specialty: defaultSkill || "",
+    seniority: "",
     basis: "",
+    expectedMonthlyRate: "",
     availability: "",
     portfolioUrl: "",
     linkedinUrl: "",
-    resume: undefined as File | undefined,
     message: "",
   });
 
@@ -47,9 +51,20 @@ export function BenchForm({ defaultSkill, className }: BenchFormProps) {
     setErrorMessage("");
 
     try {
-      const result = await submitViaEmail("bench", formData);
+      const payload = new FormData();
+      for (const [key, value] of Object.entries(formData)) {
+        if (key === "resume") continue;
+        payload.set(key, value ?? "");
+      }
+      if (formData.resume) {
+        payload.set("resume", formData.resume);
+      }
+      payload.set("honeypot", honeypotRef.current?.value ?? "");
+
+      const result = await submitBenchApplication({ data: payload });
       if (result.success) {
         setStatus("success");
+        setSubmittedName(formData.firstName);
         setFormData({
           firstName: "",
           lastName: "",
@@ -57,7 +72,9 @@ export function BenchForm({ defaultSkill, className }: BenchFormProps) {
           phone: "",
           location: "",
           specialty: defaultSkill || "",
+          seniority: "",
           basis: "",
+          expectedMonthlyRate: "",
           availability: "",
           portfolioUrl: "",
           linkedinUrl: "",
@@ -80,7 +97,7 @@ export function BenchForm({ defaultSkill, className }: BenchFormProps) {
           Application received!
         </p>
         <p className="mt-2 body-small text-muted-foreground">
-          Thanks for applying â we&apos;ll be in touch when opportunities open.
+          Thanks for applying{submittedName ? `, ${submittedName}` : ""} — we&apos;ll be in touch when opportunities open.
         </p>
         <button
           type="button"
@@ -196,7 +213,7 @@ export function BenchForm({ defaultSkill, className }: BenchFormProps) {
           className="form-input w-full rounded-md border border-input bg-background px-4 py-3 text-foreground placeholder:text-muted-foreground/70 transition-colors focus:border-gold focus:ring-2 focus:ring-gold/30 focus:outline-none"
         />
         <p className="mt-1 text-xs text-muted-foreground">
-          Wherever you&apos;re based â our clients hire across the US, LATAM, and Pakistan.
+          Wherever you&apos;re based — our clients hire across the US, LATAM, and Pakistan.
         </p>
       </div>
 
@@ -228,6 +245,34 @@ export function BenchForm({ defaultSkill, className }: BenchFormProps) {
         </div>
         <div>
           <label
+            htmlFor="seniority"
+            className="form-label-small mb-2 block text-muted-foreground"
+          >
+            Seniority <span className="text-gold">*</span>
+          </label>
+          <select
+            id="seniority"
+            name="seniority"
+            required
+            value={formData.seniority}
+            onChange={handleChange}
+            className="form-input w-full appearance-none rounded-md border border-input bg-background px-4 py-3 pr-10 text-foreground transition-colors focus:border-gold focus:ring-2 focus:ring-gold/30 focus:outline-none"
+          >
+            <option value="" disabled>
+              Select your level
+            </option>
+            {seniorityOptions.map((opt) => (
+              <option key={opt.value} value={opt.value}>
+                {opt.label}
+              </option>
+            ))}
+          </select>
+        </div>
+      </div>
+
+      <div className="grid gap-5 sm:grid-cols-2">
+        <div>
+          <label
             htmlFor="basis"
             className="form-label-small mb-2 block text-muted-foreground"
           >
@@ -250,6 +295,34 @@ export function BenchForm({ defaultSkill, className }: BenchFormProps) {
               </option>
             ))}
           </select>
+        </div>
+        <div>
+          <label
+            htmlFor="expectedMonthlyRate"
+            className="form-label-small mb-2 block text-muted-foreground"
+          >
+            Expected monthly rate (USD)
+          </label>
+          <div className="relative">
+            <span className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground">
+              $
+            </span>
+            <input
+              type="number"
+              id="expectedMonthlyRate"
+              name="expectedMonthlyRate"
+              min="0"
+              step="50"
+              inputMode="numeric"
+              value={formData.expectedMonthlyRate}
+              onChange={handleChange}
+              placeholder="6,500"
+              className="form-input w-full rounded-md border border-input bg-background py-3 pl-8 pr-4 text-foreground placeholder:text-muted-foreground/70 transition-colors focus:border-gold focus:ring-2 focus:ring-gold/30 focus:outline-none"
+            />
+          </div>
+          <p className="mt-1 text-xs text-muted-foreground">
+            Per month, in USD — not hourly or annual.
+          </p>
         </div>
       </div>
 
@@ -297,7 +370,7 @@ export function BenchForm({ defaultSkill, className }: BenchFormProps) {
             className="form-input w-full rounded-md border border-input bg-background px-4 py-3 text-foreground placeholder:text-muted-foreground/70 transition-colors focus:border-gold focus:ring-2 focus:ring-gold/30 focus:outline-none"
           />
           <p className="mt-1 text-xs text-muted-foreground">
-            Optional â a personal site, GitHub, or work samples.
+            Optional — a personal site, GitHub, or work samples.
           </p>
         </div>
         <div>
@@ -367,6 +440,7 @@ export function BenchForm({ defaultSkill, className }: BenchFormProps) {
       {/* Honeypot */}
       <div className="absolute left-[-9999px]" aria-hidden="true">
         <input
+          ref={honeypotRef}
           type="text"
           name="website"
           tabIndex={-1}

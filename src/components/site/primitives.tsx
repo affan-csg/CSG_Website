@@ -116,14 +116,17 @@ export function ArrowLink({
   to,
   label,
   className,
+  hash,
 }: {
   to: string;
   label: string;
   className?: string;
+  hash?: string;
 }) {
   return (
     <Link
       to={to as never}
+      {...(hash ? { hash } : {})}
       className={cn(
         "group inline-flex items-center gap-2 button-text text-gold transition-all duration-300 hover:gap-3",
         className,

@@ -11,7 +11,6 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AboutRouteImport } from './routes/about'
-import { Route as BlogRouteImport } from './routes/blog'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as FaqRouteImport } from './routes/faq'
 import { Route as GetStartedRouteImport } from './routes/get-started'
@@ -19,16 +18,23 @@ import { Route as JoinOurBenchRouteImport } from './routes/join-our-bench'
 import { Route as LegalNoticeRouteImport } from './routes/legal-notice'
 import { Route as MerchantPoliciesRouteImport } from './routes/merchant-policies'
 import { Route as OfferCalibrationRouteImport } from './routes/offer-calibration'
+import { Route as OurStoryRouteImport } from './routes/our-story'
 import { Route as PodsRouteImport } from './routes/pods'
 import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as RefundRouteImport } from './routes/refund'
 import { Route as TermsRouteImport } from './routes/terms'
 import { Route as WhyCsgRouteImport } from './routes/why-csg'
+import { Route as BlogIndexRouteImport } from './routes/blog.index'
 import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
 import { Route as GlobalDeliveryIndexRouteImport } from './routes/global-delivery.index'
 import { Route as GlobalDeliveryRegionRouteImport } from './routes/global-delivery.$region'
 import { Route as ServicesIndexRouteImport } from './routes/services.index'
 import { Route as ServicesSlugRouteImport } from './routes/services.$slug'
+import { Route as StaffingIndexRouteImport } from './routes/staffing.index'
+import { Route as StaffingSlugRouteImport } from './routes/staffing.$slug'
+import { Route as StaffingPodsRouteImport } from './routes/staffing.pods'
+import { Route as StaffingRolesRouteImport } from './routes/staffing.roles'
+import { Route as StaffingSpecializedRolesRouteImport } from './routes/staffing.specialized-roles'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -38,11 +44,6 @@ const IndexRoute = IndexRouteImport.update({
 const AboutRoute = AboutRouteImport.update({
   id: '/about',
   path: '/about',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const BlogRoute = BlogRouteImport.update({
-  id: '/blog',
-  path: '/blog',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ContactRoute = ContactRouteImport.update({
@@ -80,6 +81,11 @@ const OfferCalibrationRoute = OfferCalibrationRouteImport.update({
   path: '/offer-calibration',
   getParentRoute: () => rootRouteImport,
 } as any)
+const OurStoryRoute = OurStoryRouteImport.update({
+  id: '/our-story',
+  path: '/our-story',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PodsRoute = PodsRouteImport.update({
   id: '/pods',
   path: '/pods',
@@ -105,10 +111,15 @@ const WhyCsgRoute = WhyCsgRouteImport.update({
   path: '/why-csg',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BlogIndexRoute = BlogIndexRouteImport.update({
+  id: '/blog/',
+  path: '/blog/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const BlogSlugRoute = BlogSlugRouteImport.update({
-  id: '/$slug',
-  path: '/$slug',
-  getParentRoute: () => BlogRoute,
+  id: '/blog/$slug',
+  path: '/blog/$slug',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const GlobalDeliveryIndexRoute = GlobalDeliveryIndexRouteImport.update({
   id: '/global-delivery/',
@@ -130,11 +141,36 @@ const ServicesSlugRoute = ServicesSlugRouteImport.update({
   path: '/services/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const StaffingIndexRoute = StaffingIndexRouteImport.update({
+  id: '/staffing/',
+  path: '/staffing/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const StaffingSlugRoute = StaffingSlugRouteImport.update({
+  id: '/staffing/$slug',
+  path: '/staffing/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const StaffingPodsRoute = StaffingPodsRouteImport.update({
+  id: '/staffing/pods',
+  path: '/staffing/pods',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const StaffingRolesRoute = StaffingRolesRouteImport.update({
+  id: '/staffing/roles',
+  path: '/staffing/roles',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const StaffingSpecializedRolesRoute =
+  StaffingSpecializedRolesRouteImport.update({
+    id: '/staffing/specialized-roles',
+    path: '/staffing/specialized-roles',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
-  '/blog': typeof BlogRouteWithChildren
   '/contact': typeof ContactRoute
   '/faq': typeof FaqRoute
   '/get-started': typeof GetStartedRoute
@@ -142,6 +178,7 @@ export interface FileRoutesByFullPath {
   '/legal-notice': typeof LegalNoticeRoute
   '/merchant-policies': typeof MerchantPoliciesRoute
   '/offer-calibration': typeof OfferCalibrationRoute
+  '/our-story': typeof OurStoryRoute
   '/pods': typeof PodsRoute
   '/privacy': typeof PrivacyRoute
   '/refund': typeof RefundRoute
@@ -150,13 +187,18 @@ export interface FileRoutesByFullPath {
   '/blog/$slug': typeof BlogSlugRoute
   '/global-delivery/$region': typeof GlobalDeliveryRegionRoute
   '/services/$slug': typeof ServicesSlugRoute
+  '/staffing/$slug': typeof StaffingSlugRoute
+  '/staffing/pods': typeof StaffingPodsRoute
+  '/staffing/roles': typeof StaffingRolesRoute
+  '/staffing/specialized-roles': typeof StaffingSpecializedRolesRoute
+  '/blog/': typeof BlogIndexRoute
   '/global-delivery/': typeof GlobalDeliveryIndexRoute
   '/services/': typeof ServicesIndexRoute
+  '/staffing/': typeof StaffingIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
-  '/blog': typeof BlogRouteWithChildren
   '/contact': typeof ContactRoute
   '/faq': typeof FaqRoute
   '/get-started': typeof GetStartedRoute
@@ -164,6 +206,7 @@ export interface FileRoutesByTo {
   '/legal-notice': typeof LegalNoticeRoute
   '/merchant-policies': typeof MerchantPoliciesRoute
   '/offer-calibration': typeof OfferCalibrationRoute
+  '/our-story': typeof OurStoryRoute
   '/pods': typeof PodsRoute
   '/privacy': typeof PrivacyRoute
   '/refund': typeof RefundRoute
@@ -172,14 +215,19 @@ export interface FileRoutesByTo {
   '/blog/$slug': typeof BlogSlugRoute
   '/global-delivery/$region': typeof GlobalDeliveryRegionRoute
   '/services/$slug': typeof ServicesSlugRoute
+  '/staffing/$slug': typeof StaffingSlugRoute
+  '/staffing/pods': typeof StaffingPodsRoute
+  '/staffing/roles': typeof StaffingRolesRoute
+  '/staffing/specialized-roles': typeof StaffingSpecializedRolesRoute
+  '/blog': typeof BlogIndexRoute
   '/global-delivery': typeof GlobalDeliveryIndexRoute
   '/services': typeof ServicesIndexRoute
+  '/staffing': typeof StaffingIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
-  '/blog': typeof BlogRouteWithChildren
   '/contact': typeof ContactRoute
   '/faq': typeof FaqRoute
   '/get-started': typeof GetStartedRoute
@@ -187,6 +235,7 @@ export interface FileRoutesById {
   '/legal-notice': typeof LegalNoticeRoute
   '/merchant-policies': typeof MerchantPoliciesRoute
   '/offer-calibration': typeof OfferCalibrationRoute
+  '/our-story': typeof OurStoryRoute
   '/pods': typeof PodsRoute
   '/privacy': typeof PrivacyRoute
   '/refund': typeof RefundRoute
@@ -195,15 +244,20 @@ export interface FileRoutesById {
   '/blog/$slug': typeof BlogSlugRoute
   '/global-delivery/$region': typeof GlobalDeliveryRegionRoute
   '/services/$slug': typeof ServicesSlugRoute
+  '/staffing/$slug': typeof StaffingSlugRoute
+  '/staffing/pods': typeof StaffingPodsRoute
+  '/staffing/roles': typeof StaffingRolesRoute
+  '/staffing/specialized-roles': typeof StaffingSpecializedRolesRoute
+  '/blog/': typeof BlogIndexRoute
   '/global-delivery/': typeof GlobalDeliveryIndexRoute
   '/services/': typeof ServicesIndexRoute
+  '/staffing/': typeof StaffingIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
     | '/about'
-    | '/blog'
     | '/contact'
     | '/faq'
     | '/get-started'
@@ -211,6 +265,7 @@ export interface FileRouteTypes {
     | '/legal-notice'
     | '/merchant-policies'
     | '/offer-calibration'
+    | '/our-story'
     | '/pods'
     | '/privacy'
     | '/refund'
@@ -219,13 +274,18 @@ export interface FileRouteTypes {
     | '/blog/$slug'
     | '/global-delivery/$region'
     | '/services/$slug'
+    | '/staffing/$slug'
+    | '/staffing/pods'
+    | '/staffing/roles'
+    | '/staffing/specialized-roles'
+    | '/blog/'
     | '/global-delivery/'
     | '/services/'
+    | '/staffing/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/about'
-    | '/blog'
     | '/contact'
     | '/faq'
     | '/get-started'
@@ -233,6 +293,7 @@ export interface FileRouteTypes {
     | '/legal-notice'
     | '/merchant-policies'
     | '/offer-calibration'
+    | '/our-story'
     | '/pods'
     | '/privacy'
     | '/refund'
@@ -241,13 +302,18 @@ export interface FileRouteTypes {
     | '/blog/$slug'
     | '/global-delivery/$region'
     | '/services/$slug'
+    | '/staffing/$slug'
+    | '/staffing/pods'
+    | '/staffing/roles'
+    | '/staffing/specialized-roles'
+    | '/blog'
     | '/global-delivery'
     | '/services'
+    | '/staffing'
   id:
     | '__root__'
     | '/'
     | '/about'
-    | '/blog'
     | '/contact'
     | '/faq'
     | '/get-started'
@@ -255,6 +321,7 @@ export interface FileRouteTypes {
     | '/legal-notice'
     | '/merchant-policies'
     | '/offer-calibration'
+    | '/our-story'
     | '/pods'
     | '/privacy'
     | '/refund'
@@ -263,14 +330,19 @@ export interface FileRouteTypes {
     | '/blog/$slug'
     | '/global-delivery/$region'
     | '/services/$slug'
+    | '/staffing/$slug'
+    | '/staffing/pods'
+    | '/staffing/roles'
+    | '/staffing/specialized-roles'
+    | '/blog/'
     | '/global-delivery/'
     | '/services/'
+    | '/staffing/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
-  BlogRoute: typeof BlogRouteWithChildren
   ContactRoute: typeof ContactRoute
   FaqRoute: typeof FaqRoute
   GetStartedRoute: typeof GetStartedRoute
@@ -278,15 +350,23 @@ export interface RootRouteChildren {
   LegalNoticeRoute: typeof LegalNoticeRoute
   MerchantPoliciesRoute: typeof MerchantPoliciesRoute
   OfferCalibrationRoute: typeof OfferCalibrationRoute
+  OurStoryRoute: typeof OurStoryRoute
   PodsRoute: typeof PodsRoute
   PrivacyRoute: typeof PrivacyRoute
   RefundRoute: typeof RefundRoute
   TermsRoute: typeof TermsRoute
   WhyCsgRoute: typeof WhyCsgRoute
+  BlogSlugRoute: typeof BlogSlugRoute
   GlobalDeliveryRegionRoute: typeof GlobalDeliveryRegionRoute
   ServicesSlugRoute: typeof ServicesSlugRoute
+  StaffingSlugRoute: typeof StaffingSlugRoute
+  StaffingPodsRoute: typeof StaffingPodsRoute
+  StaffingRolesRoute: typeof StaffingRolesRoute
+  StaffingSpecializedRolesRoute: typeof StaffingSpecializedRolesRoute
+  BlogIndexRoute: typeof BlogIndexRoute
   GlobalDeliveryIndexRoute: typeof GlobalDeliveryIndexRoute
   ServicesIndexRoute: typeof ServicesIndexRoute
+  StaffingIndexRoute: typeof StaffingIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -303,13 +383,6 @@ declare module '@tanstack/react-router' {
       path: '/about'
       fullPath: '/about'
       preLoaderRoute: typeof AboutRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/blog': {
-      id: '/blog'
-      path: '/blog'
-      fullPath: '/blog'
-      preLoaderRoute: typeof BlogRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/contact': {
@@ -361,6 +434,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof OfferCalibrationRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/our-story': {
+      id: '/our-story'
+      path: '/our-story'
+      fullPath: '/our-story'
+      preLoaderRoute: typeof OurStoryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/pods': {
       id: '/pods'
       path: '/pods'
@@ -396,12 +476,19 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof WhyCsgRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/blog/': {
+      id: '/blog/'
+      path: '/blog'
+      fullPath: '/blog/'
+      preLoaderRoute: typeof BlogIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/blog/$slug': {
       id: '/blog/$slug'
-      path: '/$slug'
+      path: '/blog/$slug'
       fullPath: '/blog/$slug'
       preLoaderRoute: typeof BlogSlugRouteImport
-      parentRoute: typeof BlogRoute
+      parentRoute: typeof rootRouteImport
     }
     '/global-delivery/': {
       id: '/global-delivery/'
@@ -431,23 +518,47 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ServicesSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/staffing/': {
+      id: '/staffing/'
+      path: '/staffing'
+      fullPath: '/staffing/'
+      preLoaderRoute: typeof StaffingIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/staffing/$slug': {
+      id: '/staffing/$slug'
+      path: '/staffing/$slug'
+      fullPath: '/staffing/$slug'
+      preLoaderRoute: typeof StaffingSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/staffing/pods': {
+      id: '/staffing/pods'
+      path: '/staffing/pods'
+      fullPath: '/staffing/pods'
+      preLoaderRoute: typeof StaffingPodsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/staffing/roles': {
+      id: '/staffing/roles'
+      path: '/staffing/roles'
+      fullPath: '/staffing/roles'
+      preLoaderRoute: typeof StaffingRolesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/staffing/specialized-roles': {
+      id: '/staffing/specialized-roles'
+      path: '/staffing/specialized-roles'
+      fullPath: '/staffing/specialized-roles'
+      preLoaderRoute: typeof StaffingSpecializedRolesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
-
-interface BlogRouteChildren {
-  BlogSlugRoute: typeof BlogSlugRoute
-}
-
-const BlogRouteChildren: BlogRouteChildren = {
-  BlogSlugRoute: BlogSlugRoute,
-}
-
-const BlogRouteWithChildren = BlogRoute._addFileChildren(BlogRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
-  BlogRoute: BlogRouteWithChildren,
   ContactRoute: ContactRoute,
   FaqRoute: FaqRoute,
   GetStartedRoute: GetStartedRoute,
@@ -455,15 +566,23 @@ const rootRouteChildren: RootRouteChildren = {
   LegalNoticeRoute: LegalNoticeRoute,
   MerchantPoliciesRoute: MerchantPoliciesRoute,
   OfferCalibrationRoute: OfferCalibrationRoute,
+  OurStoryRoute: OurStoryRoute,
   PodsRoute: PodsRoute,
   PrivacyRoute: PrivacyRoute,
   RefundRoute: RefundRoute,
   TermsRoute: TermsRoute,
   WhyCsgRoute: WhyCsgRoute,
+  BlogSlugRoute: BlogSlugRoute,
   GlobalDeliveryRegionRoute: GlobalDeliveryRegionRoute,
   ServicesSlugRoute: ServicesSlugRoute,
+  StaffingSlugRoute: StaffingSlugRoute,
+  StaffingPodsRoute: StaffingPodsRoute,
+  StaffingRolesRoute: StaffingRolesRoute,
+  StaffingSpecializedRolesRoute: StaffingSpecializedRolesRoute,
+  BlogIndexRoute: BlogIndexRoute,
   GlobalDeliveryIndexRoute: GlobalDeliveryIndexRoute,
   ServicesIndexRoute: ServicesIndexRoute,
+  StaffingIndexRoute: StaffingIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

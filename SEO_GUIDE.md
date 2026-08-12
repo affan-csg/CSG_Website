@@ -19,21 +19,29 @@ Complete guide to SEO implementation, geo-targeting, and search engine optimizat
 
 ## 🎯 SEO Overview
 
-### Current SEO Score
-- **Lighthouse SEO Score:** 90+
-- **Mobile Friendly:** ✅ Pass
-- **Core Web Vitals:** ✅ All green
-- **Structured Data:** ✅ Organization, LocalBusiness, FAQPage, Service
+### Current State (verified 2026-08-12 against a running dev server, not just read from source)
+- **Structured Data:** Organization, LocalBusiness, FAQPage, Service, Article, Regional LocalBusiness, BreadcrumbList — all wired to real pages (see [Structured Data](#structured-data-json-ld))
+- **Canonical tags:** Fixed — every page now emits its own `<link rel="canonical">`. Previously every page silently canonicalized to the homepage (see [Meta Tags & Open Graph](#meta-tags--open-graph)); this was a real duplicate-content bug, not a style nit.
+- **Lighthouse score / Core Web Vitals:** Not yet measured against the current build — don't cite a number until someone actually runs Lighthouse against a production deploy.
+
+### Three bugs that only showed up when the pages were actually rendered
+Everything above was verified by booting the dev server and reading the real HTML output, not just the source. That's how these were caught — none were visible from reading `seo.ts` in isolation:
+
+1. **No JSON-LD had ever rendered, anywhere, ever.** `buildOrganizationJsonLd()` etc. were correctly built and correctly passed into `head().scripts`, but every script entry used the key `JSON: JSON.stringify(...)`. TanStack Router's script-tag renderer looks for a `children` key, not `JSON` — so `JSON` silently became an unused custom HTML attribute and every `<script type="application/ld+json">` shipped completely empty. This affected the Organization/LocalBusiness schema in `__root.tsx` too, meaning **zero structured data was ever live on the site**, regardless of what this doc claimed. Fixed by renaming the field to `children` everywhere (`src/routes/__root.tsx`, `blog.$slug.tsx`, `staffing.$slug.tsx`, `global-delivery.$region.tsx`, `faq.tsx`).
+2. **Every blog post URL rendered the blog listing page, not the post.** `src/routes/blog.tsx` had no `<Outlet />`, but TanStack Router's file-based routing convention made it the *parent* of `blog.$slug.tsx` purely because of the filename prefix (`blog.tsx` + `blog.$slug.tsx` = parent/child, the same way `services.$slug.tsx` would nest under a plain `services.tsx`). Without an Outlet, the child route's component never mounts — visiting any `/blog/$slug` URL silently rendered `BlogPage` (the listing) instead of `BlogPostPage`. All 6 posts were unreadable at their own URLs. Fixed by renaming `blog.tsx` → `blog.index.tsx` (matching the `.index.tsx` convention already used correctly for `staffing`/`global-delivery`/`services`), which makes it a sibling instead of a parent.
+3. **Most page titles rendered with the brand name twice**, e.g. `"Contact Us | Career Source Group | Career Source Group"`. 15 routes hardcoded `" | Career Source Group"` in their own `title`, on top of `buildSeoMeta()` unconditionally appending the same suffix. Fixed by stripping the hardcoded suffix from every route (and from the three region titles in `src/content/delivery.ts`), and adding an opt-out (`titleSuffix: false`) for the homepage, which intentionally leads with the brand name instead of trailing it.
+
+**Takeaway for future SEO work on this repo:** verify against rendered HTML (`curl` the dev server, grep for the actual tags), not just against the source code. All three of these looked completely correct from the source alone.
 
 ### SEO Principles Implemented
 1. ✅ **Server-Side Rendering (SSR)** — Crawl-friendly HTML
-2. ✅ **Meta Tags** — Title, description, keywords, canonical
+2. ✅ **Meta Tags** — Title, description, keywords, canonical (per-page, see fix note above)
 3. ✅ **Open Graph** — Social sharing optimization
-4. ✅ **Structured Data** — JSON-LD schemas for rich snippets
+4. ✅ **Structured Data** — JSON-LD schemas for rich snippets, wired into the pages that have matching content
 5. ✅ **Responsive Design** — Mobile-first approach
-6. ✅ **Fast Loading** — Performance optimization
+6. ⚠️ **Fast Loading** — No performance budget or measurement in place yet; see [Performance Optimization](#performance-optimization)
 7. ✅ **Sitemap & Robots** — Search engine discovery
-8. ✅ **Geo-Targeting** — Regional content optimization
+8. ⚠️ **Geo-Targeting** — Helpers exist (`buildRegionalBusinessJsonLd`, wired) but hreflang/geo-meta are intentionally NOT wired — see [Geo-Targeting Strategy](#geo-targeting-strategy) for why
 
 ---
 
@@ -69,51 +77,27 @@ Complete guide to SEO implementation, geo-targeting, and search engine optimizat
 - Area served (US, LATAM, Pakistan)
 - Price range
 
-### Service Schema
-**Purpose:** Highlight your service offerings for service-specific search queries.
+### Staffing Schema
+**Purpose:** Highlight your staffing offerings for staffing-specific search queries.
 
-**Usage:**
-```typescript
-const schema = buildServiceJsonLd({
-  name: "AI/ML Staffing Solutions",
-  description: "Expert AI and Machine Learning talent...",
-  image: "/images/ai-ml.jpg",
-  region: "United States"
-});
-```
+**Wired in:** `src/routes/staffing.$slug.tsx` — each of the 8 specialty pages (`/staffing/ai-ml`, `/staffing/mlops`, etc.) emits its own schema.org `Service` object (built via `buildStaffingJsonLd()`) from that page's loader data.
 
 ### Breadcrumb Schema
 **Purpose:** Improve navigation in search results and user experience.
 
-**Usage:**
-```typescript
-const breadcrumbs = buildBreadcrumbJsonLd([
-  { name: "Home", url: "/" },
-  { name: "Services", url: "/services" },
-  { name: "AI/ML", url: "/services/ai-ml" }
-]);
-```
+**Wired in:** `src/routes/staffing.$slug.tsx`, `src/routes/global-delivery.$region.tsx`, and `src/routes/blog.$slug.tsx` — each dynamic detail page emits a `Home → Section → Page` breadcrumb trail matching its actual nav hierarchy.
 
 ### FAQ Schema
 **Purpose:** Enable rich snippet display for FAQ sections.
 
 **Location:** `src/lib/seo.ts` → `buildFaqJsonLd()`
 
-**Used in:** FAQ pages to show questions directly in search results
+**Wired in:** `src/routes/faq.tsx`, built from the real `faqs` array in `src/content/site.ts` (both client and talent questions).
 
 ### Article Schema
 **Purpose:** Optimize blog posts and content pages for search.
 
-**Usage:**
-```typescript
-const article = buildArticleJsonLd({
-  title: "How to Hire AI/ML Engineers",
-  description: "Complete guide to hiring AI talent...",
-  image: "/images/blog/hiring.jpg",
-  publishedDate: "2026-08-01",
-  modifiedDate: "2026-08-10"
-});
-```
+**Wired in:** `src/routes/blog.$slug.tsx` — each post gets its own title, description (the post's own opening paragraph), and `datePublished` instead of the previous shared generic "Blog Post" metadata that was identical across all 6 posts.
 
 ---
 
@@ -150,10 +134,12 @@ const article = buildArticleJsonLd({
 
 **Implementation:**
 ```jsx
-<link rel="canonical" href="https://careersourcegroup.com/services/ai-ml" />
+<link rel="canonical" href="https://careersourcegroup.com/staffing/ai-ml" />
 ```
 
-**Generated via:** `buildSeoMeta()` function in `src/lib/seo.ts`
+**Generated via:** `buildSeoMeta()` function in `src/lib/seo.ts`, returned as a proper `links` entry that each route spreads into its own `head()`.
+
+**Fixed bug:** `buildSeoMeta()` used to emit `<meta name="canonical">`, which browsers and crawlers don't recognize as a canonical signal at all — combined with a single hardcoded `<link rel="canonical" href="https://careersourcegroup.com">` in `__root.tsx`, every page on the site was actually declaring the **homepage** as its canonical URL. That's a real signal to Google to drop non-home pages from the index in favor of `/`. Both are fixed: `buildSeoMeta()` now returns a real `link rel="canonical"` per page, and the hardcoded root-level one was removed.
 
 ### Open Graph Tags
 **Purpose:** Optimize social sharing (LinkedIn, Facebook, Twitter)
@@ -185,16 +171,12 @@ Ensure your content appears in relevant geographic regions and target local user
 
 ### Implementation
 
-#### 1. Hreflang Tags
-**Purpose:** Tell search engines which version of content to show to users in different countries.
+#### 1. Hreflang Tags — ⚠️ NOT currently wired up (intentionally)
+**Purpose:** Tell search engines which version of content to show to users who search in a different language.
 
-**Locations:**
-- US English: `en-US` → `https://careersourcegroup.com/`
-- LATAM Spanish: `es-MX` → `https://careersourcegroup.com/global-delivery/latam`
-- Pakistan English: `en-PK` → `https://careersourcegroup.com/global-delivery/pakistan`
-- Default: `x-default` → `https://careersourcegroup.com/`
+**Why this isn't turned on:** `buildHreflangLinks()` exists in `src/lib/seo.ts` but is not called from any route, and it shouldn't be until the underlying content problem is fixed. Hreflang is for actual language/regional *translations* of the same page — but `/global-delivery/latam` and `/global-delivery/pakistan` are English-language pages *about* those regions, not Spanish or Urdu translations. Wiring the helper as currently written would tag `/global-delivery/latam` as `es-MX` (Spanish-Mexico) content when the page is in English, and Pakistan has no meaningful ISO language code as `en-PK` for this purpose. That's a false signal to Google, and Search Console will flag it as a "no return tag" / language-mismatch error. Before wiring this up, either translate the regional pages for real, or drop the hreflang approach and rely on the (correct) per-page canonical tags alone.
 
-**Implementation:**
+**Existing helper (needs the content fix above before use):**
 ```typescript
 export function buildHreflangLinks(currentPath: string) {
   return [
@@ -207,8 +189,8 @@ export function buildHreflangLinks(currentPath: string) {
 }
 ```
 
-#### 2. Geo Targeting Meta Tags
-**Purpose:** Signal geographic relevance to search engines.
+#### 2. Geo Targeting Meta Tags — ⚠️ NOT currently wired up
+**Purpose:** Signal geographic relevance to search engines. Note Google itself has said `geo.*` meta tags carry little to no ranking weight; the `buildRegionalBusinessJsonLd()` schema (wired, see below) is the signal actually worth prioritizing. Wire this up only if a specific need shows up (e.g. a directory or Bing-specific requirement).
 
 **Meta Tags:**
 ```html
@@ -227,12 +209,7 @@ const geoMeta = buildGeoTargetingMeta("us");
 #### 3. Regional Schema Markup
 **Purpose:** Provide region-specific structured data.
 
-**Usage:**
-```typescript
-const usSchema = buildRegionalBusinessJsonLd("us");
-const latamSchema = buildRegionalBusinessJsonLd("latam");
-const pkSchema = buildRegionalBusinessJsonLd("pakistan");
-```
+**Wired in:** `src/routes/global-delivery.$region.tsx` — each of `/global-delivery/us`, `/global-delivery/latam`, and `/global-delivery/pakistan` emits its own `LocalBusiness` schema plus a breadcrumb trail.
 
 **Included Data:**
 - Regional business name
@@ -264,17 +241,23 @@ const pkSchema = buildRegionalBusinessJsonLd("pakistan");
 
 **Current Coverage:**
 - Homepage
-- All main pages (about, why-csg, pods)
-- All services (AI/ML, DevOps, Data, MLOps, Full Stack, Healthcare)
+- All main pages (our-story, staffing)
+- The Staffing hub (`/staffing`) and its three children: `/staffing/roles`, `/staffing/pods`, `/staffing/specialized-roles`
+- All 8 specialized role detail pages (ai-ml, mlops, data, devops, devsecops, cloud, software-dev, product)
 - All regional delivery pages (US, LATAM, Pakistan)
 - CTA pages (contact, get-started, join-bench)
-- Blog listing
+- Blog listing plus all 6 individual post URLs (`/blog/$slug`) — previously only the listing page was in the sitemap
 - Legal pages (terms, privacy, refund, etc.)
+
+**Not in the sitemap (correctly excluded):** the legacy `/about`, `/why-csg`, `/services`, `/services/$slug`, `/pods` URLs — these are 301 redirect stubs (see below), not content, so they should never appear in the sitemap.
+
+### Legacy URL Redirects
+The site was renamed (`/about` → `/our-story`, `/services` → `/staffing`, `/why-csg` → `/our-story#why-csg`, `/pods` → `/staffing/pods`). The redirect stubs at the old paths (`src/routes/about.tsx`, `src/routes/why-csg.tsx`, `src/routes/services.index.tsx`, `src/routes/services.$slug.tsx`, `src/routes/pods.tsx`) now explicitly return `statusCode: 301`. TanStack Router's `redirect()` defaults to a `307` (temporary) if you don't set this — for a permanent rename that matters: a 307 tells Google "this might move back, don't consolidate rankings," while a 301 tells it to transfer link equity and index entries to the new URL. Any future URL rename should follow the same pattern.
 
 **Format:**
 ```xml
 <url>
-  <loc>https://careersourcegroup.com/services/ai-ml</loc>
+  <loc>https://careersourcegroup.com/staffing/ai-ml</loc>
   <lastmod>2026-08-10</lastmod>
   <changefreq>monthly</changefreq>
   <priority>0.8</priority>
@@ -284,7 +267,7 @@ const pkSchema = buildRegionalBusinessJsonLd("pakistan");
 **Priorities:**
 - Homepage: 1.0
 - Main pages: 0.9
-- Service pages: 0.8
+- Staffing pages: 0.8
 - Regional pages: 0.8
 - CTA pages: 0.8
 - Blog: 0.7
@@ -292,7 +275,7 @@ const pkSchema = buildRegionalBusinessJsonLd("pakistan");
 
 **Change Frequency:**
 - Homepage: weekly
-- Service pages: monthly
+- Staffing pages: monthly
 - Blog: weekly
 - Legal: yearly
 
@@ -424,19 +407,19 @@ Sitemap: https://careersourcegroup.com/sitemap.xml
 4. **Meta Tags:** Set unique title and description
 5. **Open Graph:** Add image and social meta
 6. **Update Sitemap:** Add to sitemap.xml
-7. **Internal Links:** Link from relevant service/regional pages
+7. **Internal Links:** Link from relevant staffing/regional pages
 8. **Keyword Research:** Target 1 primary keyword
 
-### When Adding a New Service Page
+### When Adding a New Staffing Page
 
-1. **Route:** Create `/services/$slug.tsx`
-2. **Schema:** Add Service schema with area served
-3. **Meta Tags:** Service-specific title and description
+1. **Route:** Create `/staffing/$slug.tsx`
+2. **Schema:** Add Service schema (via `buildStaffingJsonLd()`) with area served
+3. **Meta Tags:** Staffing-specific title and description
 4. **Breadcrumbs:** Add breadcrumb schema
-5. **Keywords:** Target service + region (e.g., "AI/ML staffing in US")
+5. **Keywords:** Target staffing role + region (e.g., "AI/ML staffing in US")
 6. **Content:** 800-1500 words minimum
-7. **Update Sitemap:** Add service page
-8. **Link Building:** Link from homepage, services index, regional pages
+7. **Update Sitemap:** Add staffing page
+8. **Link Building:** Link from homepage, staffing index, regional pages
 
 ### When Adding Regional Content
 
@@ -463,23 +446,21 @@ Sitemap: https://careersourcegroup.com/sitemap.xml
 
 ## ✅ SEO Checklist Before Launch
 
-- [ ] All pages have unique titles and descriptions
-- [ ] Meta descriptions 150-160 characters
-- [ ] All pages have canonical tags
-- [ ] Open Graph tags on all pages
-- [ ] JSON-LD schemas for org, local business, FAQ
-- [ ] Robots.txt configured correctly
-- [ ] Sitemap.xml created and submitted
-- [ ] Hreflang tags for regional variants
-- [ ] Images have alt text
-- [ ] Internal linking structure
-- [ ] No broken links (404s)
-- [ ] Mobile-friendly design ✅
-- [ ] Page speed optimized
-- [ ] Core Web Vitals passing
-- [ ] Schema markup validation passes
+- [x] All pages have unique titles and descriptions
+- [x] All pages have real `<link rel="canonical">` tags (fixed 2026-08-12 — see [Canonical Tags](#meta-tags--open-graph))
+- [x] Open Graph tags on all pages
+- [x] JSON-LD schemas for org, local business, FAQ, service, article, breadcrumb — wired into matching pages
+- [x] Robots.txt configured correctly
+- [x] Sitemap.xml includes every real page, including individual blog posts
+- [x] Legacy URL redirects use 301 (permanent), not the router's default 307
+- [ ] Meta descriptions verified at 150-160 characters — not yet audited page by page
+- [ ] Hreflang tags for regional variants — intentionally not wired, see [Hreflang Tags](#geo-targeting-strategy) for why
+- [ ] Images have alt text — not yet audited
+- [ ] No broken links (404s) — not yet audited
+- [ ] Page speed / Core Web Vitals measured against production — not yet run
+- [ ] Schema markup validated with Google's Rich Results Test — not yet run
 
 ---
 
-**Last Updated:** August 2026  
-**Status:** SEO System Implemented & Optimized
+**Last Updated:** 2026-08-12
+**Status:** Canonical-tag bug fixed, structured data wired into real pages, sitemap and redirects corrected. Performance and content-quality items above are still open.

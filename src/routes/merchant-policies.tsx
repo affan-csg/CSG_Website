@@ -6,13 +6,12 @@ import { legalPages } from "@/content/pages";
 import { buildSeoMeta } from "@/lib/seo";
 
 export const Route = createFileRoute("/merchant-policies")({
-  head: () => ({
-    meta: buildSeoMeta({
-      title: "Merchant Policies | Career Source Group",
+  head: () =>
+    buildSeoMeta({
+      title: "Merchant Policies",
       description: "Merchant policies and payment information for Career Source Group.",
       path: "/merchant-policies"
     }),
-  }),
   component: MerchantPoliciesPage,
 });
 

@@ -9,15 +9,24 @@ import {
   SectionHeading,
 } from "@/components/site/primitives";
 import { faqs } from "@/content/site";
-import { buildSeoMeta } from "@/lib/seo";
+import { buildFaqJsonLd, buildSeoMeta } from "@/lib/seo";
 
 export const Route = createFileRoute("/faq")({
   head: () => ({
-    meta: buildSeoMeta({
-      title: "Frequently Asked Questions | Career Source Group",
+    ...buildSeoMeta({
+      title: "Frequently Asked Questions",
       description: "Answers for clients hiring AI/ML, MLOps, Data, DevOps, DevSecOps, Cloud, Software Development, and Product talent.",
       path: "/faq"
-    }) }),
+    }),
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify(
+          buildFaqJsonLd(faqs.map((f) => ({ question: f.q, answer: f.a }))),
+        ),
+      },
+    ],
+  }),
   component: FaqPage,
 });
 

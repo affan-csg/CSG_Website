@@ -21,12 +21,12 @@ import { regionCards } from "@/content/site";
 import { buildSeoMeta } from "@/lib/seo";
 
 export const Route = createFileRoute("/global-delivery/")({
-  head: () => ({
-    meta: buildSeoMeta({
-      title: "US vs LATAM vs Pakistan — The Honest Comparison | CSG",
+  head: () =>
+    buildSeoMeta({
+      title: "US vs LATAM vs Pakistan — The Honest Comparison",
       description: "Cost, time zone overlap, engagement models and speed to start compared across US staffing, LATAM nearshore and Pakistan offshore.",
       path: "/global-delivery"
-    }) }),
+    }),
   component: GlobalDeliveryIndex,
 });
 

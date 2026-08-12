@@ -12,7 +12,7 @@ import {
   SectionHeading,
 } from "@/components/site/primitives";
 import { regionPages, prosCons, type RegionPage } from "@/content/delivery";
-import { buildSeoMeta } from "@/lib/seo";
+import { buildBreadcrumbJsonLd, buildRegionalBusinessJsonLd, buildSeoMeta } from "@/lib/seo";
 
 interface RegionSearch {
   region: string;
@@ -31,11 +31,27 @@ export const Route = createFileRoute("/global-delivery/$region")({
       };
     }
     return {
-      meta: buildSeoMeta({
+      ...buildSeoMeta({
         title: region.meta.title,
         description: region.meta.description,
         path: `/global-delivery/${params.region}`,
       }),
+      scripts: [
+        {
+          type: "application/ld+json",
+          children: JSON.stringify(buildRegionalBusinessJsonLd(region.slug)),
+        },
+        {
+          type: "application/ld+json",
+          children: JSON.stringify(
+            buildBreadcrumbJsonLd([
+              { name: "Home", url: "/" },
+              { name: "Global Delivery", url: "/global-delivery" },
+              { name: region.meta.title, url: `/global-delivery/${params.region}` },
+            ]),
+          ),
+        },
+      ],
     };
   },
   beforeLoad: ({ params }) => {

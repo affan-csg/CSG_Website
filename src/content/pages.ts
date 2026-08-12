@@ -12,12 +12,12 @@ export const home = {
   fee: {
     heading: "We Charge 10%. The Industry Charges 20-30%.",
     body: "Standard direct-hire fees in US staffing run 15-30% of first-year salary. On a $150,000 hire, that's $30,000-$45,000 to a staffing firm for one placement. We charge 10% — on that same hire, $15,000. On five hires a year, that's a quarter of a million dollars back in your budget.",
-    cta: { label: "Learn how we do it", to: "/why-csg" },
+    cta: { label: "Learn how we do it", to: "/our-story", hash: "why-csg" },
   },
   pods: {
     heading: "We Don't Fill Seats. We Stand Up Teams.",
     body: "A CSG Pod is a complete, purpose-built team — sized by experience, communication skill, technical skill, and cost — delivered under one contract, one invoice, one point of contact.",
-    cta: { label: "Explore Pods", to: "/pods" },
+    cta: { label: "Explore Pods", to: "/staffing/pods" },
   },
   whyCsg: {
     heading: "Why CSG",
@@ -26,7 +26,7 @@ export const home = {
       "10% direct hire fee. Industry charges 20-30%. Same vetting, same guarantee.",
       "Trusted by Synovus, Deloitte, BCBS, M3, and TK Elevators.",
     ],
-    cta: { label: "Why companies work with us", to: "/why-csg" },
+    cta: { label: "Why companies work with us", to: "/our-story", hash: "why-csg" },
   },
   faqQuestions: [
     "Why do you charge 10% for direct hire when the industry charges 20-30%?",
@@ -67,7 +67,7 @@ export const whyCsg = {
 };
 
 export const about = {
-  title: "About Career Source Group",
+  title: "The Career Source Group story",
   lead: "Career Source Group is a US staffing and talent delivery firm built for companies that need to move faster than a four-to-six month hiring cycle allows. We place tech and non-tech talent across direct hire, contract, and contract-to-hire in the US, and we deliver dedicated nearshore talent from LATAM and offshore talent from Pakistan on a contract basis. We do it under one contract, one invoice, and one point of contact. And we charge 10% of annual salary for direct hire — not the 20-30% the rest of the market charges.",
   howWeWork: {
     heading: "How we work",
@@ -126,14 +126,14 @@ export const about = {
 };
 
 export const specialtyOptions = [
-  "AI & ML Engineering",
-  "MLOps Engineering",
-  "Data Engineering, Data Science & Analytics",
-  "DevOps Engineering",
-  "DevSecOps & Platform Engineering",
-  "Cloud Engineering & Architecture",
-  "Software Development",
-  "Product & Project Management",
+  "AI/ML Engineer",
+  "MLOps Engineer",
+  "Data Engineer / Data Scientist",
+  "DevOps Engineer",
+  "DevSecOps / Platform Engineer",
+  "Cloud Engineer / Architect",
+  "Software Engineer",
+  "Product / Project Manager",
 ] as const;
 
 export const bench = {

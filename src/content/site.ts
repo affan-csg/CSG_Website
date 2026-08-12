@@ -19,11 +19,9 @@ export const company = {
 };
 
 export const navLinks = [
-  { label: "Services", to: "/services" },
-  { label: "How Pods Work", to: "/pods" },
+  { label: "Our Story", to: "/our-story" },
   { label: "Global Delivery", to: "/global-delivery" },
-  { label: "Why CSG", to: "/why-csg" },
-  { label: "About", to: "/about" },
+  { label: "Staffing", to: "/staffing" },
 ] as const;
 
 export const specialties = [
@@ -77,19 +75,40 @@ export const regionCards = [
     to: "/global-delivery/us",
     title: "US Staffing",
     body: "Direct hire, contract, and contract-to-hire. Full time zone overlap. Best for leadership, client-facing, and compliance-sensitive roles.",
-    cta: "See US Services",
+    cta: "See US Staffing",
   },
   {
     to: "/global-delivery/latam",
     title: "LATAM Nearshore",
     body: "Contract only. 30-70% less than US cost, near-full time zone overlap. Best for core product engineering and daily collaboration.",
-    cta: "See LATAM Services",
+    cta: "See LATAM Staffing",
   },
   {
     to: "/global-delivery/pakistan",
     title: "Pakistan Offshore",
     body: "Contract only. 50-70% less than US cost. Best for execution-heavy work, maintenance, and overnight coverage.",
-    cta: "See Pakistan Services",
+    cta: "See Pakistan Staffing",
+  },
+] as const;
+
+export const staffingSectionCards = [
+  {
+    to: "/staffing/roles",
+    title: "Staffing Roles",
+    body: "Individual specialists placed into a seat you've already defined — direct hire, contract, or contract-to-hire, priced across three regions.",
+    cta: "See Staffing Roles",
+  },
+  {
+    to: "/staffing/pods",
+    title: "Pods",
+    body: "A complete, purpose-built team — sized by experience, communication skill, technical skill, and cost — delivered under one contract, one invoice, one point of contact.",
+    cta: "See How Pods Work",
+  },
+  {
+    to: "/staffing/specialized-roles",
+    title: "Specialized Roles",
+    body: "The eight technical practices everyone else is struggling to fill: AI/ML, MLOps, data, DevOps, DevSecOps, cloud, software development, and product.",
+    cta: "See Specialized Roles",
   },
 ] as const;
 
@@ -183,8 +202,8 @@ export const ctaBand = {
 
 export const footerColumns = [
   {
-    title: "Specialties",
-    links: specialties.map((s) => ({ label: s.title, to: `/services/${s.slug}` })),
+    title: "Specialized Roles",
+    links: specialties.map((s) => ({ label: s.title, to: `/staffing/${s.slug}` })),
   },
   {
     title: "Delivery",
@@ -193,15 +212,15 @@ export const footerColumns = [
       { label: "US Staffing", to: "/global-delivery/us" },
       { label: "LATAM Nearshore", to: "/global-delivery/latam" },
       { label: "Pakistan Offshore", to: "/global-delivery/pakistan" },
-      { label: "How Pods Work", to: "/pods" },
+      { label: "Staffing Roles", to: "/staffing/roles" },
+      { label: "Pods", to: "/staffing/pods" },
       { label: "What your offer buys", to: "/offer-calibration" },
     ],
   },
   {
     title: "Company",
     links: [
-      { label: "Why CSG", to: "/why-csg" },
-      { label: "About", to: "/about" },
+      { label: "Our Story", to: "/our-story" },
       { label: "Blog", to: "/blog" },
       { label: "Contact", to: "/contact" },
       { label: "FAQ", to: "/faq" },

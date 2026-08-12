@@ -7,7 +7,6 @@ import {
   ArrowLink,
   ButtonLink,
   CtaBand,
-  FaqSection,
   NumberedItem,
   Panel,
   Pill,
@@ -17,18 +16,19 @@ import {
 import { home } from "@/content/pages";
 import { regionCards, specialties, specialtyTags } from "@/content/site";
 import { FloatingConsultCTA } from "@/components/site/floating-consult-cta";
-import { buildSeoMeta, buildFaqJsonLd } from "@/lib/seo";
+import { buildSeoMeta } from "@/lib/seo";
 
 const HeroCanvas = lazy(() => import("@/components/site/hero-canvas"));
 
 export const Route = createFileRoute("/")({
-  head: () => ({
-    meta: buildSeoMeta({
+  head: () =>
+    buildSeoMeta({
       title: "Career Source Group — US, LATAM & Pakistan Staffing, One Contract",
+      titleSuffix: false,
       description: "US | LATAM | Pakistan. Direct hire at 10%, contract and contract-to-hire — one contract, one invoice, one point of contact.",
       path: "/",
       keywords: "US staffing, LATAM nearshore, Pakistan offshore, direct hire 10%, contract staffing, contract-to-hire, staff augmentation, IT staffing, AI ML engineering, DevOps, data engineering"
-    }) }),
+    }),
   component: HomePage,
 });
 
@@ -198,7 +198,11 @@ function HomePage() {
               ))}
             </div>
             <div className="mt-8">
-              <ArrowLink to={home.fee.cta.to} label={home.fee.cta.label} />
+              <ArrowLink
+                to={home.fee.cta.to}
+                hash={home.fee.cta.hash}
+                label={home.fee.cta.label}
+              />
             </div>
           </Reveal>
         </div>
@@ -236,7 +240,7 @@ function HomePage() {
               {specialties.slice(0, 4).map((s) => (
                 <Link
                   key={s.slug}
-                  to="/services/$slug"
+                  to="/staffing/$slug"
                   params={{ slug: s.slug }}
                   className="group bg-card p-5 transition-all duration-500 hover:bg-navy-soft hover:shadow-lg hover:shadow-gold/5"
                 >
@@ -253,14 +257,14 @@ function HomePage() {
               ))}
             </div>
             <div className="mt-6">
-              <ArrowLink to="/services" label="See all specialties" />
+              <ArrowLink to="/staffing" label="See all specialties" />
             </div>
           </div>
           <Reveal delay={0.1}>
             <div className="overflow-hidden rounded-md border border-border">
               <img
-                src="/images/services.png"
-                alt="Career Source Group services overview"
+                src="/images/staffing.png"
+                alt="Career Source Group staffing overview"
                 className="aspect-[4/3] w-full object-cover transition-transform duration-700 hover:scale-[1.02]"
               />
             </div>
@@ -314,7 +318,11 @@ function HomePage() {
               ))}
             </div>
             <div className="mt-10">
-              <ArrowLink to={home.whyCsg.cta.to} label={home.whyCsg.cta.label} />
+              <ArrowLink
+                to={home.whyCsg.cta.to}
+                hash={home.whyCsg.cta.hash}
+                label={home.whyCsg.cta.label}
+              />
             </div>
           </div>
           <Reveal delay={0.1}>

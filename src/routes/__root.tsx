@@ -82,10 +82,9 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
   head: () => ({
     meta: [
       { charSet: "utf-8" },
-      { name: "viewport", content: "width=device-width, initial-scale=1" },
+      { name: "viewport", content: "width=device-width, initial-scale=1, viewport-fit=cover" },
       { name: "author", content: "Career Source Group, LLC" },
       { name: "theme-color", content: "#0F172A" },
-      { name: "viewport", content: "width=device-width, initial-scale=1, viewport-fit=cover" },
       { httpEquiv: "x-dns-prefetch-control", content: "on" },
       { name: "keywords", content: "staffing, talent acquisition, US staffing, LATAM nearshore, Pakistan offshore, direct hire, contract staffing, contract-to-hire, staff augmentation, IT staffing, healthcare staffing" },
       { property: "og:type", content: "website" },
@@ -108,16 +107,15 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       },
       { rel: "icon", href: "/favicon.svg", type: "image/svg+xml" },
       { rel: "apple-touch-icon", href: "/images/brand/CSG.png" },
-      { rel: "canonical", href: "https://careersourcegroup.com" },
     ],
     scripts: [
       {
         type: "application/ld+json",
-        JSON: JSON.stringify(buildOrganizationJsonLd()),
+        children: JSON.stringify(buildOrganizationJsonLd()),
       },
       {
         type: "application/ld+json",
-        JSON: JSON.stringify(buildLocalBusinessJsonLd()),
+        children: JSON.stringify(buildLocalBusinessJsonLd()),
       },
     ],
   }),

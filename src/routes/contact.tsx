@@ -13,12 +13,12 @@ import { company } from "@/content/site";
 import { buildSeoMeta } from "@/lib/seo";
 
 export const Route = createFileRoute("/contact")({
-  head: () => ({
-    meta: buildSeoMeta({
-      title: "Contact Us | Career Source Group",
+  head: () =>
+    buildSeoMeta({
+      title: "Contact Us",
       description: "Reach Career Source Group by phone or email, or find our Alpharetta, GA office.",
       path: "/contact"
-    }) }),
+    }),
   component: ContactPage,
 });
 
