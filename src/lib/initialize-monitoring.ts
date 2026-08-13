@@ -87,9 +87,11 @@ export function initializeMonitoring(config: MonitoringConfig = {}) {
     if (config.analytics?.enabled !== false) {
       // Flush any pending analytics events
       const flushModule = import("./analytics-integration");
-      flushModule.then((m) => m.flushEvents()).catch(() => {
-        // Silently fail
-      });
+      flushModule
+        .then((m) => m.flushEvents())
+        .catch(() => {
+          // Silently fail
+        });
     }
   });
 

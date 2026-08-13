@@ -1,6 +1,14 @@
 import { test, expect } from "@playwright/test";
 import { injectAxe, checkA11y } from "axe-playwright";
 
+interface AxeResults {
+  violations: Array<{ id: string; [key: string]: unknown }>;
+}
+
+interface AxeModule {
+  run: () => Promise<AxeResults>;
+}
+
 test.describe("Accessibility E2E Tests (WCAG AA)", () => {
   const pages = [
     { path: "/", name: "Homepage" },
@@ -96,13 +104,14 @@ test.describe("Accessibility E2E Tests (WCAG AA)", () => {
     await injectAxe(page);
 
     // Get contrast results
-    const results = await page.evaluate(() => {
-      return (window as any).axe.run();
+    const results: AxeResults = await page.evaluate(() => {
+      const windowWithAxe = window as Record<string, unknown>;
+      return (windowWithAxe.axe as AxeModule).run();
     });
 
     // Filter for color-contrast violations
-    const contrastViolations = (results as any).violations.filter(
-      (v: any) => v.id === "color-contrast",
+    const contrastViolations = results.violations.filter(
+      (v: { id: string }) => v.id === "color-contrast",
     );
 
     expect(contrastViolations).toHaveLength(0);

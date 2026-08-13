@@ -45,10 +45,7 @@ export function initErrorTracking(customConfig: Partial<ErrorTrackingConfig> = {
 /**
  * Capture error event
  */
-export function captureError(
-  error: Error | unknown,
-  context?: Record<string, unknown>,
-) {
+export function captureError(error: Error | unknown, context?: Record<string, unknown>) {
   if (!config.dsn) {
     // No error tracking configured - just log to console in dev
     if (config.environment === "development") {
@@ -89,7 +86,10 @@ export function captureException(
 /**
  * Capture message
  */
-export function captureMessage(message: string, level?: "fatal" | "error" | "warning" | "info" | "debug") {
+export function captureMessage(
+  message: string,
+  level?: "fatal" | "error" | "warning" | "info" | "debug",
+) {
   if (!config.dsn) {
     if (config.environment === "development") {
       console.log("Message captured:", message, level);
@@ -113,7 +113,8 @@ export function setUserContext(userId?: string, email?: string, name?: string) {
   if (typeof window === "undefined") return;
 
   // Store in window for error tracking
-  (window as any).__errorTrackingUser = {
+  const windowWithUser = window as Record<string, unknown>;
+  windowWithUser.__errorTrackingUser = {
     id: userId,
     email,
     name,
@@ -130,8 +131,9 @@ async function sendToErrorTracking(errorData: Record<string, unknown>) {
     const payload = JSON.stringify(errorData);
 
     // Use navigator.sendBeacon for reliability (queues even if page unloads)
-    if (typeof navigator !== "undefined" && navigator.sendBeacon) {
-      navigator.sendBeacon(config.dsn, payload);
+    const nav = typeof navigator !== "undefined" ? navigator : undefined;
+    if (nav && nav.sendBeacon) {
+      nav.sendBeacon(config.dsn, payload);
     } else {
       // Fallback to fetch with no-cors
       await fetch(config.dsn, {

@@ -101,11 +101,7 @@ export function trackFormSubmission(
 /**
  * Track interaction
  */
-export function trackInteraction(
-  interactionType: string,
-  target: string,
-  duration?: number,
-) {
+export function trackInteraction(interactionType: string, target: string, duration?: number) {
   trackEvent("interaction", {
     type: interactionType,
     target,
