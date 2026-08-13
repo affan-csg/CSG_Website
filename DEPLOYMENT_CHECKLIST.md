@@ -1,31 +1,38 @@
 # Deployment Checklist — Career Source Group Website
 
-**Date:** August 10, 2026  
-**Status:** ✅ READY FOR PRODUCTION DEPLOYMENT
+**Date:** August 10, 2026 (superseded — see update below)  
+**Status:** ✅ VERIFIED AGAINST THE CURRENT TREE (2026-08-13)
+
+> **Update (2026-08-13, later session):** ran a full type/build/lint/e2e pass against the working tree. Fixed 18 real `tsc --noEmit` errors that `pnpm build` silently ignores (Vite/Rolldown transpiles without type-checking — the "No TypeScript errors" line below was never actually verified with `tsc`). Also found and fixed the reason the 3 new e2e specs had never run: `playwright.config.ts` pointed at port 5173, but this project's dev server runs on port 8080. Once pointed at the right port, the specs themselves had several bugs (an ESM `__dirname` crash, a shared-file race across parallel workers, wrong locators/assertions, `networkidle` waits timing out against Vite's dev-mode cold compiles) — all fixed, and all 3 specs now pass in full alongside the 2 pre-existing ones. Also wired up Resend email notifications on all three forms (previously stored-but-never-emailed), with a 5s timeout so a slow/unreachable Resend API can never stall a submission. `pnpm build` / `pnpm lint` / `tsc --noEmit` are all clean.
 
 ---
 
 ## ✅ Pre-Deployment Verification
 
 ### Code Quality
-- [x] Build successful (3.19s, 0 errors)
-- [x] No TypeScript errors
+
+- [x] Build successful (verified 2026-08-13: client 13.1s + SSR 5.5s + Nitro 4.5s, 0 errors; one non-blocking chunk-size warning on the Three.js hero bundle)
+- [x] No TypeScript errors (verified 2026-08-13 with `tsc --noEmit` directly — `pnpm build` alone does not type-check; 18 real errors were found and fixed this pass)
 - [x] No CSS compilation errors
 - [x] No console warnings
 - [x] All commits pushed locally
 - [x] Branch: main (up to date)
-- [x] ESLint passing
-- [x] Prettier formatting applied
+- [x] ESLint passing (verified 2026-08-13: 0 errors, 7 pre-existing `react-refresh` warnings)
+- [x] Prettier formatting applied (repo-wide CRLF→LF normalization done 2026-08-13)
 
 ### Testing
-- [x] E2E tests configured (Playwright)
-- [x] Contact Form E2E test created
-- [x] Requirement Form E2E test created
-- [x] Critical user flows covered
-- [x] Mobile viewport tests included
+
+- [x] E2E tests configured (Playwright) — `playwright.config.ts` was pointed at port 5173; the dev server actually runs on 8080, so `webServer` auto-start could never have worked. Fixed 2026-08-13.
+- [x] Contact Form E2E — `e2e/contact-form.spec.ts`, passing
+- [x] Requirement Form E2E — `e2e/requirement-form.spec.ts`, passing
+- [x] Bench Form E2E — `e2e/bench-form.spec.ts`, passing (fixed an ESM `__dirname` crash, a shared-temp-file race across parallel workers, a wrong honeypot class assertion, a route-interception pattern that didn't match the app's real request path, and a strict-mode locator ambiguity)
+- [x] Regional Delivery E2E — `e2e/regional-delivery.spec.ts`, passing (fixed `networkidle` waits timing out under Vite dev cold-compiles, strict-mode locator ambiguity vs. the footer, a stale title assertion, and back/forward navigation waits)
+- [x] Staffing Navigation E2E — `e2e/staffing-navigation.spec.ts`, passing (same `networkidle` → `load` fix, 23 occurrences)
+- [x] Mobile viewport tests included — passing
 - [x] Form validation tests passing
 
 ### Security
+
 - [x] `.env.local` in `.gitignore` (not committed)
 - [x] `.vercel/` directory in `.gitignore` (not committed)
 - [x] No secrets in code
@@ -34,6 +41,7 @@
 - [x] Robots.txt configured
 
 ### Files & Structure
+
 - [x] All source files organized
 - [x] Public assets present
 - [x] Sitemap.xml generated
@@ -42,12 +50,14 @@
 - [x] Documentation complete
 
 ### Performance
+
 - [x] Lighthouse Score: 90+
 - [x] Core Web Vitals: All green
 - [x] Mobile Friendly: PASS
 - [x] Page Speed: Optimized
 
 ### SEO (verified 2026-08-12 — see [SEO_GUIDE.md](./SEO_GUIDE.md) for detail)
+
 - [x] JSON-LD schemas configured and wired into real pages (Organization, LocalBusiness, FAQPage, Service, Article, Breadcrumb)
 - [x] Meta tags implemented, unique per page (blog posts previously all shared identical metadata — fixed)
 - [x] Canonical tags fixed — every page now emits its own `<link rel="canonical">` (previously every page canonicalized to the homepage, a real duplicate-content bug)
@@ -57,6 +67,7 @@
 - [ ] Geo-targeting meta tags — not wired (low priority; Google gives these little weight)
 
 ### Accessibility
+
 - [x] WCAG AA compliant
 - [x] Keyboard navigation working
 - [x] Screen reader compatible
@@ -68,6 +79,7 @@
 ## 📦 Deployment Package Contents
 
 ### Code Changes: 22 Files Modified
+
 ```
 ✓ .gitignore              (50 → 87 lines)
 ✓ README.md               (75 → 450+ lines)
@@ -79,6 +91,7 @@
 ```
 
 ### Documentation: 5 New Files
+
 ```
 ✓ TYPOGRAPHY.md                   (250+ lines)
 ✓ TYPOGRAPHY_UPGRADE_SUMMARY.md   (Implementation guide)
@@ -88,6 +101,7 @@
 ```
 
 ### E2E Tests: 3 New Files
+
 ```
 ✓ playwright.config.ts            (Test configuration)
 ✓ e2e/contact-form.spec.ts        (8 test cases)
@@ -96,11 +110,13 @@
 ```
 
 ### Static Assets: 1 New File
+
 ```
 ✓ public/.well-known/security.txt (Security contact)
 ```
 
 ### Updated Files
+
 ```
 ✓ .gitignore                  (Added Playwright artifacts)
 ✓ package.json                (Added test scripts)
@@ -112,13 +128,14 @@
 ## 🚀 Deployment Instructions
 
 ### Step 1: Verify Commit
+
 ```bash
-# Check latest commit
+# Check latest commit — verify it matches what you intend to deploy
 git log -1 --oneline
-# Output: e88c54c feat: Complete website upgrade — Typography, SEO, and Documentation
 ```
 
 ### Step 2: Push to Remote
+
 ```bash
 # Push to main branch
 git push origin main
@@ -129,13 +146,16 @@ git status
 ```
 
 ### Step 3: Vercel Automatic Deployment
+
 Vercel automatically deploys on `main` branch push:
+
 - Build starts automatically
 - Environment variables loaded from Vercel project settings
 - Deployment preview generated
 - Production URL updated: https://careersourcegroup.com
 
 ### Step 4: Post-Deployment Verification
+
 After deployment completes:
 
 1. **Check Site is Live**
@@ -173,6 +193,7 @@ After deployment completes:
 ## 📋 Post-Deployment Tasks
 
 ### Immediate (First 24 hours)
+
 - [ ] Monitor Vercel deployment dashboard
 - [ ] Check error logs for any issues
 - [ ] Verify all pages load correctly
@@ -181,6 +202,7 @@ After deployment completes:
 - [ ] Verify redirects work
 
 ### Day 1-7
+
 - [ ] Submit sitemap to Google Search Console
 - [ ] Monitor Search Console for crawl errors
 - [ ] Check Core Web Vitals in Search Console
@@ -188,6 +210,7 @@ After deployment completes:
 - [ ] Test email notifications (forms)
 
 ### Week 1-4
+
 - [ ] Monitor keyword rankings
 - [ ] Check regional performance (US/LATAM/Pakistan)
 - [ ] Verify hreflang implementation
@@ -199,6 +222,7 @@ After deployment completes:
 ## 🔍 Quality Checklist
 
 ### Homepage
+
 - [x] Loads without errors
 - [x] Hero section displays correctly
 - [x] Typography is professional
@@ -207,12 +231,14 @@ After deployment completes:
 - [x] CTAs visible and clickable
 
 ### Staffing Pages
+
 - [x] Dynamic routes working
 - [x] Content displays correctly
 - [x] Related links functional
 - [x] Mobile responsive
 
 ### Regional Pages
+
 - [x] US page loads
 - [x] LATAM page loads
 - [x] Pakistan page loads
@@ -221,16 +247,18 @@ After deployment completes:
 - [ ] Hreflang tags — not implemented, see SEO section above for why
 
 ### Forms
+
 - [x] Contact form functional — persists to Supabase `contact_submissions`
 - [x] Get-started form functional — persists to Supabase `client_requirements`
 - [x] Join-bench form functional — persists to Supabase `candidate_applications`, résumé uploaded to the private `resumes` Storage bucket
 - [x] Validation working (Zod, server-side)
 - [x] Success messages display
 - [x] Rate limiting (5/email/hour, 20/IP/hour on the two intake forms) and honeypot spam checks active
-- [ ] Migrations `supabase/migrations/001`–`006` applied to the production Supabase project (see README → Database)
-- [ ] Email notifications (Resend) — not wired yet; submissions are stored but no one is emailed. `RESEND_API_KEY` is present but unused.
+- [x] Migrations `supabase/migrations/001`–`006` applied to the production Supabase project (confirmed 2026-08-13)
+- [x] Email notifications (Resend) — wired 2026-08-13; each successful submission (contact/get-started/join-our-bench) sends a staff notification via `src/lib/server/notify.ts`, capped at a 5s timeout so a slow/unreachable Resend API can never stall a submission. Requires `RESEND_API_KEY`, `RESEND_FROM_EMAIL`, `CONTACT_NOTIFICATION_EMAIL` to be set in production — if any is missing, notification is silently skipped and the submission still succeeds. Cloudflare Turnstile bot protection remains unwired (`NEXT_PUBLIC_TURNSTILE_SITE_KEY` unused).
 
 ### Technical
+
 - [x] No 404 errors
 - [x] No 5xx errors
 - [x] HTTPS working
@@ -243,6 +271,7 @@ After deployment completes:
 ## 📊 Performance Benchmarks
 
 ### Expected Metrics (Post-Deployment)
+
 ```
 Lighthouse:
   • Performance: 90+
@@ -268,27 +297,32 @@ Pages Load Time:
 ## 🆘 Troubleshooting
 
 ### Build Fails on Vercel
+
 - [ ] Check build logs in Vercel dashboard
 - [ ] Verify environment variables set
 - [ ] Run local build: `pnpm build`
 - [ ] Check git history: `git log`
 
 ### Pages Return 404
+
 - [ ] Check route files in `src/routes/`
 - [ ] Verify sitemap.xml has correct URLs
 - [ ] Check for routing typos
 
 ### Styles Not Loading
+
 - [ ] Check CSS file import: `src/styles.css`
 - [ ] Verify Tailwind config: `tailwind.config.js`
 - [ ] Clear browser cache and reload
 
 ### Fonts Not Loading (Manrope)
+
 - [ ] Check Google Fonts link in `__root.tsx`
 - [ ] Verify preconnect headers
 - [ ] Check browser console for font warnings
 
 ### SEO Not Showing
+
 - [ ] Wait 24-48 hours for initial indexing
 - [ ] Submit sitemap to Google Search Console
 - [ ] Check Search Console for errors
@@ -299,6 +333,7 @@ Pages Load Time:
 ## 🧪 E2E Testing (Before Deployment)
 
 ### Run Full E2E Test Suite
+
 ```bash
 # Start dev server in one terminal
 pnpm dev
@@ -308,6 +343,7 @@ pnpm test:e2e
 ```
 
 ### Test Coverage
+
 - **Test #1: Contact Form**
   - Form loads and renders
   - Required field validation
@@ -329,18 +365,21 @@ pnpm test:e2e
   - Error handling
 
 ### Interactive Test Runner
+
 ```bash
 # See tests execute in real-time with interactive UI
 pnpm test:e2e:ui
 ```
 
 ### Debug Mode
+
 ```bash
 # Run tests with browser dev tools open
 pnpm test:e2e:debug
 ```
 
 ### Generate Report
+
 ```bash
 # Run tests and generate HTML report
 pnpm test:e2e
@@ -350,6 +389,7 @@ pnpm test:e2e
 ```
 
 ### Before Deploying
+
 - [ ] Run `pnpm test:e2e`
 - [ ] All tests pass on Chromium
 - [ ] All tests pass on Firefox
@@ -365,6 +405,7 @@ pnpm test:e2e
 ### If Issues Occur
 
 **Minor Issue (Site functional, minor bug):**
+
 1. Report issue details
 2. Create bug fix branch: `fix/issue-name`
 3. Fix locally and test
@@ -372,6 +413,7 @@ pnpm test:e2e
 5. Vercel redeploys automatically
 
 **Critical Issue (Site down or broken):**
+
 1. Revert latest commit: `git revert HEAD`
 2. Push to main
 3. Vercel redeploys with previous version
@@ -379,8 +421,9 @@ pnpm test:e2e
 5. Re-deploy when ready
 
 **Rollback Command:**
+
 ```bash
-git revert e88c54c
+git revert <commit-hash>
 git push origin main
 ```
 
@@ -389,6 +432,7 @@ git push origin main
 ## ✅ Final Verification
 
 ### Before Pressing Deploy Button
+
 - [x] All tests pass locally
 - [x] Build completes without errors
 - [x] No console warnings
@@ -399,41 +443,49 @@ git push origin main
 - [x] Deployment checklist reviewed
 
 ### Deployment Status
+
 ```
 ✅ Code Ready
-✅ Tests Passing
-✅ Build Successful
+✅ Tests Passing (5/5 e2e specs, all browsers not yet cross-checked — chromium verified)
+✅ Build Successful (verified 2026-08-13)
+✅ TypeScript Clean (verified 2026-08-13 with tsc --noEmit directly)
 ✅ Documentation Complete
 ✅ SEO Configured
 ✅ Security Verified
+✅ Email Notifications Wired (Resend, 2026-08-13)
 
-STATUS: 🚀 READY FOR PRODUCTION DEPLOYMENT
+STATUS: ✅ READY TO DEPLOY
 ```
 
 ---
 
 ## 📝 Deployment Record
 
-**Deployment Date:** August 10, 2026  
+**Last documented deployment-readiness review:** August 10, 2026 (commit `e88c54c`)  
 **Deployed By:** [Your Name]  
 **Version:** v2.0 (Full Upgrade)  
-**Commit Hash:** e88c54c  
-**Branch:** main  
+**Branch:** main
 
-**Changes Included:**
+**Changes included as of that review:**
+
 - Premium typography system (20+ utilities)
 - Enhanced SEO with 6 new schemas
-- Geo-targeting for US/LATAM/Pakistan
+- Geo-targeting for US/LATAM/Pakistan (hreflang helper written, not wired up)
 - Complete documentation (1000+ lines)
 - Production-ready configuration
 
-**Deployment Status:** ✅ READY
+**Since then (commit `a545d2a`, 2026-08-12):** Supabase-backed forms, `/staffing` + `/our-story` route restructure, 3 new e2e specs, 6 SQL migrations (confirmed applied 2026-08-13).
+
+**Later same-day session (2026-08-13):** fixed 18 `tsc --noEmit` errors, fixed the port misconfiguration and several test-only bugs blocking the 3 new e2e specs, wired up Resend email notifications on all three forms. Full type/build/lint/e2e pass confirmed clean.
+
+**Deployment Status:** ✅ Ready to deploy `a545d2a` or later, pending your own review of the `pnpm add -D @types/three` and Resend-wiring changes.
 
 ---
 
-*This checklist ensures your website is production-ready and properly configured for search engines and users worldwide.*
+_This checklist ensures your website is production-ready and properly configured for search engines and users worldwide._
 
 **For questions or issues, refer to:**
+
 - README.md — Project documentation
 - TYPOGRAPHY.md — Typography reference
 - SEO_GUIDE.md — SEO implementation guide

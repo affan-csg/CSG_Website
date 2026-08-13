@@ -15,15 +15,14 @@ export const Route = createFileRoute("/faq")({
   head: () => ({
     ...buildSeoMeta({
       title: "Frequently Asked Questions",
-      description: "Answers for clients hiring AI/ML, MLOps, Data, DevOps, DevSecOps, Cloud, Software Development, and Product talent.",
-      path: "/faq"
+      description:
+        "Answers for clients hiring AI/ML, MLOps, Data, DevOps, DevSecOps, Cloud, Software Development, and Product talent.",
+      path: "/faq",
     }),
     scripts: [
       {
         type: "application/ld+json",
-        children: JSON.stringify(
-          buildFaqJsonLd(faqs.map((f) => ({ question: f.q, answer: f.a }))),
-        ),
+        children: JSON.stringify(buildFaqJsonLd(faqs.map((f) => ({ question: f.q, answer: f.a })))),
       },
     ],
   }),
@@ -43,28 +42,16 @@ function FaqPage() {
       />
 
       <Section>
-        <SectionHeading
-          eyebrow="For clients"
-          title="Hiring and engagement questions"
-        />
+        <SectionHeading eyebrow="For clients" title="Hiring and engagement questions" />
         <Reveal className="mt-8">
-          <FaqSection
-            questions={clientFaqs.map((f) => f.q)}
-            showAllLink={false}
-          />
+          <FaqSection questions={clientFaqs.map((f) => f.q)} showAllLink={false} />
         </Reveal>
       </Section>
 
       <Section className="border-t border-border">
-        <SectionHeading
-          eyebrow="For talent"
-          title="Application and placement questions"
-        />
+        <SectionHeading eyebrow="For talent" title="Application and placement questions" />
         <Reveal className="mt-8">
-          <FaqSection
-            questions={talentFaqs.map((f) => f.q)}
-            showAllLink={false}
-          />
+          <FaqSection questions={talentFaqs.map((f) => f.q)} showAllLink={false} />
         </Reveal>
       </Section>
 

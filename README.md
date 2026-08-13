@@ -42,6 +42,7 @@ Career Source Group (CSG) is a global staffing company offering:
 ## ✨ Features
 
 ### Core Features
+
 - ✅ **Responsive Design** — Mobile-first, optimized for all devices
 - ✅ **Premium Typography** — Manrope font system with clear hierarchy
 - ✅ **Dynamic Routing** — File-based routing for staffing specialties and regions
@@ -49,6 +50,7 @@ Career Source Group (CSG) is a global staffing company offering:
 - ✅ **Blog Platform** — CMS-ready blog structure with dynamic routes
 
 ### Performance & SEO
+
 - ✅ **Server-Side Rendering (SSR)** — Fast initial page loads, SEO-friendly
 - ✅ **JSON-LD Structured Data** — Organization, LocalBusiness, FAQPage, Service, Article, Breadcrumb schemas
 - ✅ **Meta Tags & Open Graph** — Per-page titles/descriptions, real canonical tags, optimized for social sharing
@@ -58,6 +60,7 @@ Career Source Group (CSG) is a global staffing company offering:
 See [SEO & Performance](#seo--performance) below for what's implemented vs. still open (hreflang is intentionally not enabled yet).
 
 ### Visual & Animation
+
 - ✅ **Three.js Particles** — Interactive 3D background effects
 - ✅ **Framer Motion** — Smooth page transitions and micro-interactions
 - ✅ **GSAP** — Advanced animations and timelines
@@ -65,6 +68,7 @@ See [SEO & Performance](#seo--performance) below for what's implemented vs. stil
 - ✅ **Custom Cursor** — Branded cursor effects
 
 ### Accessibility
+
 - ✅ **WCAG AA Compliant** — Proper contrast ratios, keyboard navigation
 - ✅ **Semantic HTML** — Proper heading hierarchy, ARIA labels
 - ✅ **Focus Management** — Visible focus states, keyboard support
@@ -75,16 +79,19 @@ See [SEO & Performance](#seo--performance) below for what's implemented vs. stil
 ## 🏗️ Tech Stack
 
 ### Frontend Framework
+
 - **[TanStack Start](https://tanstack.com/start)** (1.168.x) — Modern React SSR framework
 - **[React](https://react.dev)** (19.2) — UI library
 - **[TanStack Router](https://tanstack.com/router)** (1.170) — Type-safe file-based routing
 
 ### Styling & Design
+
 - **[Tailwind CSS](https://tailwindcss.com)** (4.2) — Utility-first CSS framework
 - **[Manrope Font](https://fonts.google.com/specimen/Manrope)** — Premium typeface (weights: 400-800)
 - **[OKLCH Color Space](https://oklch.com/)** — Modern perceptually uniform colors
 
 ### Animation & Interactivity
+
 - **[Framer Motion](https://www.framer.com/motion)** (13.0) — React animation library
 - **[GSAP](https://gsap.com)** (3.15) — Professional animation platform
 - **[Lenis](https://lenis.darkroom.engineering)** (1.3) — Smooth scroll library
@@ -92,27 +99,32 @@ See [SEO & Performance](#seo--performance) below for what's implemented vs. stil
 - **[React Three Fiber](https://docs.pmnd.rs/react-three-fiber)** (9.7) — React renderer for Three.js
 
 ### Forms & Validation
+
 - **[React Hook Form](https://react-hook-form.com)** (7.71) — Performant form state
 - **[Zod](https://zod.dev)** (3.24) — TypeScript-first validation
 - **[Radix UI](https://radix-ui.com)** — Accessible component primitives
 
 ### UI Components & Icons
+
 - **[shadcn/ui](https://ui.shadcn.com)** — Copy-paste component library
 - **[Lucide React](https://lucide.dev)** — Icon library (575+ icons)
 - **[Embla Carousel](https://www.embla-carousel.com)** — Carousel component
 - **[React Day Picker](https://react-day-picker.js.org)** — Date picker
 
 ### Data & State Management
+
 - **[TanStack React Query](https://tanstack.com/query)** (5.101) — Server state management
 - **[Supabase](https://supabase.com)** (`@supabase/supabase-js` 2.112) — Form submission storage + résumé file storage
 - **[Recharts](https://recharts.org)** (2.15) — Data visualization
 
 ### Build & Deployment
+
 - **[Vite](https://vitejs.dev)** (8.2) — Lightning-fast build tool
 - **[Nitro](https://nitro.unjs.io)** (3.0 beta) — Universal server framework
 - **[Vercel](https://vercel.com)** — Deployment platform (configured)
 
 ### Development Tools
+
 - **[TypeScript](https://www.typescriptlang.org)** (5.8) — Type safety
 - **[ESLint](https://eslint.org)** — Code linting
 - **[Prettier](https://prettier.io)** — Code formatting
@@ -122,6 +134,7 @@ See [SEO & Performance](#seo--performance) below for what's implemented vs. stil
 ## 🚀 Getting Started
 
 ### Prerequisites
+
 - Node.js 18+
 - pnpm
 
@@ -164,6 +177,11 @@ pnpm lint
 # Format code with Prettier
 pnpm format
 ```
+
+### Windows Notes
+
+- **Don't run this repo from inside a OneDrive-synced folder** (e.g. `OneDrive\Desktop\...`). OneDrive's file-lock/sync scanning against `node_modules` has been observed to make `pnpm build` OOM-crash and `pnpm lint` take 20+ minutes. Clone or move the repo somewhere outside OneDrive (e.g. `C:\dev\...`).
+- Line endings are enforced as LF via [`.gitattributes`](./.gitattributes). If `pnpm lint` ever balloons back up to minutes-long with a wall of `Delete '␍'` errors, some files picked up CRLF — run `pnpm format` to fix it. This most often happens on machines with `core.autocrlf=true` from before `.gitattributes` was added.
 
 ---
 
@@ -267,10 +285,10 @@ All three forms write to Supabase, not email — there's no `mailto:` fallback. 
 [`src/lib/server/`](./src/lib/server/) for the Supabase client, insert logic, rate
 limiting, and Zod validation.
 
-| Form | Table | Notes |
-| --- | --- | --- |
-| Contact (`/contact`) | `contact_submissions` | No rate limit — honeypot only |
-| Get a Requirement (`/get-started`) | `client_requirements` | Rate-limited: 5/email/hr, 20/IP/hr |
+| Form                               | Table                    | Notes                                                                                                             |
+| ---------------------------------- | ------------------------ | ----------------------------------------------------------------------------------------------------------------- |
+| Contact (`/contact`)               | `contact_submissions`    | No rate limit — honeypot only                                                                                     |
+| Get a Requirement (`/get-started`) | `client_requirements`    | Rate-limited: 5/email/hr, 20/IP/hr                                                                                |
 | Join Our Bench (`/join-our-bench`) | `candidate_applications` | Same rate limits; résumé uploaded to the private `resumes` Storage bucket, referenced by path, never a public URL |
 
 **Setup:** on a fresh Supabase project, run every file in [`supabase/migrations/`](./supabase/migrations/) in order via the SQL Editor (or `supabase db push` if the project is linked with the CLI). On the existing production project, migrations `001`–`005` are already applied — only `006_bench_form_fields.sql` needs to be run (adds `seniority`, `expected_monthly_rate`, `message` to `candidate_applications`).
@@ -292,6 +310,7 @@ Row-level security is enabled on all three tables with staff-only `SELECT`; inse
 ### SEO Features Implemented
 
 #### ✅ Structured Data (JSON-LD)
+
 - Organization + LocalBusiness schema (root layout)
 - FAQPage schema, built from the real Q&A content on `/faq`
 - Service schema on each of the 8 `/staffing/$slug` specialty pages
@@ -300,22 +319,26 @@ Row-level security is enabled on all three tables with staff-only `SELECT`; inse
 - BreadcrumbList schema on all of the above dynamic pages
 
 #### ✅ Meta Tags
+
 - Page-specific titles and descriptions (unique per route, including per blog post — previously all 6 posts shared identical metadata)
 - Open Graph tags for social sharing
 - Twitter Card metadata
 - Canonical URLs — every page emits its own `<link rel="canonical">`. This was previously broken (see [SEO_GUIDE.md](./SEO_GUIDE.md#meta-tags--open-graph)): a hardcoded root-level canonical meant every non-home page declared the homepage as canonical.
 
 #### ⚠️ Geo-Targeting — partially implemented
+
 - **Regional schema markup** — done, see above
-- **Hreflang tags** — helper exists (`buildHreflangLinks` in `src/lib/seo.ts`) but is deliberately *not* wired up: the regional pages are English-language content about LATAM/Pakistan, not translations, so tagging them `es-MX`/`en-PK` would be an incorrect signal. Needs real translated pages first.
+- **Hreflang tags** — helper exists (`buildHreflangLinks` in `src/lib/seo.ts`) but is deliberately _not_ wired up: the regional pages are English-language content about LATAM/Pakistan, not translations, so tagging them `es-MX`/`en-PK` would be an incorrect signal. Needs real translated pages first.
 - **Geo-location metadata** — helper exists (`buildGeoTargetingMeta`) but unused; Google gives it little weight, so it's low priority.
 
 #### ✅ Sitemap & Robots
+
 - **sitemap.xml** — static, includes every real page including individual blog posts; legacy redirect URLs correctly excluded
 - **robots.txt** — configured for crawlers
 - Legacy URL renames (`/about`, `/services`, `/why-csg`) 301-redirect to their new paths so link equity transfers
 
 #### ✅ Performance
+
 - Server-side rendering (SSR) for fast initial loads
 - Lazy loading for images
 - Optimized font loading (preconnect)
@@ -323,6 +346,7 @@ Row-level security is enabled on all three tables with staff-only `SELECT`; inse
 - Caching headers for assets
 
 ### Performance Metrics
+
 Not yet measured against a production deploy of the current build — run Lighthouse/PageSpeed Insights before citing numbers here.
 
 ---
@@ -342,16 +366,19 @@ git push origin main
 ### Other Platforms
 
 This project works on:
+
 - **Netlify** — Configure build command: `pnpm build`
 - **Cloudflare Workers** — Use Workers deployment
 - **Traditional Node.js Hosting** — Build and run via Node server
 
 ### Build Command
+
 ```bash
 pnpm build
 ```
 
 ### Preview Before Deploy
+
 ```bash
 pnpm preview
 ```
@@ -371,8 +398,8 @@ This is a proprietary project, but internal contributions follow these guideline
 
 1. **Branch Naming:** `feature/feature-name`, `fix/bug-name`, `docs/doc-name`
 2. **Commit Messages:** Clear, descriptive, present tense
-3. **Code Style:** Run `npm run format` before committing
-4. **Testing:** Ensure no lint errors: `npm run lint`
+3. **Code Style:** Run `pnpm format` before committing
+4. **Testing:** Ensure no lint errors: `pnpm lint`
 5. **Pull Requests:** Link issues, describe changes, test in staging
 
 ---
@@ -397,10 +424,11 @@ This is a proprietary project. Unauthorized use, reproduction, or distribution i
 ## 🙏 Acknowledgments
 
 Built with modern web technologies:
+
 - React, TypeScript, Tailwind CSS
 - TanStack ecosystem (Start, Router, Query)
 - Three.js, GSAP, Framer Motion
 - Vercel for hosting and deployment
 
-**Last Updated:** August 2026  
-**Current Version:** 2.0 (Typography Upgrade Complete)
+**Last Updated:** August 13, 2026  
+**Current Version:** 2.0 (Supabase Forms Backend + Route Restructure) — see [CHANGELOG.md](./CHANGELOG.md) for full history

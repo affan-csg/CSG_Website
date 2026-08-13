@@ -89,8 +89,7 @@ export const pods = {
     },
     {
       title: "Full Engineering Pod",
-      composition:
-        "US technical lead + LATAM senior engineers + Pakistan execution capacity",
+      composition: "US technical lead + LATAM senior engineers + Pakistan execution capacity",
       body: "",
     },
   ],

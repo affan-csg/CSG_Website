@@ -61,9 +61,7 @@ export const whyCsg = {
     },
   ],
   cta: { label: "Compare all three regions", to: "/global-delivery" },
-  faqQuestions: [
-    "Why do you charge 10% for direct hire when the industry charges 20-30%?",
-  ],
+  faqQuestions: ["Why do you charge 10% for direct hire when the industry charges 20-30%?"],
 };
 
 export const about = {
@@ -147,8 +145,7 @@ export const bench = {
       "Pod placements mean you may be matched alongside other specialists you'll actually work with, not dropped into a team alone.",
     ],
   },
-  locationHint:
-    "Wherever you're based — our clients hire across the US, LATAM, and Pakistan.",
+  locationHint: "Wherever you're based — our clients hire across the US, LATAM, and Pakistan.",
   portfolioHint: "Optional — a personal site, GitHub, or work samples.",
   resumeHint: "PDF or Word document, 5 MB max.",
   availability: ["Immediately", "2–4 weeks", "1–3 months"],
@@ -168,13 +165,8 @@ export const getStarted = {
 export const contact = {
   title: "Contact us",
   lead: "General inquiries. For a staffing requirement or a bench application, use the links below instead.",
-  subjects: [
-    "I need to hire talent",
-    "I'm looking for work",
-    "Something else",
-  ],
-  botNotice:
-    "Bot verification is not configured yet — this form cannot be submitted until it is.",
+  subjects: ["I need to hire talent", "I'm looking for work", "Something else"],
+  botNotice: "Bot verification is not configured yet — this form cannot be submitted until it is.",
 };
 
 export const legalPages = {
@@ -193,10 +185,7 @@ export const legalPages = {
       ["Address", "6040 Yorkridge Dr, Alpharetta, Georgia, 30005, United States"],
       ["Registered Company Name", "Career Source Group, LLC"],
       ["Phone Number", "+14438759677"],
-      [
-        "Registered Office Address",
-        "6040 Yorkridge Dr, Alpharetta, Georgia, 30005, United States",
-      ],
+      ["Registered Office Address", "6040 Yorkridge Dr, Alpharetta, Georgia, 30005, United States"],
     ] as const,
   },
   merchant: {

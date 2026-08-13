@@ -8,10 +8,7 @@ const HeroCanvas = lazy(() => import("@/components/site/hero-canvas"));
  */
 export function HeroParticles({ showRing = true }: { showRing?: boolean }) {
   return (
-    <div
-      aria-hidden
-      className="pointer-events-none absolute inset-0 opacity-70 -z-10"
-    >
+    <div aria-hidden className="pointer-events-none absolute inset-0 opacity-70 -z-10">
       <ClientOnly fallback={null}>
         <Suspense fallback={null}>
           <HeroCanvas showRing={showRing} />

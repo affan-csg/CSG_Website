@@ -10,7 +10,7 @@ export const Route = createFileRoute("/legal-notice")({
     buildSeoMeta({
       title: "Legal Notice",
       description: "Legal notice and company information for Career Source Group.",
-      path: "/legal-notice"
+      path: "/legal-notice",
     }),
   component: LegalNoticePage,
 });
@@ -18,10 +18,7 @@ export const Route = createFileRoute("/legal-notice")({
 function LegalNoticePage() {
   return (
     <>
-      <PageHero
-        eyebrow="Legal"
-        title={legalPages.legalNotice.title}
-      />
+      <PageHero eyebrow="Legal" title={legalPages.legalNotice.title} />
 
       <Section>
         <div className="max-w-3xl">
@@ -35,9 +32,7 @@ function LegalNoticePage() {
                   <p className="font-mono text-[0.66rem] uppercase tracking-[0.18em] text-gold">
                     {label}
                   </p>
-                  <p className="text-[1.02rem] leading-relaxed text-muted-foreground">
-                    {value}
-                  </p>
+                  <p className="text-[1.02rem] leading-relaxed text-muted-foreground">{value}</p>
                 </div>
               ))}
             </div>

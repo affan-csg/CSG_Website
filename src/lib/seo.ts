@@ -30,7 +30,12 @@ export function buildSeoMeta(opts: SeoOptions) {
     meta: [
       { title: pageTitle },
       { name: "description", content: opts.description },
-      { name: "keywords", content: opts.keywords || "staffing, talent acquisition, US staffing, LATAM nearshore, Pakistan offshore, direct hire, contract staffing, Career Source Group" },
+      {
+        name: "keywords",
+        content:
+          opts.keywords ||
+          "staffing, talent acquisition, US staffing, LATAM nearshore, Pakistan offshore, direct hire, contract staffing, Career Source Group",
+      },
       { name: "author", content: SITE_NAME },
       { name: "robots", content: opts.noindex ? "noindex, nofollow" : "index, follow" },
       // Open Graph
@@ -55,29 +60,30 @@ export function buildOrganizationJsonLd() {
   return {
     "@context": "https://schema.org",
     "@type": "Organization",
-    "name": "Career Source Group, LLC",
-    "url": SITE_URL,
-    "logo": SITE_URL + DEFAULT_OG_IMAGE,
-    "description": "US staffing and talent delivery firm providing direct hire, contract, and contract-to-hire talent across the US, LATAM, and Pakistan.",
-    "address": {
+    name: "Career Source Group, LLC",
+    url: SITE_URL,
+    logo: SITE_URL + DEFAULT_OG_IMAGE,
+    description:
+      "US staffing and talent delivery firm providing direct hire, contract, and contract-to-hire talent across the US, LATAM, and Pakistan.",
+    address: {
       "@type": "PostalAddress",
-      "streetAddress": "6040 Yorkridge Dr",
-      "addressLocality": "Alpharetta",
-      "addressRegion": "Georgia",
-      "postalCode": "30005",
-      "addressCountry": "US"
+      streetAddress: "6040 Yorkridge Dr",
+      addressLocality: "Alpharetta",
+      addressRegion: "Georgia",
+      postalCode: "30005",
+      addressCountry: "US",
     },
-    "contactPoint": {
+    contactPoint: {
       "@type": "ContactPoint",
-      "telephone": "+1-443-875-9677",
-      "contactType": "customer service",
-      "availableLanguage": ["English", "Spanish"]
+      telephone: "+1-443-875-9677",
+      contactType: "customer service",
+      availableLanguage: ["English", "Spanish"],
     },
-    "sameAs": [
+    sameAs: [
       "https://www.linkedin.com/in/zohaibkhawaja/",
       "https://www.facebook.com/61559974043500",
-      "https://www.instagram.com/careersourcegroup"
-    ]
+      "https://www.instagram.com/careersourcegroup",
+    ],
   };
 }
 
@@ -85,40 +91,41 @@ export function buildLocalBusinessJsonLd() {
   return {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
-    "name": "Career Source Group, LLC",
-    "url": SITE_URL,
-    "logo": SITE_URL + DEFAULT_OG_IMAGE,
-    "description": "US staffing and talent delivery firm providing direct hire, contract, and contract-to-hire talent across the US, LATAM, and Pakistan.",
-    "address": {
+    name: "Career Source Group, LLC",
+    url: SITE_URL,
+    logo: SITE_URL + DEFAULT_OG_IMAGE,
+    description:
+      "US staffing and talent delivery firm providing direct hire, contract, and contract-to-hire talent across the US, LATAM, and Pakistan.",
+    address: {
       "@type": "PostalAddress",
-      "streetAddress": "6040 Yorkridge Dr",
-      "addressLocality": "Alpharetta",
-      "addressRegion": "Georgia",
-      "postalCode": "30005",
-      "addressCountry": "US"
+      streetAddress: "6040 Yorkridge Dr",
+      addressLocality: "Alpharetta",
+      addressRegion: "Georgia",
+      postalCode: "30005",
+      addressCountry: "US",
     },
-    "telephone": "+1-443-875-9677",
-    "priceRange": "$$",
-    "openingHours": "Mo-Fr 09:00-18:00",
-    "geo": {
+    telephone: "+1-443-875-9677",
+    priceRange: "$$",
+    openingHours: "Mo-Fr 09:00-18:00",
+    geo: {
       "@type": "GeoCoordinates",
-      "latitude": 34.0754,
-      "longitude": -84.2941
+      latitude: 34.0754,
+      longitude: -84.2941,
     },
-    "areaServed": [
+    areaServed: [
       {
         "@type": "Country",
-        "name": "United States"
+        name: "United States",
       },
       {
         "@type": "Country",
-        "name": "Mexico"
+        name: "Mexico",
       },
       {
         "@type": "Country",
-        "name": "Pakistan"
-      }
-    ]
+        name: "Pakistan",
+      },
+    ],
   };
 }
 
@@ -126,14 +133,14 @@ export function buildFaqJsonLd(questions: Array<{ question: string; answer: stri
   return {
     "@context": "https://schema.org",
     "@type": "FAQPage",
-    "mainEntity": questions.map(q => ({
+    mainEntity: questions.map((q) => ({
       "@type": "Question",
-      "name": q.question,
-      "acceptedAnswer": {
+      name: q.question,
+      acceptedAnswer: {
         "@type": "Answer",
-        "text": q.answer
-      }
-    }))
+        text: q.answer,
+      },
+    })),
   };
 }
 
@@ -147,16 +154,16 @@ export function buildStaffingJsonLd(role: {
   return {
     "@context": "https://schema.org",
     "@type": "Service",
-    "name": role.name,
-    "description": role.description,
-    "image": role.image ? SITE_URL + role.image : DEFAULT_OG_IMAGE,
-    "provider": {
+    name: role.name,
+    description: role.description,
+    image: role.image ? SITE_URL + role.image : DEFAULT_OG_IMAGE,
+    provider: {
       "@type": "Organization",
-      "name": "Career Source Group, LLC",
-      "url": SITE_URL
+      name: "Career Source Group, LLC",
+      url: SITE_URL,
     },
-    "areaServed": role.region || "United States",
-    ...(role.price && { "priceRange": role.price })
+    areaServed: role.region || "United States",
+    ...(role.price && { priceRange: role.price }),
   };
 }
 
@@ -164,12 +171,12 @@ export function buildBreadcrumbJsonLd(items: Array<{ name: string; url: string }
   return {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
-    "itemListElement": items.map((item, index) => ({
+    itemListElement: items.map((item, index) => ({
       "@type": "ListItem",
-      "position": index + 1,
-      "name": item.name,
-      "item": SITE_URL + item.url
-    }))
+      position: index + 1,
+      name: item.name,
+      item: SITE_URL + item.url,
+    })),
   };
 }
 
@@ -178,24 +185,27 @@ export function buildRegionalBusinessJsonLd(region: "us" | "latam" | "pakistan")
     us: {
       name: "Career Source Group - United States",
       country: "US",
-      description: "Direct hire staffing, contract staffing, and contract-to-hire talent acquisition across the United States.",
+      description:
+        "Direct hire staffing, contract staffing, and contract-to-hire talent acquisition across the United States.",
       geo: { latitude: 34.0754, longitude: -84.2941 },
-      regions: ["United States"]
+      regions: ["United States"],
     },
     latam: {
       name: "Career Source Group - LATAM Nearshore",
       country: "Mexico",
-      description: "Nearshore talent delivery and staffing solutions across Latin America with 30-70% cost savings.",
+      description:
+        "Nearshore talent delivery and staffing solutions across Latin America with 30-70% cost savings.",
       geo: { latitude: 23.6345, longitude: -102.5528 },
-      regions: ["Mexico", "Colombia", "Argentina", "Brazil"]
+      regions: ["Mexico", "Colombia", "Argentina", "Brazil"],
     },
     pakistan: {
       name: "Career Source Group - Pakistan Offshore",
       country: "Pakistan",
-      description: "Offshore talent delivery and staffing solutions from Pakistan with 50-70% cost savings.",
+      description:
+        "Offshore talent delivery and staffing solutions from Pakistan with 50-70% cost savings.",
       geo: { latitude: 30.3753, longitude: 69.3451 },
-      regions: ["Pakistan"]
-    }
+      regions: ["Pakistan"],
+    },
   };
 
   const data = regionData[region];
@@ -203,25 +213,25 @@ export function buildRegionalBusinessJsonLd(region: "us" | "latam" | "pakistan")
   return {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
-    "name": data.name,
-    "url": SITE_URL,
-    "logo": SITE_URL + DEFAULT_OG_IMAGE,
-    "description": data.description,
-    "telephone": "+1-443-875-9677",
-    "priceRange": "$$",
-    "geo": {
+    name: data.name,
+    url: SITE_URL,
+    logo: SITE_URL + DEFAULT_OG_IMAGE,
+    description: data.description,
+    telephone: "+1-443-875-9677",
+    priceRange: "$$",
+    geo: {
       "@type": "GeoCoordinates",
-      "latitude": data.geo.latitude,
-      "longitude": data.geo.longitude
+      latitude: data.geo.latitude,
+      longitude: data.geo.longitude,
     },
-    "areaServed": data.regions.map(r => ({
+    areaServed: data.regions.map((r) => ({
       "@type": "Country",
-      "name": r
+      name: r,
     })),
-    "address": {
+    address: {
       "@type": "PostalAddress",
-      "addressCountry": data.country
-    }
+      addressCountry: data.country,
+    },
   };
 }
 
@@ -236,23 +246,23 @@ export function buildArticleJsonLd(article: {
   return {
     "@context": "https://schema.org",
     "@type": "Article",
-    "headline": article.title,
-    "description": article.description,
-    "image": article.image ? SITE_URL + article.image : DEFAULT_OG_IMAGE,
-    "author": {
+    headline: article.title,
+    description: article.description,
+    image: article.image ? SITE_URL + article.image : DEFAULT_OG_IMAGE,
+    author: {
       "@type": "Organization",
-      "name": article.author || "Career Source Group, LLC"
+      name: article.author || "Career Source Group, LLC",
     },
-    "publisher": {
+    publisher: {
       "@type": "Organization",
-      "name": "Career Source Group, LLC",
-      "logo": {
+      name: "Career Source Group, LLC",
+      logo: {
         "@type": "ImageObject",
-        "url": SITE_URL + DEFAULT_OG_IMAGE
-      }
+        url: SITE_URL + DEFAULT_OG_IMAGE,
+      },
     },
-    ...(article.publishedDate && { "datePublished": article.publishedDate }),
-    ...(article.modifiedDate && { "dateModified": article.modifiedDate })
+    ...(article.publishedDate && { datePublished: article.publishedDate }),
+    ...(article.modifiedDate && { dateModified: article.modifiedDate }),
   };
 }
 
@@ -260,15 +270,15 @@ export function buildAggregateRatingJsonLd(
   rating: number,
   reviewCount: number,
   bestRating: number = 5,
-  worstRating: number = 1
+  worstRating: number = 1,
 ) {
   return {
     "@context": "https://schema.org",
     "@type": "AggregateRating",
-    "ratingValue": rating,
-    "bestRating": bestRating,
-    "worstRating": worstRating,
-    "reviewCount": reviewCount
+    ratingValue: rating,
+    bestRating: bestRating,
+    worstRating: worstRating,
+    reviewCount: reviewCount,
   };
 }
 
@@ -277,18 +287,18 @@ export function buildGeoTargetingMeta(region: "us" | "latam" | "pakistan") {
     us: {
       geoPosition: "34.0754, -84.2941",
       placeType: "Country",
-      placeName: "United States"
+      placeName: "United States",
     },
     latam: {
       geoPosition: "23.6345, -102.5528",
       placeType: "Region",
-      placeName: "Latin America"
+      placeName: "Latin America",
     },
     pakistan: {
       geoPosition: "30.3753, 69.3451",
       placeType: "Country",
-      placeName: "Pakistan"
-    }
+      placeName: "Pakistan",
+    },
   };
 
   const data = regionData[region];
@@ -296,16 +306,20 @@ export function buildGeoTargetingMeta(region: "us" | "latam" | "pakistan") {
   return [
     { name: "geo.position", content: data.geoPosition },
     { name: "geo.placename", content: data.placeName },
-    { name: "geo.region", content: `geo.${region}` }
+    { name: "geo.region", content: `geo.${region}` },
   ];
 }
 
 export function buildHreflangLinks(currentPath: string) {
   return [
     { rel: "canonical", href: SITE_URL + currentPath },
-    { rel: "alternate", hrefLang: "en-US", href: SITE_URL + (currentPath.includes("/us") ? currentPath : "/") },
+    {
+      rel: "alternate",
+      hrefLang: "en-US",
+      href: SITE_URL + (currentPath.includes("/us") ? currentPath : "/"),
+    },
     { rel: "alternate", hrefLang: "es-MX", href: SITE_URL + "/global-delivery/latam" },
     { rel: "alternate", hrefLang: "en-PK", href: SITE_URL + "/global-delivery/pakistan" },
-    { rel: "alternate", hrefLang: "x-default", href: SITE_URL + currentPath }
+    { rel: "alternate", hrefLang: "x-default", href: SITE_URL + currentPath },
   ];
 }

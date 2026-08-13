@@ -15,8 +15,7 @@ export const comparisonRows = [
     label: "Best for",
     us: "Leadership, client-facing, compliance-sensitive, culture-critical",
     latam: "Core product engineering, anything needing daily collaboration",
-    pakistan:
-      "Execution-heavy work, maintenance, overnight coverage, volume throughput",
+    pakistan: "Execution-heavy work, maintenance, overnight coverage, volume throughput",
   },
   {
     label: "Engagement models",

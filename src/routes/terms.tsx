@@ -9,7 +9,7 @@ export const Route = createFileRoute("/terms")({
     buildSeoMeta({
       title: "Terms & Conditions",
       description: "Terms and conditions for Career Source Group.",
-      path: "/terms"
+      path: "/terms",
     }),
   component: TermsPage,
 });
@@ -17,10 +17,7 @@ export const Route = createFileRoute("/terms")({
 function TermsPage() {
   return (
     <>
-      <PageHero
-        eyebrow="Legal"
-        title={legalPages.terms.title}
-      />
+      <PageHero eyebrow="Legal" title={legalPages.terms.title} />
 
       <Section>
         <div className="max-w-3xl">

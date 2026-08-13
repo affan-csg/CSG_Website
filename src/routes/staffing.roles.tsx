@@ -15,7 +15,8 @@ export const Route = createFileRoute("/staffing/roles")({
   head: () => ({
     ...buildSeoMeta({
       title: "Staffing Roles — Individual Specialists, Priced by Region",
-      description: "Direct hire, contract, and contract-to-hire specialists placed into a seat you've already defined, priced across the US, LATAM, and Pakistan.",
+      description:
+        "Direct hire, contract, and contract-to-hire specialists placed into a seat you've already defined, priced across the US, LATAM, and Pakistan.",
       path: "/staffing/roles",
     }),
     scripts: [

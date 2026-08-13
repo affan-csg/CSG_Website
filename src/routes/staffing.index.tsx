@@ -11,7 +11,8 @@ export const Route = createFileRoute("/staffing/")({
   head: () =>
     buildSeoMeta({
       title: "Staffing — Roles, Pods, and Specialized Technical Hires",
-      description: "Individual specialists, purpose-built pods, or deep technical specialties — placed across the US, LATAM, and Pakistan under one contract.",
+      description:
+        "Individual specialists, purpose-built pods, or deep technical specialties — placed across the US, LATAM, and Pakistan under one contract.",
       path: "/staffing",
     }),
   component: StaffingIndex,

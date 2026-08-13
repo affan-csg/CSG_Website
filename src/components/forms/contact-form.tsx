@@ -1,236 +1,128 @@
-import { useRef, useState } from "react";
+import { useRef } from "react";
 
 import { cn } from "@/lib/utils";
-import { type ContactFormData, type FormStatus, inquiryTypeOptions } from "@/lib/forms";
+import { type ContactFormData, inquiryTypeOptions } from "@/lib/forms";
 import { submitContactForm } from "@/lib/form-actions";
+import { useFormSubmit } from "@/lib/use-form-submit";
+import {
+  FormError,
+  FormSuccess,
+  Honeypot,
+  SelectField,
+  SubmitButton,
+  TextAreaField,
+  TextField,
+} from "@/components/site/form-controls";
 
 interface ContactFormProps {
   className?: string;
 }
 
+const initialData: ContactFormData = {
+  firstName: "",
+  lastName: "",
+  email: "",
+  phone: "",
+  inquiryType: "",
+  message: "",
+};
+
 export function ContactForm({ className }: ContactFormProps) {
-  const [status, setStatus] = useState<FormStatus>("idle");
-  const [errorMessage, setErrorMessage] = useState("");
+  const { status, setStatus, errorMessage, formData, handleChange, submit } =
+    useFormSubmit<ContactFormData>(initialData);
   const honeypotRef = useRef<HTMLInputElement>(null);
-  const [formData, setFormData] = useState<ContactFormData>({
-    firstName: "",
-    lastName: "",
-    email: "",
-    phone: "",
-    inquiryType: "",
-    message: "",
-  });
 
-  const handleChange = (
-    e: React.ChangeEvent<
-      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
-    >,
-  ) => {
-    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setStatus("submitting");
-    setErrorMessage("");
-
-    try {
-      const result = await submitContactForm({
-        data: { ...formData, honeypot: honeypotRef.current?.value ?? "" },
-      });
-      if (result.success) {
-        setStatus("success");
-        setFormData({
-          firstName: "",
-          lastName: "",
-          email: "",
-          phone: "",
-          inquiryType: "",
-          message: "",
-        });
-      } else {
-        setStatus("error");
-        setErrorMessage(result.message);
-      }
-    } catch {
-      setStatus("error");
-      setErrorMessage("Something went wrong. Please try again.");
-    }
+    void submit(
+      () =>
+        submitContactForm({ data: { ...formData, honeypot: honeypotRef.current?.value ?? "" } }),
+      initialData,
+    );
   };
 
   if (status === "success") {
     return (
-      <div className="rounded-md border border-green-500/30 bg-green-500/10 p-6 text-center">
-        <p className="heading-subsection font-display text-green-400">
-          Message sent!
-        </p>
-        <p className="mt-2 body-small text-muted-foreground">
-          We&apos;ll be in touch soon. Thank you for reaching out.
-        </p>
-        <button
-          type="button"
-          onClick={() => setStatus("idle")}
-          className="mt-4 button-text text-gold hover:text-gold/80"
-        >
-          Send another message
-        </button>
-      </div>
+      <FormSuccess
+        title="Message sent!"
+        message="We'll be in touch soon. Thank you for reaching out."
+        resetLabel="Send another message"
+        onReset={() => setStatus("idle")}
+      />
     );
   }
 
   return (
     <form onSubmit={handleSubmit} className={cn("space-y-5", className)}>
       <div className="grid gap-5 sm:grid-cols-2">
-        <div>
-          <label
-            htmlFor="firstName"
-            className="form-label-small mb-2 block text-muted-foreground"
-          >
-            First name <span className="text-gold">*</span>
-          </label>
-          <input
-            type="text"
-            id="firstName"
-            name="firstName"
-            required
-            value={formData.firstName}
-            onChange={handleChange}
-            placeholder="Jane"
-            autoComplete="given-name"
-            className="form-input w-full rounded-md border border-input bg-background px-4 py-3 text-foreground placeholder:text-muted-foreground/70 transition-colors focus:border-gold focus:ring-2 focus:ring-gold/30 focus:outline-none"
-          />
-        </div>
-        <div>
-          <label
-            htmlFor="lastName"
-            className="form-label-small mb-2 block text-muted-foreground"
-          >
-            Last name <span className="text-gold">*</span>
-          </label>
-          <input
-            type="text"
-            id="lastName"
-            name="lastName"
-            required
-            value={formData.lastName}
-            onChange={handleChange}
-            placeholder="Doe"
-            autoComplete="family-name"
-            className="form-input w-full rounded-md border border-input bg-background px-4 py-3 text-foreground placeholder:text-muted-foreground/70 transition-colors focus:border-gold focus:ring-2 focus:ring-gold/30 focus:outline-none"
-          />
-        </div>
+        <TextField
+          label="First name"
+          name="firstName"
+          required
+          value={formData.firstName}
+          onChange={handleChange}
+          placeholder="Jane"
+          autoComplete="given-name"
+        />
+        <TextField
+          label="Last name"
+          name="lastName"
+          required
+          value={formData.lastName}
+          onChange={handleChange}
+          placeholder="Doe"
+          autoComplete="family-name"
+        />
       </div>
 
       <div className="grid gap-5 sm:grid-cols-2">
-        <div>
-          <label
-            htmlFor="email"
-            className="form-label-small mb-2 block text-muted-foreground"
-          >
-            Email <span className="text-gold">*</span>
-          </label>
-          <input
-            type="email"
-            id="email"
-            name="email"
-            required
-            value={formData.email}
-            onChange={handleChange}
-            placeholder="jane@company.com"
-            autoComplete="email"
-            className="form-input w-full rounded-md border border-input bg-background px-4 py-3 text-foreground placeholder:text-muted-foreground/70 transition-colors focus:border-gold focus:ring-2 focus:ring-gold/30 focus:outline-none"
-          />
-        </div>
-        <div>
-          <label
-            htmlFor="phone"
-            className="form-label-small mb-2 block text-muted-foreground"
-          >
-            Phone <span className="text-gold">*</span>
-          </label>
-          <input
-            type="tel"
-            id="phone"
-            name="phone"
-            required
-            value={formData.phone}
-            onChange={handleChange}
-            placeholder="(443) 875-9677"
-            autoComplete="tel"
-            className="form-input w-full rounded-md border border-input bg-background px-4 py-3 text-foreground placeholder:text-muted-foreground/70 transition-colors focus:border-gold focus:ring-2 focus:ring-gold/30 focus:outline-none"
-          />
-        </div>
-      </div>
-
-      <div>
-        <label
-          htmlFor="inquiryType"
-          className="form-label-small mb-2 block text-muted-foreground"
-        >
-          What&apos;s this about? <span className="text-gold">*</span>
-        </label>
-        <select
-          id="inquiryType"
-          name="inquiryType"
+        <TextField
+          label="Email"
+          name="email"
+          type="email"
           required
-          value={formData.inquiryType}
+          value={formData.email}
           onChange={handleChange}
-          className="form-input w-full appearance-none rounded-md border border-input bg-background px-4 py-3 pr-10 text-foreground transition-colors focus:border-gold focus:ring-2 focus:ring-gold/30 focus:outline-none"
-        >
-          <option value="" disabled>
-            Select what this is about
-          </option>
-          {inquiryTypeOptions.map((opt) => (
-            <option key={opt.value} value={opt.value}>
-              {opt.label}
-            </option>
-          ))}
-        </select>
-      </div>
-
-      <div>
-        <label
-          htmlFor="message"
-          className="form-label-small mb-2 block text-muted-foreground"
-        >
-          Message
-        </label>
-        <textarea
-          id="message"
-          name="message"
-          value={formData.message}
+          placeholder="jane@company.com"
+          autoComplete="email"
+        />
+        <TextField
+          label="Phone"
+          name="phone"
+          type="tel"
+          required
+          value={formData.phone}
           onChange={handleChange}
-          rows={4}
-          maxLength={500}
-          placeholder="Tell us a bit about what you need or what's on your mind."
-          className="form-input w-full rounded-md border border-input bg-background px-4 py-3 text-foreground placeholder:text-muted-foreground/70 transition-colors focus:border-gold focus:ring-2 focus:ring-gold/30 focus:outline-none resize-none"
+          placeholder="(443) 875-9677"
+          autoComplete="tel"
         />
       </div>
 
-      {/* Honeypot */}
-      <div className="absolute left-[-9999px]" aria-hidden="true">
-        <input
-          ref={honeypotRef}
-          type="text"
-          name="company_name"
-          tabIndex={-1}
-          autoComplete="off"
-        />
-      </div>
+      <SelectField
+        label="What's this about?"
+        name="inquiryType"
+        required
+        placeholder="Select what this is about"
+        options={inquiryTypeOptions}
+        value={formData.inquiryType}
+        onChange={handleChange}
+      />
 
-      {errorMessage && (
-        <p className="body-small text-red-400" role="alert">
-          {errorMessage}
-        </p>
-      )}
+      <TextAreaField
+        label="Message"
+        name="message"
+        value={formData.message}
+        onChange={handleChange}
+        rows={4}
+        maxLength={500}
+        placeholder="Tell us a bit about what you need or what's on your mind."
+      />
 
-      <button
-        type="submit"
-        disabled={status === "submitting"}
-        className="button-text w-full rounded-md bg-cream px-6 py-3.5 font-display text-navy transition-all duration-300 hover:bg-gold disabled:opacity-50 disabled:cursor-not-allowed"
-      >
-        {status === "submitting" ? "Sending message..." : "Send message"}
-      </button>
+      <Honeypot name="company_name" inputRef={honeypotRef} />
+
+      <FormError message={errorMessage} />
+
+      <SubmitButton status={status} idleLabel="Send message" submittingLabel="Sending message..." />
     </form>
   );
 }

@@ -1,25 +1,31 @@
-import { useRef, useState } from "react";
+import { useRef } from "react";
 
 import { cn } from "@/lib/utils";
 import {
   type RequirementFormData,
-  type FormStatus,
-  specialtyOptions,
-  engagementOptions,
   basisOptions,
+  engagementOptions,
+  specialtyOptions,
 } from "@/lib/forms";
 import { submitRequirementForm } from "@/lib/form-actions";
+import { useFormSubmit } from "@/lib/use-form-submit";
+import {
+  FormError,
+  FormSuccess,
+  Honeypot,
+  SelectField,
+  SubmitButton,
+  TextAreaField,
+  TextField,
+} from "@/components/site/form-controls";
 
 interface RequirementFormProps {
-  defaultSkill?: string;
+  defaultSkill?: string | undefined;
   className?: string;
 }
 
-export function RequirementForm({ defaultSkill, className }: RequirementFormProps) {
-  const [status, setStatus] = useState<FormStatus>("idle");
-  const [errorMessage, setErrorMessage] = useState("");
-  const honeypotRef = useRef<HTMLInputElement>(null);
-  const [formData, setFormData] = useState<RequirementFormData>({
+function makeInitialData(defaultSkill?: string): RequirementFormData {
+  return {
     firstName: "",
     lastName: "",
     email: "",
@@ -29,293 +35,141 @@ export function RequirementForm({ defaultSkill, className }: RequirementFormProp
     engagementType: "",
     basis: "",
     message: "",
-  });
-
-  const handleChange = (
-    e: React.ChangeEvent<
-      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
-    >,
-  ) => {
-    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
+}
 
-  const handleSubmit = async (e: React.FormEvent) => {
+export function RequirementForm({ defaultSkill, className }: RequirementFormProps) {
+  const { status, setStatus, errorMessage, formData, handleChange, submit } =
+    useFormSubmit<RequirementFormData>(makeInitialData(defaultSkill));
+  const honeypotRef = useRef<HTMLInputElement>(null);
+
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setStatus("submitting");
-    setErrorMessage("");
-
-    try {
-      const result = await submitRequirementForm({
-        data: { ...formData, honeypot: honeypotRef.current?.value ?? "" },
-      });
-      if (result.success) {
-        setStatus("success");
-        setFormData({
-          firstName: "",
-          lastName: "",
-          email: "",
-          phone: "",
-          companyName: "",
-          skillNeeded: defaultSkill || "",
-          engagementType: "",
-          basis: "",
-          message: "",
-        });
-      } else {
-        setStatus("error");
-        setErrorMessage(result.message);
-      }
-    } catch {
-      setStatus("error");
-      setErrorMessage("Something went wrong. Please try again.");
-    }
+    void submit(
+      () =>
+        submitRequirementForm({
+          data: { ...formData, honeypot: honeypotRef.current?.value ?? "" },
+        }),
+      makeInitialData(defaultSkill),
+    );
   };
 
   if (status === "success") {
     return (
-      <div className="rounded-md border border-green-500/30 bg-green-500/10 p-6 text-center">
-        <p className="heading-subsection font-display text-green-400">
-          Requirement received!
-        </p>
-        <p className="mt-2 body-small text-muted-foreground">
-          We&apos;ll follow up shortly with potential candidates.
-        </p>
-        <button
-          type="button"
-          onClick={() => setStatus("idle")}
-          className="mt-4 button-text text-gold hover:text-gold/80"
-        >
-          Submit another requirement
-        </button>
-      </div>
+      <FormSuccess
+        title="Requirement received!"
+        message="We'll follow up shortly with potential candidates."
+        resetLabel="Submit another requirement"
+        onReset={() => setStatus("idle")}
+      />
     );
   }
 
   return (
     <form onSubmit={handleSubmit} className={cn("space-y-5", className)}>
       <div className="grid gap-5 sm:grid-cols-2">
-        <div>
-          <label
-            htmlFor="firstName"
-            className="form-label-small mb-2 block text-muted-foreground"
-          >
-            First name <span className="text-gold">*</span>
-          </label>
-          <input
-            type="text"
-            id="firstName"
-            name="firstName"
-            required
-            value={formData.firstName}
-            onChange={handleChange}
-            placeholder="Jane"
-            autoComplete="given-name"
-            className="form-input w-full rounded-md border border-input bg-background px-4 py-3 text-foreground placeholder:text-muted-foreground/70 transition-colors focus:border-gold focus:ring-2 focus:ring-gold/30 focus:outline-none"
-          />
-        </div>
-        <div>
-          <label
-            htmlFor="lastName"
-            className="form-label-small mb-2 block text-muted-foreground"
-          >
-            Last name <span className="text-gold">*</span>
-          </label>
-          <input
-            type="text"
-            id="lastName"
-            name="lastName"
-            required
-            value={formData.lastName}
-            onChange={handleChange}
-            placeholder="Doe"
-            autoComplete="family-name"
-            className="form-input w-full rounded-md border border-input bg-background px-4 py-3 text-foreground placeholder:text-muted-foreground/70 transition-colors focus:border-gold focus:ring-2 focus:ring-gold/30 focus:outline-none"
-          />
-        </div>
-      </div>
-
-      <div className="grid gap-5 sm:grid-cols-2">
-        <div>
-          <label
-            htmlFor="email"
-            className="form-label-small mb-2 block text-muted-foreground"
-          >
-            Email <span className="text-gold">*</span>
-          </label>
-          <input
-            type="email"
-            id="email"
-            name="email"
-            required
-            value={formData.email}
-            onChange={handleChange}
-            placeholder="jane@company.com"
-            autoComplete="email"
-            className="form-input w-full rounded-md border border-input bg-background px-4 py-3 text-foreground placeholder:text-muted-foreground/70 transition-colors focus:border-gold focus:ring-2 focus:ring-gold/30 focus:outline-none"
-          />
-        </div>
-        <div>
-          <label
-            htmlFor="phone"
-            className="form-label-small mb-2 block text-muted-foreground"
-          >
-            Phone <span className="text-gold">*</span>
-          </label>
-          <input
-            type="tel"
-            id="phone"
-            name="phone"
-            required
-            value={formData.phone}
-            onChange={handleChange}
-            placeholder="(443) 875-9677"
-            autoComplete="tel"
-            className="form-input w-full rounded-md border border-input bg-background px-4 py-3 text-foreground placeholder:text-muted-foreground/70 transition-colors focus:border-gold focus:ring-2 focus:ring-gold/30 focus:outline-none"
-          />
-        </div>
-      </div>
-
-      <div>
-        <label
-          htmlFor="companyName"
-          className="form-label-small mb-2 block text-muted-foreground"
-        >
-          Company name
-        </label>
-        <input
-          type="text"
-          id="companyName"
-          name="companyName"
-          value={formData.companyName}
-          onChange={handleChange}
-          placeholder="Acme Inc."
-          autoComplete="organization"
-          className="form-input w-full rounded-md border border-input bg-background px-4 py-3 text-foreground placeholder:text-muted-foreground/70 transition-colors focus:border-gold focus:ring-2 focus:ring-gold/30 focus:outline-none"
-        />
-      </div>
-
-      <div>
-        <label
-          htmlFor="skillNeeded"
-          className="form-label-small mb-2 block text-muted-foreground"
-        >
-          Skill needed <span className="text-gold">*</span>
-        </label>
-        <select
-          id="skillNeeded"
-          name="skillNeeded"
+        <TextField
+          label="First name"
+          name="firstName"
           required
-          value={formData.skillNeeded}
+          value={formData.firstName}
           onChange={handleChange}
-          className="form-input w-full appearance-none rounded-md border border-input bg-background px-4 py-3 pr-10 text-foreground transition-colors focus:border-gold focus:ring-2 focus:ring-gold/30 focus:outline-none"
-        >
-          <option value="" disabled>
-            Select the specialty you need
-          </option>
-          {specialtyOptions.map((opt) => (
-            <option key={opt.value} value={opt.value}>
-              {opt.label}
-            </option>
-          ))}
-        </select>
+          placeholder="Jane"
+          autoComplete="given-name"
+        />
+        <TextField
+          label="Last name"
+          name="lastName"
+          required
+          value={formData.lastName}
+          onChange={handleChange}
+          placeholder="Doe"
+          autoComplete="family-name"
+        />
       </div>
 
       <div className="grid gap-5 sm:grid-cols-2">
-        <div>
-          <label
-            htmlFor="engagementType"
-            className="form-label-small mb-2 block text-muted-foreground"
-          >
-            Engagement type <span className="text-gold">*</span>
-          </label>
-          <select
-            id="engagementType"
-            name="engagementType"
-            required
-            value={formData.engagementType}
-            onChange={handleChange}
-            className="form-input w-full appearance-none rounded-md border border-input bg-background px-4 py-3 pr-10 text-foreground transition-colors focus:border-gold focus:ring-2 focus:ring-gold/30 focus:outline-none"
-          >
-            <option value="" disabled>
-              Specialist or pod?
-            </option>
-            {engagementOptions.map((opt) => (
-              <option key={opt.value} value={opt.value}>
-                {opt.label}
-              </option>
-            ))}
-          </select>
-        </div>
-        <div>
-          <label
-            htmlFor="basis"
-            className="form-label-small mb-2 block text-muted-foreground"
-          >
-            Basis <span className="text-gold">*</span>
-          </label>
-          <select
-            id="basis"
-            name="basis"
-            required
-            value={formData.basis}
-            onChange={handleChange}
-            className="form-input w-full appearance-none rounded-md border border-input bg-background px-4 py-3 pr-10 text-foreground transition-colors focus:border-gold focus:ring-2 focus:ring-gold/30 focus:outline-none"
-          >
-            <option value="" disabled>
-              Contract or full-time?
-            </option>
-            {basisOptions.map((opt) => (
-              <option key={opt.value} value={opt.value}>
-                {opt.label}
-              </option>
-            ))}
-          </select>
-        </div>
-      </div>
-
-      <div>
-        <label
-          htmlFor="message"
-          className="form-label-small mb-2 block text-muted-foreground"
-        >
-          Tell us more
-        </label>
-        <textarea
-          id="message"
-          name="message"
-          value={formData.message}
+        <TextField
+          label="Email"
+          name="email"
+          type="email"
+          required
+          value={formData.email}
           onChange={handleChange}
-          rows={4}
-          maxLength={1000}
-          placeholder="Anything else that helps us match the right talent — timeline, must-have skills, team context."
-          className="form-input w-full rounded-md border border-input bg-background px-4 py-3 text-foreground placeholder:text-muted-foreground/70 transition-colors focus:border-gold focus:ring-2 focus:ring-gold/30 focus:outline-none resize-none"
+          placeholder="jane@company.com"
+          autoComplete="email"
+        />
+        <TextField
+          label="Phone"
+          name="phone"
+          type="tel"
+          required
+          value={formData.phone}
+          onChange={handleChange}
+          placeholder="(443) 875-9677"
+          autoComplete="tel"
         />
       </div>
 
-      {/* Honeypot */}
-      <div className="absolute left-[-9999px]" aria-hidden="true">
-        <input
-          ref={honeypotRef}
-          type="text"
-          name="website"
-          tabIndex={-1}
-          autoComplete="off"
+      <TextField
+        label="Company name"
+        name="companyName"
+        value={formData.companyName}
+        onChange={handleChange}
+        placeholder="Acme Inc."
+        autoComplete="organization"
+      />
+
+      <SelectField
+        label="Skill needed"
+        name="skillNeeded"
+        required
+        placeholder="Select the specialty you need"
+        options={specialtyOptions}
+        value={formData.skillNeeded}
+        onChange={handleChange}
+      />
+
+      <div className="grid gap-5 sm:grid-cols-2">
+        <SelectField
+          label="Engagement type"
+          name="engagementType"
+          required
+          placeholder="Specialist or pod?"
+          options={engagementOptions}
+          value={formData.engagementType}
+          onChange={handleChange}
+        />
+        <SelectField
+          label="Basis"
+          name="basis"
+          required
+          placeholder="Contract or full-time?"
+          options={basisOptions}
+          value={formData.basis}
+          onChange={handleChange}
         />
       </div>
 
-      {errorMessage && (
-        <p className="body-small text-red-400" role="alert">
-          {errorMessage}
-        </p>
-      )}
+      <TextAreaField
+        label="Tell us more"
+        name="message"
+        value={formData.message}
+        onChange={handleChange}
+        rows={4}
+        maxLength={1000}
+        placeholder="Anything else that helps us match the right talent — timeline, must-have skills, team context."
+      />
 
-      <button
-        type="submit"
-        disabled={status === "submitting"}
-        className="button-text w-full rounded-md bg-cream px-6 py-3.5 font-display text-navy transition-all duration-300 hover:bg-gold disabled:opacity-50 disabled:cursor-not-allowed"
-      >
-        {status === "submitting" ? "Submitting requirement..." : "Submit requirement"}
-      </button>
+      <Honeypot name="website" inputRef={honeypotRef} />
+
+      <FormError message={errorMessage} />
+
+      <SubmitButton
+        status={status}
+        idleLabel="Submit requirement"
+        submittingLabel="Submitting requirement..."
+      />
     </form>
   );
 }

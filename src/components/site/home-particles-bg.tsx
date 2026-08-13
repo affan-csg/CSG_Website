@@ -9,10 +9,7 @@ const HeroCanvas = lazy(() => import("@/components/site/hero-canvas"));
  */
 export function HomeParticlesBg() {
   return (
-    <div
-      aria-hidden
-      className="pointer-events-none fixed inset-0 z-0 opacity-50"
-    >
+    <div aria-hidden className="pointer-events-none fixed inset-0 z-0 opacity-50">
       <ClientOnly fallback={null}>
         <Suspense fallback={null}>
           <HeroCanvas showRing={false} />

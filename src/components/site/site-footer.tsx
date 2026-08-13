@@ -15,13 +15,9 @@ export function SiteFooter() {
                 alt="CSG"
                 className="h-10 w-auto shrink-0 object-contain [filter:invert(68%)_sepia(60%)_saturate(50%)_hue-rotate(5deg)_brightness(105%)]"
               />
-              <span className="font-display text-base font-semibold">
-                Career Source Group
-              </span>
+              <span className="font-display text-base font-semibold">Career Source Group</span>
             </Link>
-            <p className="mt-5 max-w-sm footer-text text-muted-foreground">
-              {company.tagline}
-            </p>
+            <p className="mt-5 max-w-sm footer-text text-muted-foreground">{company.tagline}</p>
             <div className="mt-7 space-y-3">
               <p className="footer-text flex gap-3 text-muted-foreground">
                 <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-gold" />
@@ -79,7 +75,9 @@ export function SiteFooter() {
             <Link to="/privacy" className="hover:text-foreground">
               Privacy Policy
             </Link>
-            <span aria-hidden="true" className="text-border">|</span>
+            <span aria-hidden="true" className="text-border">
+              |
+            </span>
             <span className="text-gold">
               powered by <span className="font-bold">AJ</span>
             </span>

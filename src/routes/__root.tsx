@@ -86,7 +86,11 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "author", content: "Career Source Group, LLC" },
       { name: "theme-color", content: "#0F172A" },
       { httpEquiv: "x-dns-prefetch-control", content: "on" },
-      { name: "keywords", content: "staffing, talent acquisition, US staffing, LATAM nearshore, Pakistan offshore, direct hire, contract staffing, contract-to-hire, staff augmentation, IT staffing, healthcare staffing" },
+      {
+        name: "keywords",
+        content:
+          "staffing, talent acquisition, US staffing, LATAM nearshore, Pakistan offshore, direct hire, contract staffing, contract-to-hire, staff augmentation, IT staffing, healthcare staffing",
+      },
       { property: "og:type", content: "website" },
       { property: "og:site_name", content: "Career Source Group" },
       { property: "og:locale", content: "en_US" },

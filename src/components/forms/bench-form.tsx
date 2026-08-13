@@ -3,25 +3,30 @@ import { useRef, useState } from "react";
 import { cn } from "@/lib/utils";
 import {
   type BenchFormData,
-  type FormStatus,
-  specialtyOptions,
-  seniorityOptions,
-  basisOptions,
   availabilityOptions,
+  basisOptions,
+  seniorityOptions,
+  specialtyOptions,
 } from "@/lib/forms";
 import { submitBenchApplication } from "@/lib/form-actions";
+import { useFormSubmit } from "@/lib/use-form-submit";
+import {
+  FormError,
+  FormSuccess,
+  Honeypot,
+  SelectField,
+  SubmitButton,
+  TextAreaField,
+  TextField,
+} from "@/components/site/form-controls";
 
 interface BenchFormProps {
-  defaultSkill?: string;
+  defaultSkill?: string | undefined;
   className?: string;
 }
 
-export function BenchForm({ defaultSkill, className }: BenchFormProps) {
-  const [status, setStatus] = useState<FormStatus>("idle");
-  const [errorMessage, setErrorMessage] = useState("");
-  const [submittedName, setSubmittedName] = useState("");
-  const honeypotRef = useRef<HTMLInputElement>(null);
-  const [formData, setFormData] = useState<BenchFormData>({
+function makeInitialData(defaultSkill?: string): BenchFormData {
+  return {
     firstName: "",
     lastName: "",
     email: "",
@@ -35,22 +40,20 @@ export function BenchForm({ defaultSkill, className }: BenchFormProps) {
     portfolioUrl: "",
     linkedinUrl: "",
     message: "",
-  });
-
-  const handleChange = (
-    e: React.ChangeEvent<
-      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
-    >,
-  ) => {
-    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
+}
 
-  const handleSubmit = async (e: React.FormEvent) => {
+export function BenchForm({ defaultSkill, className }: BenchFormProps) {
+  const { status, setStatus, errorMessage, formData, setFormData, handleChange, submit } =
+    useFormSubmit<BenchFormData>(makeInitialData(defaultSkill));
+  const [submittedName, setSubmittedName] = useState("");
+  const honeypotRef = useRef<HTMLInputElement>(null);
+
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setStatus("submitting");
-    setErrorMessage("");
 
-    try {
+    const submittingName = formData.firstName;
+    void submit(() => {
       const payload = new FormData();
       for (const [key, value] of Object.entries(formData)) {
         if (key === "resume") continue;
@@ -61,343 +64,160 @@ export function BenchForm({ defaultSkill, className }: BenchFormProps) {
       }
       payload.set("honeypot", honeypotRef.current?.value ?? "");
 
-      const result = await submitBenchApplication({ data: payload });
-      if (result.success) {
-        setStatus("success");
-        setSubmittedName(formData.firstName);
-        setFormData({
-          firstName: "",
-          lastName: "",
-          email: "",
-          phone: "",
-          location: "",
-          specialty: defaultSkill || "",
-          seniority: "",
-          basis: "",
-          expectedMonthlyRate: "",
-          availability: "",
-          portfolioUrl: "",
-          linkedinUrl: "",
-          message: "",
-        });
-      } else {
-        setStatus("error");
-        setErrorMessage(result.message);
-      }
-    } catch {
-      setStatus("error");
-      setErrorMessage("Something went wrong. Please try again.");
-    }
+      return submitBenchApplication({ data: payload }).then((result) => {
+        if (result.success) setSubmittedName(submittingName);
+        return result;
+      });
+    }, makeInitialData(defaultSkill));
   };
 
   if (status === "success") {
     return (
-      <div className="rounded-md border border-green-500/30 bg-green-500/10 p-6 text-center">
-        <p className="heading-subsection font-display text-green-400">
-          Application received!
-        </p>
-        <p className="mt-2 body-small text-muted-foreground">
-          Thanks for applying{submittedName ? `, ${submittedName}` : ""} — we&apos;ll be in touch when opportunities open.
-        </p>
-        <button
-          type="button"
-          onClick={() => setStatus("idle")}
-          className="mt-4 button-text text-gold hover:text-gold/80"
-        >
-          Submit another application
-        </button>
-      </div>
+      <FormSuccess
+        title="Application received!"
+        message={`Thanks for applying${submittedName ? `, ${submittedName}` : ""} — we'll be in touch when opportunities open.`}
+        resetLabel="Submit another application"
+        onReset={() => setStatus("idle")}
+      />
     );
   }
 
   return (
     <form onSubmit={handleSubmit} className={cn("space-y-5", className)}>
       <div className="grid gap-5 sm:grid-cols-2">
-        <div>
-          <label
-            htmlFor="firstName"
-            className="form-label-small mb-2 block text-muted-foreground"
-          >
-            First name <span className="text-gold">*</span>
-          </label>
-          <input
-            type="text"
-            id="firstName"
-            name="firstName"
-            required
-            value={formData.firstName}
-            onChange={handleChange}
-            placeholder="Jane"
-            autoComplete="given-name"
-            className="form-input w-full rounded-md border border-input bg-background px-4 py-3 text-foreground placeholder:text-muted-foreground/70 transition-colors focus:border-gold focus:ring-2 focus:ring-gold/30 focus:outline-none"
-          />
-        </div>
-        <div>
-          <label
-            htmlFor="lastName"
-            className="form-label-small mb-2 block text-muted-foreground"
-          >
-            Last name <span className="text-gold">*</span>
-          </label>
-          <input
-            type="text"
-            id="lastName"
-            name="lastName"
-            required
-            value={formData.lastName}
-            onChange={handleChange}
-            placeholder="Doe"
-            autoComplete="family-name"
-            className="form-input w-full rounded-md border border-input bg-background px-4 py-3 text-foreground placeholder:text-muted-foreground/70 transition-colors focus:border-gold focus:ring-2 focus:ring-gold/30 focus:outline-none"
-          />
-        </div>
-      </div>
-
-      <div className="grid gap-5 sm:grid-cols-2">
-        <div>
-          <label
-            htmlFor="email"
-            className="form-label-small mb-2 block text-muted-foreground"
-          >
-            Email <span className="text-gold">*</span>
-          </label>
-          <input
-            type="email"
-            id="email"
-            name="email"
-            required
-            value={formData.email}
-            onChange={handleChange}
-            placeholder="jane@company.com"
-            autoComplete="email"
-            className="form-input w-full rounded-md border border-input bg-background px-4 py-3 text-foreground placeholder:text-muted-foreground/70 transition-colors focus:border-gold focus:ring-2 focus:ring-gold/30 focus:outline-none"
-          />
-        </div>
-        <div>
-          <label
-            htmlFor="phone"
-            className="form-label-small mb-2 block text-muted-foreground"
-          >
-            Phone <span className="text-gold">*</span>
-          </label>
-          <input
-            type="tel"
-            id="phone"
-            name="phone"
-            required
-            value={formData.phone}
-            onChange={handleChange}
-            placeholder="(443) 875-9677"
-            autoComplete="tel"
-            className="form-input w-full rounded-md border border-input bg-background px-4 py-3 text-foreground placeholder:text-muted-foreground/70 transition-colors focus:border-gold focus:ring-2 focus:ring-gold/30 focus:outline-none"
-          />
-        </div>
-      </div>
-
-      <div>
-        <label
-          htmlFor="location"
-          className="form-label-small mb-2 block text-muted-foreground"
-        >
-          Location <span className="text-gold">*</span>
-        </label>
-        <input
-          type="text"
-          id="location"
-          name="location"
+        <TextField
+          label="First name"
+          name="firstName"
           required
-          value={formData.location}
+          value={formData.firstName}
           onChange={handleChange}
-          placeholder="City, Country"
-          autoComplete="address-level2"
-          className="form-input w-full rounded-md border border-input bg-background px-4 py-3 text-foreground placeholder:text-muted-foreground/70 transition-colors focus:border-gold focus:ring-2 focus:ring-gold/30 focus:outline-none"
+          placeholder="Jane"
+          autoComplete="given-name"
         />
-        <p className="mt-1 text-xs text-muted-foreground">
-          Wherever you&apos;re based — our clients hire across the US, LATAM, and Pakistan.
-        </p>
-      </div>
-
-      <div className="grid gap-5 sm:grid-cols-2">
-        <div>
-          <label
-            htmlFor="specialty"
-            className="form-label-small mb-2 block text-muted-foreground"
-          >
-            Specialty <span className="text-gold">*</span>
-          </label>
-          <select
-            id="specialty"
-            name="specialty"
-            required
-            value={formData.specialty}
-            onChange={handleChange}
-            className="form-input w-full appearance-none rounded-md border border-input bg-background px-4 py-3 pr-10 text-foreground transition-colors focus:border-gold focus:ring-2 focus:ring-gold/30 focus:outline-none"
-          >
-            <option value="" disabled>
-              Select your specialty
-            </option>
-            {specialtyOptions.map((opt) => (
-              <option key={opt.value} value={opt.value}>
-                {opt.label}
-              </option>
-            ))}
-          </select>
-        </div>
-        <div>
-          <label
-            htmlFor="seniority"
-            className="form-label-small mb-2 block text-muted-foreground"
-          >
-            Seniority <span className="text-gold">*</span>
-          </label>
-          <select
-            id="seniority"
-            name="seniority"
-            required
-            value={formData.seniority}
-            onChange={handleChange}
-            className="form-input w-full appearance-none rounded-md border border-input bg-background px-4 py-3 pr-10 text-foreground transition-colors focus:border-gold focus:ring-2 focus:ring-gold/30 focus:outline-none"
-          >
-            <option value="" disabled>
-              Select your level
-            </option>
-            {seniorityOptions.map((opt) => (
-              <option key={opt.value} value={opt.value}>
-                {opt.label}
-              </option>
-            ))}
-          </select>
-        </div>
-      </div>
-
-      <div className="grid gap-5 sm:grid-cols-2">
-        <div>
-          <label
-            htmlFor="basis"
-            className="form-label-small mb-2 block text-muted-foreground"
-          >
-            Basis <span className="text-gold">*</span>
-          </label>
-          <select
-            id="basis"
-            name="basis"
-            required
-            value={formData.basis}
-            onChange={handleChange}
-            className="form-input w-full appearance-none rounded-md border border-input bg-background px-4 py-3 pr-10 text-foreground transition-colors focus:border-gold focus:ring-2 focus:ring-gold/30 focus:outline-none"
-          >
-            <option value="" disabled>
-              Contract or full-time?
-            </option>
-            {basisOptions.map((opt) => (
-              <option key={opt.value} value={opt.value}>
-                {opt.label}
-              </option>
-            ))}
-          </select>
-        </div>
-        <div>
-          <label
-            htmlFor="expectedMonthlyRate"
-            className="form-label-small mb-2 block text-muted-foreground"
-          >
-            Expected monthly rate (USD)
-          </label>
-          <div className="relative">
-            <span className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground">
-              $
-            </span>
-            <input
-              type="number"
-              id="expectedMonthlyRate"
-              name="expectedMonthlyRate"
-              min="0"
-              step="50"
-              inputMode="numeric"
-              value={formData.expectedMonthlyRate}
-              onChange={handleChange}
-              placeholder="6,500"
-              className="form-input w-full rounded-md border border-input bg-background py-3 pl-8 pr-4 text-foreground placeholder:text-muted-foreground/70 transition-colors focus:border-gold focus:ring-2 focus:ring-gold/30 focus:outline-none"
-            />
-          </div>
-          <p className="mt-1 text-xs text-muted-foreground">
-            Per month, in USD — not hourly or annual.
-          </p>
-        </div>
-      </div>
-
-      <div>
-        <label
-          htmlFor="availability"
-          className="form-label-small mb-2 block text-muted-foreground"
-        >
-          Availability
-        </label>
-        <select
-          id="availability"
-          name="availability"
-          value={formData.availability}
+        <TextField
+          label="Last name"
+          name="lastName"
+          required
+          value={formData.lastName}
           onChange={handleChange}
-          className="form-input w-full appearance-none rounded-md border border-input bg-background px-4 py-3 pr-10 text-foreground transition-colors focus:border-gold focus:ring-2 focus:ring-gold/30 focus:outline-none"
-        >
-          <option value="" disabled>
-            When could you start?
-          </option>
-          {availabilityOptions.map((opt) => (
-            <option key={opt.value} value={opt.value}>
-              {opt.label}
-            </option>
-          ))}
-        </select>
+          placeholder="Doe"
+          autoComplete="family-name"
+        />
       </div>
 
       <div className="grid gap-5 sm:grid-cols-2">
-        <div>
-          <label
-            htmlFor="portfolioUrl"
-            className="form-label-small mb-2 block text-muted-foreground"
-          >
-            Portfolio URL
-          </label>
-          <input
-            type="url"
-            id="portfolioUrl"
-            name="portfolioUrl"
-            value={formData.portfolioUrl}
-            onChange={handleChange}
-            placeholder="https://yourportfolio.com"
-            autoComplete="url"
-            className="form-input w-full rounded-md border border-input bg-background px-4 py-3 text-foreground placeholder:text-muted-foreground/70 transition-colors focus:border-gold focus:ring-2 focus:ring-gold/30 focus:outline-none"
-          />
-          <p className="mt-1 text-xs text-muted-foreground">
-            Optional — a personal site, GitHub, or work samples.
-          </p>
-        </div>
-        <div>
-          <label
-            htmlFor="linkedinUrl"
-            className="form-label-small mb-2 block text-muted-foreground"
-          >
-            LinkedIn URL
-          </label>
-          <input
-            type="url"
-            id="linkedinUrl"
-            name="linkedinUrl"
-            value={formData.linkedinUrl}
-            onChange={handleChange}
-            placeholder="https://linkedin.com/in/your-name"
-            autoComplete="url"
-            className="form-input w-full rounded-md border border-input bg-background px-4 py-3 text-foreground placeholder:text-muted-foreground/70 transition-colors focus:border-gold focus:ring-2 focus:ring-gold/30 focus:outline-none"
-          />
-        </div>
+        <TextField
+          label="Email"
+          name="email"
+          type="email"
+          required
+          value={formData.email}
+          onChange={handleChange}
+          placeholder="jane@company.com"
+          autoComplete="email"
+        />
+        <TextField
+          label="Phone"
+          name="phone"
+          type="tel"
+          required
+          value={formData.phone}
+          onChange={handleChange}
+          placeholder="(443) 875-9677"
+          autoComplete="tel"
+        />
+      </div>
+
+      <TextField
+        label="Location"
+        name="location"
+        required
+        value={formData.location}
+        onChange={handleChange}
+        placeholder="City, Country"
+        autoComplete="address-level2"
+        hint="Wherever you're based — our clients hire across the US, LATAM, and Pakistan."
+      />
+
+      <div className="grid gap-5 sm:grid-cols-2">
+        <SelectField
+          label="Specialty"
+          name="specialty"
+          required
+          placeholder="Select your specialty"
+          options={specialtyOptions}
+          value={formData.specialty}
+          onChange={handleChange}
+        />
+        <SelectField
+          label="Seniority"
+          name="seniority"
+          required
+          placeholder="Select your level"
+          options={seniorityOptions}
+          value={formData.seniority}
+          onChange={handleChange}
+        />
+      </div>
+
+      <div className="grid gap-5 sm:grid-cols-2">
+        <SelectField
+          label="Basis"
+          name="basis"
+          required
+          placeholder="Contract or full-time?"
+          options={basisOptions}
+          value={formData.basis}
+          onChange={handleChange}
+        />
+        <TextField
+          label="Expected monthly rate (USD)"
+          name="expectedMonthlyRate"
+          type="number"
+          min="0"
+          step="50"
+          inputMode="numeric"
+          value={formData.expectedMonthlyRate}
+          onChange={handleChange}
+          placeholder="6,500"
+          prefix="$"
+          hint="Per month, in USD — not hourly or annual."
+        />
+      </div>
+
+      <SelectField
+        label="Availability"
+        name="availability"
+        placeholder="When could you start?"
+        options={availabilityOptions}
+        value={formData.availability}
+        onChange={handleChange}
+      />
+
+      <div className="grid gap-5 sm:grid-cols-2">
+        <TextField
+          label="Portfolio URL"
+          name="portfolioUrl"
+          type="url"
+          value={formData.portfolioUrl}
+          onChange={handleChange}
+          placeholder="https://yourportfolio.com"
+          autoComplete="url"
+          hint="Optional — a personal site, GitHub, or work samples."
+        />
+        <TextField
+          label="LinkedIn URL"
+          name="linkedinUrl"
+          type="url"
+          value={formData.linkedinUrl}
+          onChange={handleChange}
+          placeholder="https://linkedin.com/in/your-name"
+          autoComplete="url"
+        />
       </div>
 
       <div>
-        <label
-          htmlFor="resume"
-          className="form-label-small mb-2 block text-muted-foreground"
-        >
+        <label htmlFor="resume" className="form-label-small mb-2 block text-muted-foreground">
           Résumé <span className="text-gold">*</span>
         </label>
         <input
@@ -414,53 +234,27 @@ export function BenchForm({ defaultSkill, className }: BenchFormProps) {
           }}
           className="w-full rounded-md border border-input bg-background px-4 py-3 text-sm text-foreground file:mr-4 file:rounded-md file:border-0 file:bg-gold/20 file:px-4 file:py-2 file:text-sm file:font-semibold file:text-gold hover:file:bg-gold/30"
         />
-        <p className="mt-1 text-xs text-muted-foreground">
-          PDF or Word document, 5 MB max.
-        </p>
+        <p className="mt-1 text-xs text-muted-foreground">PDF or Word document, 5 MB max.</p>
       </div>
 
-      <div>
-        <label
-          htmlFor="message"
-          className="form-label-small mb-2 block text-muted-foreground"
-        >
-          Additional information
-        </label>
-        <textarea
-          id="message"
-          name="message"
-          value={formData.message}
-          onChange={handleChange}
-          rows={3}
-          placeholder="Anything else you'd like us to know."
-          className="w-full rounded-md border border-input bg-background px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground/70 transition-colors focus:border-gold focus:ring-2 focus:ring-gold/30 focus:outline-none resize-none"
-        />
-      </div>
+      <TextAreaField
+        label="Additional information"
+        name="message"
+        value={formData.message}
+        onChange={handleChange}
+        rows={3}
+        placeholder="Anything else you'd like us to know."
+      />
 
-      {/* Honeypot */}
-      <div className="absolute left-[-9999px]" aria-hidden="true">
-        <input
-          ref={honeypotRef}
-          type="text"
-          name="website"
-          tabIndex={-1}
-          autoComplete="off"
-        />
-      </div>
+      <Honeypot name="website" inputRef={honeypotRef} />
 
-      {errorMessage && (
-        <p className="body-small text-red-400" role="alert">
-          {errorMessage}
-        </p>
-      )}
+      <FormError message={errorMessage} />
 
-      <button
-        type="submit"
-        disabled={status === "submitting"}
-        className="button-text w-full rounded-md bg-cream px-6 py-3.5 font-display text-navy transition-all duration-300 hover:bg-gold disabled:opacity-50 disabled:cursor-not-allowed"
-      >
-        {status === "submitting" ? "Submitting application..." : "Submit application"}
-      </button>
+      <SubmitButton
+        status={status}
+        idleLabel="Submit application"
+        submittingLabel="Submitting application..."
+      />
     </form>
   );
 }

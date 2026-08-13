@@ -2,12 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 
 import { ContactForm } from "@/components/forms/contact-form";
 import { Reveal } from "@/components/site/reveal";
-import {
-  PageHero,
-  Panel,
-  Section,
-  SectionHeading,
-} from "@/components/site/primitives";
+import { PageHero, Panel, Section, SectionHeading } from "@/components/site/primitives";
 import { contact } from "@/content/pages";
 import { company } from "@/content/site";
 import { buildSeoMeta } from "@/lib/seo";
@@ -16,8 +11,9 @@ export const Route = createFileRoute("/contact")({
   head: () =>
     buildSeoMeta({
       title: "Contact Us",
-      description: "Reach Career Source Group by phone or email, or find our Alpharetta, GA office.",
-      path: "/contact"
+      description:
+        "Reach Career Source Group by phone or email, or find our Alpharetta, GA office.",
+      path: "/contact",
     }),
   component: ContactPage,
 });
@@ -25,20 +21,13 @@ export const Route = createFileRoute("/contact")({
 function ContactPage() {
   return (
     <>
-      <PageHero
-        eyebrow="Contact"
-        title={contact.title}
-        body={contact.lead}
-      />
+      <PageHero eyebrow="Contact" title={contact.title} body={contact.lead} />
 
       <Section>
         <div className="grid gap-12 lg:grid-cols-[1fr_1.2fr]">
           <Reveal>
             <div>
-              <SectionHeading
-                eyebrow="Get in touch"
-                title="Contact information"
-              />
+              <SectionHeading eyebrow="Get in touch" title="Contact information" />
               <div className="mt-8 space-y-6">
                 <div>
                   <p className="font-mono text-[0.66rem] uppercase tracking-[0.18em] text-muted-foreground">
@@ -76,10 +65,7 @@ function ContactPage() {
                   </p>
                   <div className="mt-3 space-y-2">
                     {company.hours.map(([day, hours]) => (
-                      <div
-                        key={day}
-                        className="flex items-center justify-between text-sm"
-                      >
+                      <div key={day} className="flex items-center justify-between text-sm">
                         <span className="text-muted-foreground">{day}</span>
                         <span className="font-medium">{hours}</span>
                       </div>
@@ -92,12 +78,8 @@ function ContactPage() {
 
           <Reveal delay={0.08}>
             <Panel>
-              <h3 className="font-display text-xl font-semibold">
-                Send us a message
-              </h3>
-              <p className="mt-2 text-sm text-muted-foreground">
-                {contact.lead}
-              </p>
+              <h3 className="font-display text-xl font-semibold">Send us a message</h3>
+              <p className="mt-2 text-sm text-muted-foreground">{contact.lead}</p>
               <div className="mt-6">
                 <ContactForm />
               </div>
@@ -127,7 +109,6 @@ function ContactPage() {
           </Link>
         </div>
       </Section>
-
     </>
   );
 }

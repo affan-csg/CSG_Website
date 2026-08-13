@@ -20,7 +20,8 @@ export const Route = createFileRoute("/staffing/specialized-roles")({
   head: () => ({
     ...buildSeoMeta({
       title: "Specialized Technical Roles We Fill",
-      description: "AI/ML, MLOps, data, DevOps, DevSecOps, cloud, software development and product roles — placed as specialists or pods.",
+      description:
+        "AI/ML, MLOps, data, DevOps, DevSecOps, cloud, software development and product roles — placed as specialists or pods.",
       path: "/staffing/specialized-roles",
     }),
     scripts: [
@@ -54,9 +55,7 @@ function SpecializedRolesIndex() {
           <div className="min-w-0">
             {specializedRolesPage.whyNow.paragraphs.map((p, i) => (
               <Reveal key={i} delay={i * 0.05}>
-                <p className="mt-6 text-[1.04rem] leading-[1.75] text-muted-foreground">
-                  {p}
-                </p>
+                <p className="mt-6 text-[1.04rem] leading-[1.75] text-muted-foreground">{p}</p>
               </Reveal>
             ))}
           </div>
@@ -64,12 +63,8 @@ function SpecializedRolesIndex() {
             <div className="grid gap-px overflow-hidden rounded-md border border-border bg-border sm:grid-cols-2">
               {specializedRolesPage.whyNow.stats.map((s) => (
                 <div key={s.label} className="bg-card p-6">
-                  <p className="font-display text-2xl font-semibold text-gold">
-                    {s.value}
-                  </p>
-                  <p className="mt-2 text-sm leading-snug text-muted-foreground">
-                    {s.label}
-                  </p>
+                  <p className="font-display text-2xl font-semibold text-gold">{s.value}</p>
+                  <p className="mt-2 text-sm leading-snug text-muted-foreground">{s.label}</p>
                 </div>
               ))}
             </div>
@@ -82,16 +77,10 @@ function SpecializedRolesIndex() {
         <div className="mt-14 grid gap-6 md:grid-cols-2">
           {specialties.map((s, i) => (
             <Reveal key={s.slug} delay={(i % 2) * 0.06}>
-              <Link
-                to="/staffing/$slug"
-                params={{ slug: s.slug }}
-                className="group block h-full"
-              >
+              <Link to="/staffing/$slug" params={{ slug: s.slug }} className="group block h-full">
                 <Panel className="flex h-full flex-col">
                   <div className="flex items-start justify-between gap-4">
-                    <h3 className="font-display text-lg font-semibold leading-snug">
-                      {s.title}
-                    </h3>
+                    <h3 className="font-display text-lg font-semibold leading-snug">{s.title}</h3>
                     <ArrowUpRight className="h-5 w-5 shrink-0 text-muted-foreground transition-all duration-300 group-hover:-translate-y-0.5 group-hover:text-gold" />
                   </div>
                   <p className="mt-4 grow text-[0.98rem] leading-relaxed text-muted-foreground">

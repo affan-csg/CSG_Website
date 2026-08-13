@@ -14,10 +14,6 @@ import {
 import { regionPages, prosCons, type RegionPage } from "@/content/delivery";
 import { buildBreadcrumbJsonLd, buildRegionalBusinessJsonLd, buildSeoMeta } from "@/lib/seo";
 
-interface RegionSearch {
-  region: string;
-}
-
 function getRegionPage(region: string): RegionPage | undefined {
   return regionPages.find((p) => p.slug === region);
 }
@@ -54,7 +50,7 @@ export const Route = createFileRoute("/global-delivery/$region")({
       ],
     };
   },
-  beforeLoad: ({ params }) => {
+  loader: ({ params }) => {
     const region = getRegionPage(params.region);
     if (!region) {
       throw notFound();
@@ -74,10 +70,7 @@ function ProsConsCard({
       <p className="eyebrow mt-7">Strengths</p>
       <ul className="mt-4 space-y-3">
         {data.pros.map((p) => (
-          <li
-            key={p}
-            className="flex gap-3 text-sm leading-relaxed text-muted-foreground"
-          >
+          <li key={p} className="flex gap-3 text-sm leading-relaxed text-muted-foreground">
             <Check className="mt-0.5 h-4 w-4 shrink-0 text-gold" />
             <span>{p}</span>
           </li>
@@ -86,10 +79,7 @@ function ProsConsCard({
       <p className="eyebrow mt-8">Trade-offs</p>
       <ul className="mt-4 space-y-3">
         {data.cons.map((c) => (
-          <li
-            key={c}
-            className="flex gap-3 text-sm leading-relaxed text-muted-foreground"
-          >
+          <li key={c} className="flex gap-3 text-sm leading-relaxed text-muted-foreground">
             <Minus className="mt-0.5 h-4 w-4 shrink-0 text-muted-foreground" />
             <span>{c}</span>
           </li>
@@ -135,9 +125,7 @@ function RegionDeliveryPage() {
             {regionData.highlights.map((highlight, i) => (
               <Reveal key={highlight.heading} delay={i * 0.07}>
                 <Panel>
-                  <h3 className="font-display text-xl font-semibold">
-                    {highlight.heading}
-                  </h3>
+                  <h3 className="font-display text-xl font-semibold">{highlight.heading}</h3>
                   <p className="mt-4 text-[1.02rem] leading-relaxed text-muted-foreground">
                     {highlight.body}
                   </p>
@@ -151,17 +139,12 @@ function RegionDeliveryPage() {
       {/* Models (US only) */}
       {regionData.models && regionData.models.length > 0 && (
         <Section className="border-t border-border">
-          <SectionHeading
-            eyebrow="Engagement models"
-            title="How we deliver in this region"
-          />
+          <SectionHeading eyebrow="Engagement models" title="How we deliver in this region" />
           <div className="mt-12 grid gap-6 lg:grid-cols-3">
             {regionData.models.map((model, i) => (
               <Reveal key={model.title} delay={i * 0.07}>
                 <Panel className="h-full">
-                  <h3 className="font-display text-lg font-semibold">
-                    {model.title}
-                  </h3>
+                  <h3 className="font-display text-lg font-semibold">{model.title}</h3>
                   <p className="mt-4 text-[0.95rem] leading-relaxed text-muted-foreground">
                     {model.lead}
                   </p>
@@ -193,9 +176,7 @@ function RegionDeliveryPage() {
             {regionData.sections.map((section, i) => (
               <Reveal key={section.heading} delay={i * 0.07}>
                 <div>
-                  <h3 className="font-display text-xl font-semibold">
-                    {section.heading}
-                  </h3>
+                  <h3 className="font-display text-xl font-semibold">{section.heading}</h3>
                   <p className="mt-4 text-[1.02rem] leading-relaxed text-muted-foreground">
                     {section.body}
                   </p>

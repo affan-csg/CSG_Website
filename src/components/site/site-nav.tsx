@@ -3,12 +3,6 @@ import { AnimatePresence, motion } from "motion/react";
 import { ChevronDown, Menu, X } from "lucide-react";
 import { useEffect, useState, useRef } from "react";
 
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 import { regionCards, staffingSectionCards } from "@/content/site";
 import { cn } from "@/lib/utils";
 
@@ -150,7 +144,12 @@ export function SiteNav() {
                         onMouseEnter={() => handleMouseEnter(item.label)}
                         onMouseLeave={handleMouseLeave}
                       >
-                        <div className={cn("rounded-md border border-border bg-background/95 p-2 shadow-xl backdrop-blur-xl", item.width || "min-w-[220px]")}>
+                        <div
+                          className={cn(
+                            "rounded-md border border-border bg-background/95 p-2 shadow-xl backdrop-blur-xl",
+                            item.width || "min-w-[220px]",
+                          )}
+                        >
                           <Link
                             to={item.to}
                             onClick={() => setOpenDropdown(null)}
@@ -226,24 +225,20 @@ export function SiteNav() {
 
                 if (hasChildren) {
                   return (
-                    <MobileDropdown
-                      key={item.label}
-                      item={item}
-                      onClose={() => setOpen(false)}
-                    />
+                    <MobileDropdown key={item.label} item={item} onClose={() => setOpen(false)} />
                   );
                 }
 
                 return (
-                <Link
-                  key={item.label}
-                  to={item.to}
-                  onClick={() => setOpen(false)}
-                  className="border-b border-border/60 py-3.5 heading-subsection"
-                  activeProps={{ className: "text-gold" }}
-                >
-                  {item.label}
-                </Link>
+                  <Link
+                    key={item.label}
+                    to={item.to}
+                    onClick={() => setOpen(false)}
+                    className="border-b border-border/60 py-3.5 heading-subsection"
+                    activeProps={{ className: "text-gold" }}
+                  >
+                    {item.label}
+                  </Link>
                 );
               })}
               <div className="mt-5 flex flex-col gap-3">
@@ -282,11 +277,7 @@ function MobileDropdown({
   return (
     <div className="border-b border-border/60">
       <div className="flex items-center justify-between py-3.5">
-        <Link
-          to={item.to}
-          onClick={onClose}
-          className="heading-subsection font-display"
-        >
+        <Link to={item.to} onClick={onClose} className="heading-subsection font-display">
           {item.label}
         </Link>
         <button
@@ -296,10 +287,7 @@ function MobileDropdown({
           aria-label={`Expand ${item.label} submenu`}
         >
           <ChevronDown
-            className={cn(
-              "h-4 w-4 transition-transform duration-200",
-              expanded && "rotate-180",
-            )}
+            className={cn("h-4 w-4 transition-transform duration-200", expanded && "rotate-180")}
           />
         </button>
       </div>

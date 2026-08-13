@@ -77,10 +77,7 @@ export function CustomCursor() {
 
   return (
     <>
-      <canvas
-        ref={canvasRef}
-        className="pointer-events-none fixed inset-0 z-[9999]"
-      />
+      <canvas ref={canvasRef} className="pointer-events-none fixed inset-0 z-[9999]" />
       <div
         ref={cursorRef}
         className="pointer-events-none fixed left-0 top-0 z-[9999] h-2 w-2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-gold/60"

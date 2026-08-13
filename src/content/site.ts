@@ -63,8 +63,7 @@ export const specialties = [
   {
     slug: "product",
     title: "Product & Project Management",
-    tagline:
-      "The fastest-growing salary line in tech, and almost nobody is watching it.",
+    tagline: "The fastest-growing salary line in tech, and almost nobody is watching it.",
   },
 ] as const;
 
@@ -188,9 +187,7 @@ export const faqs: Faq[] = [
 ];
 
 export function faqsByQuestion(questions: string[]): Faq[] {
-  return questions
-    .map((q) => faqs.find((f) => f.q === q))
-    .filter((f): f is Faq => Boolean(f));
+  return questions.map((q) => faqs.find((f) => f.q === q)).filter((f): f is Faq => Boolean(f));
 }
 
 export const ctaBand = {

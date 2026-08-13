@@ -1,96 +1,215 @@
 import type { ReactNode } from "react";
 
-import { contact } from "@/content/pages";
 import { cn } from "@/lib/utils";
+import type { FormStatus } from "@/lib/forms";
 
-export function Field({
-  label,
+const inputClass =
+  "form-input w-full rounded-md border border-input bg-background px-4 py-3 text-foreground placeholder:text-muted-foreground/70 transition-colors focus:border-gold focus:ring-2 focus:ring-gold/30 focus:outline-none";
+
+const selectClass = cn(inputClass, "appearance-none pr-10");
+
+const textareaClass = cn(inputClass, "resize-none");
+
+function FieldLabel({
+  htmlFor,
   required,
-  hint,
   children,
-  className,
 }: {
-  label: string;
-  required?: boolean;
-  hint?: string;
+  htmlFor: string;
+  required?: boolean | undefined;
   children: ReactNode;
-  className?: string;
 }) {
   return (
-    <label className={cn("flex min-w-0 flex-col gap-2", className)}>
-      <span className="form-label-small text-muted-foreground">
-        {label}
-        {required ? <span className="text-gold">*</span> : null}
-      </span>
-      {children}
-      {hint ? <span className="caption-text text-muted-foreground">{hint}</span> : null}
+    <label htmlFor={htmlFor} className="form-label-small mb-2 block text-muted-foreground">
+      {children} {required ? <span className="text-gold">*</span> : null}
     </label>
   );
 }
 
-const control =
-  "form-input w-full rounded-sm border border-input bg-card/60 px-4 py-3 text-foreground placeholder:text-muted-foreground/70 transition-colors focus:border-gold focus:outline-none";
+type TextFieldProps = {
+  label: string;
+  name: string;
+  required?: boolean;
+  hint?: string;
+  prefix?: string;
+} & Omit<React.InputHTMLAttributes<HTMLInputElement>, "name" | "id">;
 
-export function TextInput(props: React.InputHTMLAttributes<HTMLInputElement>) {
-  return <input {...props} className={cn(control, props.className)} />;
-}
-
-export function TextArea(props: React.TextareaHTMLAttributes<HTMLTextAreaElement>) {
-  return <textarea {...props} className={cn(control, "min-h-32", props.className)} />;
-}
-
-export function SelectInput({
-  placeholder,
-  options,
+export function TextField({
+  label,
+  name,
+  required,
+  hint,
+  prefix,
+  className,
   ...props
-}: React.SelectHTMLAttributes<HTMLSelectElement> & {
-  placeholder: string;
-  options: readonly string[];
-}) {
+}: TextFieldProps) {
   return (
-    <select {...props} defaultValue="" className={cn(control, props.className)}>
-      <option value="" disabled>
-        {placeholder}
-      </option>
-      {options.map((o) => (
-        <option key={o} value={o}>
-          {o}
-        </option>
-      ))}
-    </select>
+    <div>
+      <FieldLabel htmlFor={name} required={required}>
+        {label}
+      </FieldLabel>
+      {prefix ? (
+        <div className="relative">
+          <span className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground">
+            {prefix}
+          </span>
+          <input
+            id={name}
+            name={name}
+            required={required}
+            className={cn(inputClass, "pl-8", className)}
+            {...props}
+          />
+        </div>
+      ) : (
+        <input
+          id={name}
+          name={name}
+          required={required}
+          className={cn(inputClass, className)}
+          {...props}
+        />
+      )}
+      {hint ? <p className="mt-1 text-xs text-muted-foreground">{hint}</p> : null}
+    </div>
   );
 }
 
-export function FormShell({
-  title,
-  children,
-  submitLabel,
+type TextAreaFieldProps = {
+  label: string;
+  name: string;
+  required?: boolean;
+} & Omit<React.TextareaHTMLAttributes<HTMLTextAreaElement>, "name" | "id">;
+
+export function TextAreaField({ label, name, required, className, ...props }: TextAreaFieldProps) {
+  return (
+    <div>
+      <FieldLabel htmlFor={name} required={required}>
+        {label}
+      </FieldLabel>
+      <textarea
+        id={name}
+        name={name}
+        required={required}
+        className={cn(textareaClass, className)}
+        {...props}
+      />
+    </div>
+  );
+}
+
+interface SelectOption {
+  value: string;
+  label: string;
+}
+
+type SelectFieldProps = {
+  label: string;
+  name: string;
+  required?: boolean;
+  placeholder: string;
+  options: readonly SelectOption[];
+} & Omit<React.SelectHTMLAttributes<HTMLSelectElement>, "name" | "id">;
+
+export function SelectField({
+  label,
+  name,
+  required,
+  placeholder,
+  options,
+  className,
+  ...props
+}: SelectFieldProps) {
+  return (
+    <div>
+      <FieldLabel htmlFor={name} required={required}>
+        {label}
+      </FieldLabel>
+      <select
+        id={name}
+        name={name}
+        required={required}
+        className={cn(selectClass, className)}
+        {...props}
+      >
+        <option value="" disabled>
+          {placeholder}
+        </option>
+        {options.map((opt) => (
+          <option key={opt.value} value={opt.value}>
+            {opt.label}
+          </option>
+        ))}
+      </select>
+    </div>
+  );
+}
+
+export function Honeypot({
+  name,
+  inputRef,
 }: {
-  title: string;
-  children: ReactNode;
-  submitLabel: string;
+  name: string;
+  inputRef: React.RefObject<HTMLInputElement | null>;
 }) {
   return (
-    <div className="glass-panel rounded-md p-7 md:p-10">
-      <h2 className="card-title font-display">{title}</h2>
-      <form
-        className="mt-8 grid gap-6 sm:grid-cols-2"
-        onSubmit={(e) => e.preventDefault()}
+    <div className="absolute left-[-9999px]" aria-hidden="true">
+      <input ref={inputRef} type="text" name={name} tabIndex={-1} autoComplete="off" />
+    </div>
+  );
+}
+
+export function FormError({ message }: { message: string }) {
+  if (!message) return null;
+  return (
+    <p className="body-small text-red-400" role="alert">
+      {message}
+    </p>
+  );
+}
+
+export function SubmitButton({
+  status,
+  idleLabel,
+  submittingLabel,
+}: {
+  status: FormStatus;
+  idleLabel: string;
+  submittingLabel: string;
+}) {
+  return (
+    <button
+      type="submit"
+      disabled={status === "submitting"}
+      className="button-text w-full rounded-md bg-cream px-6 py-3.5 font-display text-navy transition-all duration-300 hover:bg-gold disabled:opacity-50 disabled:cursor-not-allowed"
+    >
+      {status === "submitting" ? submittingLabel : idleLabel}
+    </button>
+  );
+}
+
+export function FormSuccess({
+  title,
+  message,
+  resetLabel,
+  onReset,
+}: {
+  title: string;
+  message: ReactNode;
+  resetLabel: string;
+  onReset: () => void;
+}) {
+  return (
+    <div className="rounded-md border border-green-500/30 bg-green-500/10 p-6 text-center">
+      <p className="heading-subsection font-display text-green-400">{title}</p>
+      <p className="mt-2 body-small text-muted-foreground">{message}</p>
+      <button
+        type="button"
+        onClick={onReset}
+        className="mt-4 button-text text-gold hover:text-gold/80"
       >
-        {children}
-        <div className="sm:col-span-2">
-          <p className="caption-text leading-relaxed text-muted-foreground">
-            {contact.botNotice}
-          </p>
-          <button
-            type="submit"
-            disabled
-            className="button-text mt-5 inline-flex cursor-not-allowed items-center justify-center rounded-md bg-cream px-7 py-3.5 font-display text-navy opacity-60"
-          >
-            {submitLabel}
-          </button>
-        </div>
-      </form>
+        {resetLabel}
+      </button>
     </div>
   );
 }

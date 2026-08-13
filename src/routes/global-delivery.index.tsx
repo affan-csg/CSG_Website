@@ -24,8 +24,9 @@ export const Route = createFileRoute("/global-delivery/")({
   head: () =>
     buildSeoMeta({
       title: "US vs LATAM vs Pakistan — The Honest Comparison",
-      description: "Cost, time zone overlap, engagement models and speed to start compared across US staffing, LATAM nearshore and Pakistan offshore.",
-      path: "/global-delivery"
+      description:
+        "Cost, time zone overlap, engagement models and speed to start compared across US staffing, LATAM nearshore and Pakistan offshore.",
+      path: "/global-delivery",
     }),
   component: GlobalDeliveryIndex,
 });
@@ -101,15 +102,9 @@ function GlobalDeliveryIndex() {
                   >
                     {row.label}
                   </th>
-                  <td className="py-6 pr-6 leading-relaxed text-muted-foreground">
-                    {row.us}
-                  </td>
-                  <td className="py-6 pr-6 leading-relaxed text-muted-foreground">
-                    {row.latam}
-                  </td>
-                  <td className="py-6 leading-relaxed text-muted-foreground">
-                    {row.pakistan}
-                  </td>
+                  <td className="py-6 pr-6 leading-relaxed text-muted-foreground">{row.us}</td>
+                  <td className="py-6 pr-6 leading-relaxed text-muted-foreground">{row.latam}</td>
+                  <td className="py-6 leading-relaxed text-muted-foreground">{row.pakistan}</td>
                 </tr>
               ))}
             </tbody>
@@ -146,7 +141,7 @@ function GlobalDeliveryIndex() {
         <div className="mt-12 grid gap-6 lg:grid-cols-3">
           {regionCards.map((card, i) => (
             <Reveal key={card.to} delay={i * 0.07}>
-              <Link to={card.to} className="group block h-full">
+              <Link to={card.to as string} className="group block h-full">
                 <Panel className="flex h-full flex-col">
                   <div className="flex items-start justify-between gap-4">
                     <h3 className="font-display text-xl font-semibold">{card.title}</h3>

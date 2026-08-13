@@ -10,10 +10,7 @@ import {
 } from "@/lib/forms";
 
 function valuesOf<T extends ReadonlyArray<{ value: string }>>(options: T) {
-  return options.map((o) => o.value) as unknown as [
-    T[number]["value"],
-    ...T[number]["value"][],
-  ];
+  return options.map((o) => o.value) as unknown as [T[number]["value"], ...T[number]["value"][]];
 }
 
 const specialtyValues = valuesOf(specialtyOptions);

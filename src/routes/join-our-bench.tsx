@@ -2,26 +2,21 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 
 import { BenchForm } from "@/components/forms/bench-form";
 import { Reveal } from "@/components/site/reveal";
-import {
-  FaqSection,
-  PageHero,
-  Panel,
-  Pill,
-  Section,
-  SectionHeading,
-} from "@/components/site/primitives";
+import { PageHero, Panel, Pill, Section, SectionHeading } from "@/components/site/primitives";
 import { bench } from "@/content/pages";
 import { buildSeoMeta } from "@/lib/seo";
 
 export const Route = createFileRoute("/join-our-bench")({
-  validateSearch: (search: Record<string, unknown>) => ({
-    skill: search.skill as string | undefined,
-  }),
+  validateSearch: (search: Record<string, unknown>): { skill?: string } => {
+    const skill = search["skill"];
+    return typeof skill === "string" ? { skill } : {};
+  },
   head: () =>
     buildSeoMeta({
       title: "Join Our Bench | Contract & Full-Time AI, Data & Cloud Roles",
-      description: "Apply to join Career Source Group bench — AI/ML, MLOps, Data, DevOps, DevSecOps, Cloud, Software Development, and Product roles.",
-      path: "/join-our-bench"
+      description:
+        "Apply to join Career Source Group bench — AI/ML, MLOps, Data, DevOps, DevSecOps, Cloud, Software Development, and Product roles.",
+      path: "/join-our-bench",
     }),
   component: JoinOurBenchPage,
 });
@@ -41,17 +36,10 @@ function JoinOurBenchPage() {
   const { skill } = Route.useSearch();
   return (
     <>
-      <PageHero
-        eyebrow="Join our bench"
-        title={bench.title}
-        body={bench.lead}
-      />
+      <PageHero eyebrow="Join our bench" title={bench.title} body={bench.lead} />
 
       <Section>
-        <SectionHeading
-          eyebrow="How it works"
-          title={bench.what.heading}
-        />
+        <SectionHeading eyebrow="How it works" title={bench.what.heading} />
         <div className="mt-10 grid gap-6 md:grid-cols-3">
           {bench.what.items.map((item, i) => (
             <Reveal key={i} delay={i * 0.06}>
@@ -59,9 +47,7 @@ function JoinOurBenchPage() {
                 <span className="font-mono text-xs text-gold">
                   {String(i + 1).padStart(2, "0")}
                 </span>
-                <p className="mt-5 text-[0.98rem] leading-relaxed text-muted-foreground">
-                  {item}
-                </p>
+                <p className="mt-5 text-[0.98rem] leading-relaxed text-muted-foreground">{item}</p>
               </Panel>
             </Reveal>
           ))}
@@ -69,10 +55,7 @@ function JoinOurBenchPage() {
       </Section>
 
       <Section className="border-t border-border">
-        <SectionHeading
-          eyebrow="Specialties"
-          title="What we place"
-        />
+        <SectionHeading eyebrow="Specialties" title="What we place" />
         <div className="mt-10 flex flex-wrap gap-3">
           {specialties.map((specialty) => (
             <Reveal key={specialty}>
@@ -82,24 +65,17 @@ function JoinOurBenchPage() {
         </div>
         <Reveal className="mt-8 max-w-2xl">
           <p className="text-[1.02rem] leading-[1.75] text-muted-foreground">
-            We place specialists and pods with clients who need these roles — on
-            a contract or full-time basis. Apply once and we'll match you as
-            opportunities open.
+            We place specialists and pods with clients who need these roles — on a contract or
+            full-time basis. Apply once and we'll match you as opportunities open.
           </p>
         </Reveal>
       </Section>
 
       <Section className="border-t border-border">
-        <SectionHeading
-          eyebrow="Apply now"
-          title="Submit your application"
-          align="center"
-        />
+        <SectionHeading eyebrow="Apply now" title="Submit your application" align="center" />
         <Reveal className="mx-auto mt-10 max-w-2xl">
           <Panel>
-            <h3 className="font-display text-xl font-semibold">
-              Join our bench
-            </h3>
+            <h3 className="font-display text-xl font-semibold">Join our bench</h3>
             <p className="mt-2 text-sm text-muted-foreground">
               Apply once and we'll match you as opportunities open.
             </p>
@@ -111,10 +87,7 @@ function JoinOurBenchPage() {
       </Section>
 
       <Section className="border-t border-border">
-        <SectionHeading
-          eyebrow="For clients"
-          title="Looking to hire instead?"
-        />
+        <SectionHeading eyebrow="For clients" title="Looking to hire instead?" />
         <Reveal className="mt-8">
           <Link
             to="/get-started"
@@ -124,7 +97,6 @@ function JoinOurBenchPage() {
           </Link>
         </Reveal>
       </Section>
-
     </>
   );
 }

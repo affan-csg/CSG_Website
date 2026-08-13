@@ -3,20 +3,15 @@ import { ArrowUpRight } from "lucide-react";
 
 import { Reveal } from "@/components/site/reveal";
 import { buildSeoMeta } from "@/lib/seo";
-import {
-  CtaBand,
-  PageHero,
-  Panel,
-  Section,
-  SectionHeading,
-} from "@/components/site/primitives";
+import { CtaBand, PageHero, Panel, Section } from "@/components/site/primitives";
 
 export const Route = createFileRoute("/blog/")({
   head: () =>
     buildSeoMeta({
       title: "Blog",
-      description: "Insights on staffing, talent acquisition, and workforce strategy from Career Source Group.",
-      path: "/blog"
+      description:
+        "Insights on staffing, talent acquisition, and workforce strategy from Career Source Group.",
+      path: "/blog",
     }),
   component: BlogPage,
 });
@@ -91,11 +86,7 @@ function BlogPage() {
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {blogPosts.map((post, i) => (
             <Reveal key={post.slug} delay={(i % 3) * 0.06}>
-              <Link
-                to="/blog/$slug"
-                params={{ slug: post.slug }}
-                className="group block h-full"
-              >
+              <Link to="/blog/$slug" params={{ slug: post.slug }} className="group block h-full">
                 <Panel className="flex h-full flex-col overflow-hidden p-0">
                   <div className="relative aspect-[16/9] w-full overflow-hidden">
                     <img

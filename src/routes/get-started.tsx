@@ -2,25 +2,21 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 
 import { RequirementForm } from "@/components/forms/requirement-form";
 import { Reveal } from "@/components/site/reveal";
-import {
-  FaqSection,
-  PageHero,
-  Panel,
-  Section,
-  SectionHeading,
-} from "@/components/site/primitives";
+import { FaqSection, PageHero, Panel, Section } from "@/components/site/primitives";
 import { getStarted } from "@/content/pages";
 import { buildSeoMeta } from "@/lib/seo";
 
 export const Route = createFileRoute("/get-started")({
-  validateSearch: (search: Record<string, unknown>) => ({
-    skill: search.skill as string | undefined,
-  }),
+  validateSearch: (search: Record<string, unknown>): { skill?: string } => {
+    const skill = search["skill"];
+    return typeof skill === "string" ? { skill } : {};
+  },
   head: () =>
     buildSeoMeta({
       title: "Submit a Requirement",
-      description: "Tell us what you need — AI/ML, MLOps, Data, DevOps, DevSecOps, Cloud, Software Development, or Product talent, contract or full-time.",
-      path: "/get-started"
+      description:
+        "Tell us what you need — AI/ML, MLOps, Data, DevOps, DevSecOps, Cloud, Software Development, or Product talent, contract or full-time.",
+      path: "/get-started",
     }),
   component: GetStartedPage,
 });
@@ -29,22 +25,14 @@ function GetStartedPage() {
   const { skill } = Route.useSearch();
   return (
     <>
-      <PageHero
-        eyebrow="Get started"
-        title={getStarted.title}
-        body={getStarted.lead}
-      />
+      <PageHero eyebrow="Get started" title={getStarted.title} body={getStarted.lead} />
 
       <Section>
         <div className="grid gap-12 lg:grid-cols-[1.2fr_1fr]">
           <Reveal>
             <Panel>
-              <h3 className="font-display text-xl font-semibold">
-                Submit your requirement
-              </h3>
-              <p className="mt-2 text-sm text-muted-foreground">
-                {getStarted.lead}
-              </p>
+              <h3 className="font-display text-xl font-semibold">Submit your requirement</h3>
+              <p className="mt-2 text-sm text-muted-foreground">{getStarted.lead}</p>
               <div className="mt-6">
                 <RequirementForm defaultSkill={skill} />
               </div>
@@ -62,9 +50,7 @@ function GetStartedPage() {
               </Link>
 
               <div className="mt-12">
-                <h3 className="font-display text-xl font-semibold">
-                  What to expect
-                </h3>
+                <h3 className="font-display text-xl font-semibold">What to expect</h3>
                 <ul className="mt-6 space-y-4">
                   {[
                     "We'll have profiles in front of you this week",

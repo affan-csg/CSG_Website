@@ -9,7 +9,7 @@ export const Route = createFileRoute("/refund")({
     buildSeoMeta({
       title: "Refund Policy",
       description: "Refund policy for Career Source Group.",
-      path: "/refund"
+      path: "/refund",
     }),
   component: RefundPage,
 });
@@ -17,10 +17,7 @@ export const Route = createFileRoute("/refund")({
 function RefundPage() {
   return (
     <>
-      <PageHero
-        eyebrow="Legal"
-        title={legalPages.refund.title}
-      />
+      <PageHero eyebrow="Legal" title={legalPages.refund.title} />
 
       <Section>
         <div className="max-w-3xl">

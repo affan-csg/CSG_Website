@@ -136,7 +136,7 @@ export const staffingRoles: StaffingRole[] = [
       },
       {
         heading: "The sourcing insight we bring",
-        body: 'Platform engineering is new enough that searching for the literal title "platform engineer" will fail. The talent is sitting in adjacent roles — DevOps engineers who\'ve built self-service tooling, SREs who automate reflexively, cloud architects with a product mindset. We source for the skill pattern, not the title. That\'s not a technique most firms use, and it\'s why these searches stall elsewhere.',
+        body: "Platform engineering is new enough that searching for the literal title \"platform engineer\" will fail. The talent is sitting in adjacent roles — DevOps engineers who've built self-service tooling, SREs who automate reflexively, cloud architects with a product mindset. We source for the skill pattern, not the title. That's not a technique most firms use, and it's why these searches stall elsewhere.",
       },
       {
         heading: "What we vet for",
@@ -216,8 +216,7 @@ export const staffingRoles: StaffingRole[] = [
   {
     slug: "product",
     title: "Product & Project Management",
-    tagline:
-      "The fastest-growing salary line in tech, and almost nobody is watching it.",
+    tagline: "The fastest-growing salary line in tech, and almost nobody is watching it.",
     blocks: [
       {
         heading: "Market reality",
@@ -265,8 +264,7 @@ export const staffingHubPage = {
 };
 
 export const staffingRolesPage = {
-  title:
-    "We Don't Sell Resumes. We Sell the Right Seat, in the Right Region, at the Right Number.",
+  title: "We Don't Sell Resumes. We Sell the Right Seat, in the Right Region, at the Right Number.",
   paragraphs: [
     'Most staffing firms take your req, take your budget, and go looking. Then three weeks later they come back and explain why the market is "tight" and you need to raise the number.',
     "We run it in the opposite order. Give us the offer — base, bonus, equity, remote flexibility, and how fast you need someone — and we'll tell you three things before we source a single candidate: what that offer realistically buys in the US market right now, and how long the search will take at that number; what the same offer buys in LATAM, usually two seniority levels higher, or two more people; and what the same offer buys in Pakistan, usually a small team instead of one hire.",

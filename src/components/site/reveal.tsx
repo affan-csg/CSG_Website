@@ -10,13 +10,7 @@ type RevealProps = {
 };
 
 /** Scroll-triggered fade + rise. Renders content immediately for SSR/SEO. */
-export function Reveal({
-  children,
-  delay = 0,
-  y = 24,
-  className,
-  as = "div",
-}: RevealProps) {
+export function Reveal({ children, delay = 0, y = 24, className, as = "div" }: RevealProps) {
   const reduce = useReducedMotion();
   const Comp = motion[as];
 

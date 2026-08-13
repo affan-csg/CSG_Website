@@ -138,22 +138,16 @@ function StaffingRoleDetail() {
               className="group bg-card p-7 transition-colors duration-500 hover:bg-navy-soft"
             >
               <div className="flex items-start justify-between gap-4">
-                <h3 className="font-display text-base font-semibold leading-snug">
-                  {s.title}
-                </h3>
+                <h3 className="font-display text-base font-semibold leading-snug">{s.title}</h3>
                 <ArrowUpRight className="h-4 w-4 shrink-0 text-muted-foreground transition-colors group-hover:text-gold" />
               </div>
-              <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
-                {s.tagline}
-              </p>
+              <p className="mt-4 text-sm leading-relaxed text-muted-foreground">{s.tagline}</p>
             </Link>
           ))}
         </div>
       </Section>
 
-      {role.faqQuestions.length ? (
-        <FaqSection questions={role.faqQuestions} />
-      ) : null}
+      {role.faqQuestions.length ? <FaqSection questions={role.faqQuestions} /> : null}
     </>
   );
 }

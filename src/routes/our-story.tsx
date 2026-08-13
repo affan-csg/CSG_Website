@@ -18,9 +18,11 @@ export const Route = createFileRoute("/our-story")({
   head: () =>
     buildSeoMeta({
       title: "Our Story — US, LATAM & Pakistan Staffing",
-      description: "A US staffing and talent delivery firm placing tech and non-tech talent across direct hire, contract and contract-to-hire in the US, plus LATAM and Pakistan delivery. Why companies work with us instead of managing vendors across regions.",
+      description:
+        "A US staffing and talent delivery firm placing tech and non-tech talent across direct hire, contract and contract-to-hire in the US, plus LATAM and Pakistan delivery. Why companies work with us instead of managing vendors across regions.",
       path: "/our-story",
-      keywords: "our story Career Source Group, why Career Source Group, staffing company Alpharetta GA, US staffing firm, talent delivery, direct hire staffing"
+      keywords:
+        "our story Career Source Group, why Career Source Group, staffing company Alpharetta GA, US staffing firm, talent delivery, direct hire staffing",
     }),
   component: OurStoryPage,
 });
@@ -28,24 +30,14 @@ export const Route = createFileRoute("/our-story")({
 function OurStoryPage() {
   return (
     <>
-      <PageHero
-        eyebrow="Our Story"
-        title={about.title}
-        body={about.lead}
-        showParticles={true}
-      />
+      <PageHero eyebrow="Our Story" title={about.title} body={about.lead} showParticles={true} />
 
       <Section>
-        <SectionHeading
-          eyebrow="How we work"
-          title={about.howWeWork.heading}
-        />
+        <SectionHeading eyebrow="How we work" title={about.howWeWork.heading} />
         <div className="mt-10 max-w-3xl">
           {about.howWeWork.paragraphs.map((p, i) => (
             <Reveal key={i} delay={i * 0.04}>
-              <p className="mt-6 text-[1.04rem] leading-[1.75] text-muted-foreground">
-                {p}
-              </p>
+              <p className="mt-6 text-[1.04rem] leading-[1.75] text-muted-foreground">{p}</p>
             </Reveal>
           ))}
         </div>
@@ -60,26 +52,20 @@ function OurStoryPage() {
         <div className="mt-10 space-y-0">
           {whyCsg.reasons.map((reason, i) => (
             <Reveal key={reason.heading} delay={i * 0.05}>
-              <NumberedItem
-                index={i + 1}
-                heading={reason.heading}
-                body={reason.body}
-              />
+              <NumberedItem index={i + 1} heading={reason.heading} body={reason.body} />
             </Reveal>
           ))}
         </div>
         <div className="mt-14">
           <PullQuote>
-            We're the only staffing firm that sells all three regions — US,
-            LATAM, and Pakistan — so our incentive is to put the work where it
-            actually belongs.
+            We're the only staffing firm that sells all three regions — US, LATAM, and Pakistan — so
+            our incentive is to put the work where it actually belongs.
           </PullQuote>
           <Reveal className="mt-8 max-w-2xl">
             <p className="text-[1.02rem] leading-[1.75] text-muted-foreground">
-              While other firms push their own region because that's all they
-              sell, we have no reason to push one over another. Geography is
-              decided after experience, communication skills, and technical
-              skills are settled — not before.
+              While other firms push their own region because that's all they sell, we have no
+              reason to push one over another. Geography is decided after experience, communication
+              skills, and technical skills are settled — not before.
             </p>
           </Reveal>
         </div>
@@ -100,12 +86,8 @@ function OurStoryPage() {
                 { value: "$250K+", label: "Saved across five hires a year" },
               ].map((s) => (
                 <div key={s.label} className="bg-card p-7">
-                  <p className="font-display text-3xl font-semibold text-gold">
-                    {s.value}
-                  </p>
-                  <p className="mt-3 text-sm leading-snug text-muted-foreground">
-                    {s.label}
-                  </p>
+                  <p className="font-display text-3xl font-semibold text-gold">{s.value}</p>
+                  <p className="mt-3 text-sm leading-snug text-muted-foreground">{s.label}</p>
                 </div>
               ))}
             </div>
@@ -120,10 +102,9 @@ function OurStoryPage() {
         />
         <Reveal className="mt-8 max-w-3xl">
           <p className="text-[1.04rem] leading-[1.75] text-muted-foreground">
-            Most offshore engagements don't fail on technical skill. They fail
-            because nobody designed for how the work would actually get
-            discussed. We staff communication-critical seats differently than
-            execution seats, on purpose. Every pod is scored on communication
+            Most offshore engagements don't fail on technical skill. They fail because nobody
+            designed for how the work would actually get discussed. We staff communication-critical
+            seats differently than execution seats, on purpose. Every pod is scored on communication
             first, then on technical skill against the client's actual stack.
           </p>
         </Reveal>
@@ -152,11 +133,7 @@ function OurStoryPage() {
       </Section>
 
       <Section className="border-t border-border">
-        <SectionHeading
-          eyebrow="Leadership"
-          title={about.founder.name}
-          body={about.founder.role}
-        />
+        <SectionHeading eyebrow="Leadership" title={about.founder.name} body={about.founder.role} />
         <div className="mt-10 grid gap-12 lg:grid-cols-[1fr_1.5fr]">
           <Reveal>
             <Panel className="flex flex-col items-center text-center">
@@ -167,12 +144,8 @@ function OurStoryPage() {
                   className="h-full w-full object-cover"
                 />
               </div>
-              <p className="mt-4 font-display text-lg font-semibold">
-                {about.founder.name}
-              </p>
-              <p className="mt-2 text-sm text-muted-foreground">
-                {about.founder.role}
-              </p>
+              <p className="mt-4 font-display text-lg font-semibold">{about.founder.name}</p>
+              <p className="mt-2 text-sm text-muted-foreground">{about.founder.role}</p>
               <div className="mt-6 flex gap-4">
                 {about.founder.links.map((link) => (
                   <a
@@ -191,9 +164,7 @@ function OurStoryPage() {
           <div className="min-w-0">
             {about.founder.bio.map((p, i) => (
               <Reveal key={i} delay={i * 0.04}>
-                <p className="mt-6 text-[1.02rem] leading-[1.75] text-muted-foreground">
-                  {p}
-                </p>
+                <p className="mt-6 text-[1.02rem] leading-[1.75] text-muted-foreground">{p}</p>
               </Reveal>
             ))}
           </div>
@@ -219,12 +190,8 @@ function OurStoryPage() {
                       className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
                     />
                   </div>
-                  <h3 className="mt-4 font-display text-lg font-semibold">
-                    {member.name}
-                  </h3>
-                  <p className="mt-2 text-sm text-muted-foreground">
-                    {member.role}
-                  </p>
+                  <h3 className="mt-4 font-display text-lg font-semibold">{member.name}</h3>
+                  <p className="mt-2 text-sm text-muted-foreground">{member.role}</p>
                   <div className="mt-auto pt-6">
                     <span className="font-display text-sm font-semibold text-gold transition-colors group-hover:text-gold/80">
                       LinkedIn →

@@ -78,20 +78,20 @@ export function PageHero({
 }: {
   eyebrow: string;
   title: string;
-  body?: string | string[];
+  body?: string | string[] | undefined;
   children?: ReactNode;
   showParticles?: boolean;
   showRing?: boolean;
 }) {
   const paragraphs = Array.isArray(body) ? body : body ? [body] : [];
   return (
-    <section className={cn(
-      "grain relative overflow-hidden border-b border-border",
-      showParticles ? "min-h-[92vh] flex items-center pt-28" : "pt-36 pb-16 md:pt-44 md:pb-24"
-    )}>
-      {showParticles && (
-        <HeroParticles showRing={showRing} />
+    <section
+      className={cn(
+        "grain relative overflow-hidden border-b border-border",
+        showParticles ? "min-h-[92vh] flex items-center pt-28" : "pt-36 pb-16 md:pt-44 md:pb-24",
       )}
+    >
+      {showParticles && <HeroParticles showRing={showRing} />}
       {showParticles && (
         <div
           aria-hidden
@@ -104,7 +104,9 @@ export function PageHero({
         <p className="eyebrow">{eyebrow}</p>
         <h1 className="mt-6 max-w-4xl text-balance heading-hero">{title}</h1>
         {paragraphs.map((p) => (
-          <p key={p} className="mt-6 max-w-2xl body-copy text-muted-foreground">{p}</p>
+          <p key={p} className="mt-6 max-w-2xl body-copy text-muted-foreground">
+            {p}
+          </p>
         ))}
         {children ? <div className="mt-10">{children}</div> : null}
       </div>
@@ -170,13 +172,7 @@ export function Pill({ children }: { children: ReactNode }) {
   );
 }
 
-export function Panel({
-  children,
-  className,
-}: {
-  children: ReactNode;
-  className?: string;
-}) {
+export function Panel({ children, className }: { children: ReactNode; className?: string }) {
   return (
     <div
       className={cn(
@@ -200,21 +196,10 @@ export function NumberedItem({
 }) {
   return (
     <div className="grid gap-5 border-t border-border py-8 transition-colors duration-300 hover:border-gold/30 md:grid-cols-[5rem_1fr]">
-      <span className="label-small text-gold">
-        {String(index).padStart(2, "0")}
-      </span>
+      <span className="label-small text-gold">{String(index).padStart(2, "0")}</span>
       <div className="min-w-0">
-        {heading ? (
-          <h3 className="card-title">{heading}</h3>
-        ) : null}
-        <p
-          className={cn(
-            "body-copy text-muted-foreground",
-            heading && "mt-3",
-          )}
-        >
-          {body}
-        </p>
+        {heading ? <h3 className="card-title">{heading}</h3> : null}
+        <p className={cn("body-copy text-muted-foreground", heading && "mt-3")}>{body}</p>
       </div>
     </div>
   );
@@ -228,15 +213,14 @@ export function PullQuote({ children }: { children: ReactNode }) {
   );
 }
 
-export function StatGrid({
-  stats,
-}: {
-  stats: readonly { value: string; label: string }[];
-}) {
+export function StatGrid({ stats }: { stats: readonly { value: string; label: string }[] }) {
   return (
     <div className="grid gap-px overflow-hidden rounded-md border border-border bg-border sm:grid-cols-2 lg:grid-cols-4">
       {stats.map((s) => (
-        <div key={s.label} className="bg-card p-7 transition-colors duration-300 hover:bg-navy-soft">
+        <div
+          key={s.label}
+          className="bg-card p-7 transition-colors duration-300 hover:bg-navy-soft"
+        >
           <p className="stat-value text-gold">{s.value}</p>
           <p className="stat-label mt-3 text-muted-foreground">{s.label}</p>
         </div>
@@ -293,12 +277,8 @@ export function CtaBand() {
       />
       <div className="container-page relative text-center">
         <Reveal>
-          <h2 className="mx-auto max-w-3xl text-balance heading-section">
-            {ctaBand.title}
-          </h2>
-          <p className="mx-auto mt-6 max-w-xl body-copy text-muted-foreground">
-            {ctaBand.body}
-          </p>
+          <h2 className="mx-auto max-w-3xl text-balance heading-section">{ctaBand.title}</h2>
+          <p className="mx-auto mt-6 max-w-xl body-copy text-muted-foreground">{ctaBand.body}</p>
           <div className="mt-10 flex flex-wrap justify-center gap-4">
             <ButtonLink to={ctaBand.primary.to} label={ctaBand.primary.label} />
             <ButtonLink
@@ -341,10 +321,7 @@ export function Prose({ content }: { content: string }) {
           return (
             <ul key={i} className="mt-6 space-y-3">
               {lines.map((line, j) => (
-                <li
-                  key={j}
-                  className="flex gap-3 body-copy text-muted-foreground"
-                >
+                <li key={j} className="flex gap-3 body-copy text-muted-foreground">
                   <span aria-hidden className="mt-2.5 h-px w-4 shrink-0 bg-gold" />
                   <span>{line.trim().replace(/^[-*] /, "")}</span>
                 </li>
@@ -353,10 +330,7 @@ export function Prose({ content }: { content: string }) {
           );
         }
         return (
-          <p
-            key={i}
-            className="mt-6 body-copy text-muted-foreground"
-          >
+          <p key={i} className="mt-6 body-copy text-muted-foreground">
             {trimmed}
           </p>
         );

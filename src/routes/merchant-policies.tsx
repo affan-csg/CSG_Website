@@ -10,7 +10,7 @@ export const Route = createFileRoute("/merchant-policies")({
     buildSeoMeta({
       title: "Merchant Policies",
       description: "Merchant policies and payment information for Career Source Group.",
-      path: "/merchant-policies"
+      path: "/merchant-policies",
     }),
   component: MerchantPoliciesPage,
 });
@@ -18,10 +18,7 @@ export const Route = createFileRoute("/merchant-policies")({
 function MerchantPoliciesPage() {
   return (
     <>
-      <PageHero
-        eyebrow="Legal"
-        title={legalPages.merchant.title}
-      />
+      <PageHero eyebrow="Legal" title={legalPages.merchant.title} />
 
       <Section>
         <div className="max-w-3xl">
@@ -35,9 +32,7 @@ function MerchantPoliciesPage() {
                   <p className="font-mono text-[0.66rem] uppercase tracking-[0.18em] text-gold">
                     {label}
                   </p>
-                  <p className="text-[1.02rem] leading-relaxed text-muted-foreground">
-                    {value}
-                  </p>
+                  <p className="text-[1.02rem] leading-relaxed text-muted-foreground">{value}</p>
                 </div>
               ))}
             </div>

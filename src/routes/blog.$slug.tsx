@@ -1,10 +1,12 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 
-import { Reveal } from "@/components/site/reveal";
 import { ArrowLink, CtaBand, PageHero, Prose, Section } from "@/components/site/primitives";
 import { buildArticleJsonLd, buildBreadcrumbJsonLd, buildSeoMeta } from "@/lib/seo";
 
-const blogContent: Record<string, { title: string; date: string; readTime: string; content: string }> = {
+const blogContent: Record<
+  string,
+  { title: string; date: string; readTime: string; content: string }
+> = {
   "the-hidden-costs-of-a-bad-hire": {
     title: "The Hidden Costs of a Bad Hire and How to Avoid Them",
     date: "2024-08-15",

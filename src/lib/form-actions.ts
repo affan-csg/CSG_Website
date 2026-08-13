@@ -1,6 +1,7 @@
 import { createServerFn } from "@tanstack/react-start";
 import { getRequestIP } from "@tanstack/react-start/server";
 
+import { sendNotificationEmail } from "@/lib/server/notify";
 import { checkEmailRateLimit, checkIpRateLimit } from "@/lib/server/rate-limit";
 import {
   insertCandidateApplication,
@@ -10,9 +11,7 @@ import {
 } from "@/lib/server/submissions";
 import { benchSchema, contactSchema, requirementSchema } from "@/lib/server/validation";
 
-export type SubmitResult =
-  | { success: true; id: string }
-  | { success: false; message: string };
+export type SubmitResult = { success: true; id: string } | { success: false; message: string };
 
 const GENERIC_ERROR: SubmitResult = {
   success: false,
@@ -64,6 +63,18 @@ export const submitContactForm = createServerFn({ method: "POST" })
           message: "We could not save your message right now. Please try again shortly.",
         };
       }
+
+      await sendNotificationEmail(
+        `New contact inquiry: ${parsed.data.firstName} ${parsed.data.lastName}`,
+        [
+          `Inquiry type: ${parsed.data.inquiryType}`,
+          `Name: ${parsed.data.firstName} ${parsed.data.lastName}`,
+          `Email: ${parsed.data.email}`,
+          `Phone: ${parsed.data.phone}`,
+          "",
+          parsed.data.message ?? "(no message)",
+        ].join("\n"),
+      );
 
       return { success: true, id: row.id };
     } catch (error) {
@@ -131,6 +142,20 @@ export const submitRequirementForm = createServerFn({ method: "POST" })
         };
       }
 
+      await sendNotificationEmail(
+        `New requirement: ${parsed.data.skillNeeded} (${parsed.data.companyName ?? "no company given"})`,
+        [
+          `Skill needed: ${parsed.data.skillNeeded}`,
+          `Engagement: ${parsed.data.engagementType} / ${parsed.data.basis}`,
+          `Company: ${parsed.data.companyName ?? "(none given)"}`,
+          `Name: ${parsed.data.firstName} ${parsed.data.lastName}`,
+          `Email: ${parsed.data.email}`,
+          `Phone: ${parsed.data.phone}`,
+          "",
+          parsed.data.message ?? "(no message)",
+        ].join("\n"),
+      );
+
       return { success: true, id: row.id };
     } catch (error) {
       console.error("submitRequirementForm failed", error);
@@ -185,7 +210,8 @@ export const submitBenchApplication = createServerFn({ method: "POST" })
     }
 
     const resumeEntry = formData.get("resume");
-    const resumeFile = resumeEntry instanceof File && resumeEntry.size > 0 ? resumeEntry : undefined;
+    const resumeFile =
+      resumeEntry instanceof File && resumeEntry.size > 0 ? resumeEntry : undefined;
 
     if (resumeFile) {
       if (resumeFile.size > MAX_RESUME_BYTES) {
@@ -252,6 +278,23 @@ export const submitBenchApplication = createServerFn({ method: "POST" })
           message: "We could not save your application right now. Please try again shortly.",
         };
       }
+
+      await sendNotificationEmail(
+        `New bench application: ${parsed.data.firstName} ${parsed.data.lastName} (${parsed.data.specialty})`,
+        [
+          `Specialty: ${parsed.data.specialty} / ${parsed.data.seniority}`,
+          `Basis: ${parsed.data.basis}`,
+          `Location: ${parsed.data.location}`,
+          `Name: ${parsed.data.firstName} ${parsed.data.lastName}`,
+          `Email: ${parsed.data.email}`,
+          `Phone: ${parsed.data.phone}`,
+          `Résumé uploaded: ${resumePath ? "yes" : "no"}`,
+          `Portfolio: ${parsed.data.portfolioUrl ?? "(none)"}`,
+          `LinkedIn: ${parsed.data.linkedinUrl ?? "(none)"}`,
+          "",
+          parsed.data.message ?? "(no message)",
+        ].join("\n"),
+      );
 
       return { success: true, id: row.id };
     } catch (error) {

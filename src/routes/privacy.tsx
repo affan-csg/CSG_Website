@@ -8,7 +8,7 @@ export const Route = createFileRoute("/privacy")({
     buildSeoMeta({
       title: "Privacy Policy",
       description: "Privacy policy for Career Source Group.",
-      path: "/privacy"
+      path: "/privacy",
     }),
   component: PrivacyPage,
 });
@@ -16,10 +16,7 @@ export const Route = createFileRoute("/privacy")({
 function PrivacyPage() {
   return (
     <>
-      <PageHero
-        eyebrow="Legal"
-        title="Privacy Policy"
-      />
+      <PageHero eyebrow="Legal" title="Privacy Policy" />
 
       <Section>
         <div className="max-w-3xl">
