@@ -11,13 +11,16 @@ import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
+import { getNonce } from "@/lib/get-nonce";
+import { logCoreWebVitals } from "@/lib/performance-monitor";
+import { ErrorBoundary } from "@/components/error-boundary/error-boundary";
 import { SiteNav } from "@/components/site/site-nav";
 import { SiteFooter } from "@/components/site/site-footer";
 import { FloatingConsultCTA } from "@/components/site/floating-consult-cta";
 import { SmoothScroll } from "@/components/site/smooth-scroll";
-import { ScrollProgress } from "@/components/site/scroll-progress";
+import { LazyScrollProgress } from "@/components/animation/lazy-scroll-progress";
 import { CustomCursor } from "@/components/site/custom-cursor";
-import { HomeParticlesBg } from "@/components/site/home-particles-bg";
+import { LazyHeroCanvas } from "@/components/animation/lazy-hero-canvas";
 import { buildOrganizationJsonLd, buildLocalBusinessJsonLd } from "@/lib/seo";
 
 function NotFoundComponent() {
@@ -79,50 +82,55 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
 }
 
 export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
-  head: () => ({
-    meta: [
-      { charSet: "utf-8" },
-      { name: "viewport", content: "width=device-width, initial-scale=1, viewport-fit=cover" },
-      { name: "author", content: "Career Source Group, LLC" },
-      { name: "theme-color", content: "#0F172A" },
-      { httpEquiv: "x-dns-prefetch-control", content: "on" },
-      {
-        name: "keywords",
-        content:
-          "staffing, talent acquisition, US staffing, LATAM nearshore, Pakistan offshore, direct hire, contract staffing, contract-to-hire, staff augmentation, IT staffing, healthcare staffing",
-      },
-      { property: "og:type", content: "website" },
-      { property: "og:site_name", content: "Career Source Group" },
-      { property: "og:locale", content: "en_US" },
-      { property: "og:image", content: "https://careersourcegroup.com/images/brand/CSG.png" },
-      { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:site", content: "@careersourcegrp" },
-      { name: "twitter:image", content: "https://careersourcegroup.com/images/brand/CSG.png" },
-    ],
-    links: [
-      { rel: "stylesheet", href: appCss },
-      { rel: "preconnect", href: "https://fonts.googleapis.com" },
-      { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "" },
-      { rel: "dns-prefetch", href: "https://fonts.googleapis.com" },
-      { rel: "dns-prefetch", href: "https://fonts.gstatic.com" },
-      {
-        rel: "stylesheet",
-        href: "https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap",
-      },
-      { rel: "icon", href: "/favicon.svg", type: "image/svg+xml" },
-      { rel: "apple-touch-icon", href: "/images/brand/CSG.png" },
-    ],
-    scripts: [
-      {
-        type: "application/ld+json",
-        children: JSON.stringify(buildOrganizationJsonLd()),
-      },
-      {
-        type: "application/ld+json",
-        children: JSON.stringify(buildLocalBusinessJsonLd()),
-      },
-    ],
-  }),
+  head: () => {
+    const nonce = getNonce();
+    return {
+      meta: [
+        { charSet: "utf-8" },
+        { name: "viewport", content: "width=device-width, initial-scale=1, viewport-fit=cover" },
+        { name: "author", content: "Career Source Group, LLC" },
+        { name: "theme-color", content: "#0F172A" },
+        { httpEquiv: "x-dns-prefetch-control", content: "on" },
+        {
+          name: "keywords",
+          content:
+            "staffing, talent acquisition, US staffing, LATAM nearshore, Pakistan offshore, direct hire, contract staffing, contract-to-hire, staff augmentation, IT staffing, healthcare staffing",
+        },
+        { property: "og:type", content: "website" },
+        { property: "og:site_name", content: "Career Source Group" },
+        { property: "og:locale", content: "en_US" },
+        { property: "og:image", content: "https://careersourcegroup.com/images/brand/CSG.png" },
+        { name: "twitter:card", content: "summary_large_image" },
+        { name: "twitter:site", content: "@careersourcegrp" },
+        { name: "twitter:image", content: "https://careersourcegroup.com/images/brand/CSG.png" },
+      ],
+      links: [
+        { rel: "stylesheet", href: appCss },
+        { rel: "preconnect", href: "https://fonts.googleapis.com" },
+        { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "" },
+        { rel: "dns-prefetch", href: "https://fonts.googleapis.com" },
+        { rel: "dns-prefetch", href: "https://fonts.gstatic.com" },
+        {
+          rel: "stylesheet",
+          href: "https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap",
+        },
+        { rel: "icon", href: "/favicon.svg", type: "image/svg+xml" },
+        { rel: "apple-touch-icon", href: "/images/brand/CSG.png" },
+      ],
+      scripts: [
+        {
+          type: "application/ld+json",
+          ...(nonce && { nonce }),
+          children: JSON.stringify(buildOrganizationJsonLd()),
+        },
+        {
+          type: "application/ld+json",
+          ...(nonce && { nonce }),
+          children: JSON.stringify(buildLocalBusinessJsonLd()),
+        },
+      ],
+    };
+  },
   shellComponent: RootShell,
   component: RootComponent,
   notFoundComponent: NotFoundComponent,
@@ -146,25 +154,33 @@ function RootShell({ children }: { children: ReactNode }) {
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
 
+  useEffect(() => {
+    // Log Core Web Vitals in development
+    logCoreWebVitals();
+  }, []);
+
   return (
-    <QueryClientProvider client={queryClient}>
-      <SmoothScroll />
-      <ScrollProgress />
-      <a
-        href="#main-content"
-        className="sr-only focus:not-sr-only focus:fixed focus:left-6 focus:top-6 focus:z-[60]      focus:rounded-md focus:bg-cream focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-navy"
-      >
-        Skip to main content
-      </a>
-      <SiteNav />
-      <main id="main-content">
-        {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
-        <Outlet />
-      </main>
-      <SiteFooter />
-      <FloatingConsultCTA />
-      <CustomCursor />
-      <HomeParticlesBg />
-    </QueryClientProvider>
+    <ErrorBoundary boundary="root" level="page">
+      <QueryClientProvider client={queryClient}>
+        <SmoothScroll />
+        <LazyScrollProgress />
+        <a
+          href="#main-content"
+          className="sr-only focus:not-sr-only focus:fixed focus:left-6 focus:top-6 focus:z-[60] focus:rounded-md focus:bg-cream focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-navy"
+        >
+          Skip to main content
+        </a>
+        <SiteNav />
+        <main id="main-content">
+          {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
+          <Outlet />
+        </main>
+        <SiteFooter />
+        <FloatingConsultCTA />
+        <CustomCursor />
+        {/* Lazy-loaded 3D canvas background with respects for reduced motion and slow networks */}
+        <LazyHeroCanvas showRing={false} />
+      </QueryClientProvider>
+    </ErrorBoundary>
   );
 }

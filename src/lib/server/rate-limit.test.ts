@@ -1,9 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import {
-  checkEmailRateLimit,
-  checkIpRateLimit,
-  RATE_LIMITS,
-} from "@/lib/server/rate-limit";
+import { checkEmailRateLimit, checkIpRateLimit, RATE_LIMITS } from "@/lib/server/rate-limit";
 import * as submissions from "@/lib/server/submissions";
 
 vi.mock("@/lib/server/submissions");
@@ -97,14 +93,12 @@ describe("checkEmailRateLimit", () => {
             setTimeout(() => resolve(1), 10);
           }),
       );
-    const appMock = vi
-      .mocked(submissions.countRecentApplicationsByEmail)
-      .mockImplementation(
-        () =>
-          new Promise((resolve) => {
-            setTimeout(() => resolve(2), 10);
-          }),
-      );
+    const appMock = vi.mocked(submissions.countRecentApplicationsByEmail).mockImplementation(
+      () =>
+        new Promise((resolve) => {
+          setTimeout(() => resolve(2), 10);
+        }),
+    );
 
     const start = Date.now();
     await checkEmailRateLimit("test@example.com");
@@ -189,22 +183,18 @@ describe("checkIpRateLimit", () => {
   });
 
   it("queries both sources in parallel", async () => {
-    const clientMock = vi
-      .mocked(submissions.countRecentClientRequirementsByIp)
-      .mockImplementation(
-        () =>
-          new Promise((resolve) => {
-            setTimeout(() => resolve(5), 10);
-          }),
-      );
-    const appMock = vi
-      .mocked(submissions.countRecentApplicationsByIp)
-      .mockImplementation(
-        () =>
-          new Promise((resolve) => {
-            setTimeout(() => resolve(8), 10);
-          }),
-      );
+    const clientMock = vi.mocked(submissions.countRecentClientRequirementsByIp).mockImplementation(
+      () =>
+        new Promise((resolve) => {
+          setTimeout(() => resolve(5), 10);
+        }),
+    );
+    const appMock = vi.mocked(submissions.countRecentApplicationsByIp).mockImplementation(
+      () =>
+        new Promise((resolve) => {
+          setTimeout(() => resolve(8), 10);
+        }),
+    );
 
     const start = Date.now();
     await checkIpRateLimit("192.168.1.1");

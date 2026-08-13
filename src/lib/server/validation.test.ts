@@ -1,9 +1,5 @@
 import { describe, it, expect } from "vitest";
-import {
-  contactSchema,
-  requirementSchema,
-  benchSchema,
-} from "@/lib/server/validation";
+import { contactSchema, requirementSchema, benchSchema } from "@/lib/server/validation";
 
 describe("contactSchema", () => {
   it("accepts valid contact form data", () => {
