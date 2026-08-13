@@ -84,18 +84,8 @@ export default {
     try {
       const nonce = generateNonce();
 
-      // Store nonce in a request-scoped way (via a custom header)
-      // Clone request headers to avoid mutation issues in dev server
-      const headers = new Headers();
-      for (const [key, value] of request.headers) {
-        headers.set(key, value);
-      }
-      headers.set("x-csp-nonce", nonce);
-
-      const modifiedRequest = new Request(request, { headers });
-
       const handler = await getServerEntry();
-      const response = await handler.fetch(modifiedRequest, env, ctx);
+      const response = await handler.fetch(request, env, ctx);
       const normalizedResponse = await normalizeCatastrophicSsrResponse(response);
 
       // Apply security headers to the response

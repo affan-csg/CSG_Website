@@ -4,6 +4,7 @@ import { Reveal } from "@/components/site/reveal";
 import {
   CtaBand,
   FaqSection,
+  LogoWall,
   NumberedItem,
   PageHero,
   Panel,
@@ -116,20 +117,9 @@ function OurStoryPage() {
           title={about.delivered.heading}
           body={about.delivered.body}
         />
-        <Reveal className="mt-8">
-          <div className="glass-panel rounded-md p-8">
-            <div className="flex flex-wrap gap-8">
-              {about.delivered.logos.map((logo) => (
-                <span
-                  key={logo}
-                  className="font-display text-xl font-semibold text-muted-foreground/60"
-                >
-                  {logo}
-                </span>
-              ))}
-            </div>
-          </div>
-        </Reveal>
+        <div className="mt-8">
+          <LogoWall logos={about.delivered.logos} />
+        </div>
       </Section>
 
       <Section className="border-t border-border">

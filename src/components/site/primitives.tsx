@@ -213,6 +213,22 @@ export function PullQuote({ children }: { children: ReactNode }) {
   );
 }
 
+export function LogoWall({ logos }: { logos: readonly string[] }) {
+  return (
+    <div className="grid grid-cols-2 gap-px overflow-hidden rounded-md border border-border bg-border sm:grid-cols-3 lg:grid-cols-5">
+      {logos.map((logo, i) => (
+        <Reveal key={logo} delay={i * 0.05}>
+          <div className="group flex h-28 items-center justify-center bg-card p-6 transition-colors duration-300 hover:bg-navy-soft">
+            <span className="font-display text-lg font-semibold tracking-tight text-muted-foreground/50 transition-all duration-300 group-hover:scale-105 group-hover:text-gold sm:text-xl">
+              {logo}
+            </span>
+          </div>
+        </Reveal>
+      ))}
+    </div>
+  );
+}
+
 export function StatGrid({ stats }: { stats: readonly { value: string; label: string }[] }) {
   return (
     <div className="grid gap-px overflow-hidden rounded-md border border-border bg-border sm:grid-cols-2 lg:grid-cols-4">
