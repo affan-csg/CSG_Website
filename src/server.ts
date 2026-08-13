@@ -84,11 +84,15 @@ export default {
     try {
       const nonce = generateNonce();
 
-      // Store nonce in a request-scoped way (via a custom header that we'll strip out)
-      const modifiedRequest = new Request(request, {
-        headers: new Headers(request.headers),
-      });
-      modifiedRequest.headers.set("x-csp-nonce", nonce);
+      // Store nonce in a request-scoped way (via a custom header)
+      // Clone request headers to avoid mutation issues in dev server
+      const headers = new Headers();
+      for (const [key, value] of request.headers) {
+        headers.set(key, value);
+      }
+      headers.set("x-csp-nonce", nonce);
+
+      const modifiedRequest = new Request(request, { headers });
 
       const handler = await getServerEntry();
       const response = await handler.fetch(modifiedRequest, env, ctx);
