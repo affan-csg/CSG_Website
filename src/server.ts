@@ -8,6 +8,10 @@ type ServerEntry = {
   fetch: (request: Request, env: unknown, ctx: unknown) => Promise<Response> | Response;
 };
 
+declare global {
+  var __CSP_NONCE__: string | undefined;
+}
+
 import * as serverEntryModule from "@tanstack/react-start/server-entry";
 
 async function getServerEntry(): Promise<ServerEntry> {
@@ -21,7 +25,7 @@ function generateNonce(): string {
 function getSecurityHeaders(nonce: string): Record<string, string> {
   // In development, use permissive CSP to allow Vite HMR and external resources
   // In production, use strict nonce-based CSP
-  const isProduction = process.env.NODE_ENV === "production";
+  const isProduction = process.env["NODE_ENV"] === "production";
 
   const cspHeader = isProduction
     ? [
@@ -101,9 +105,14 @@ export default {
   async fetch(request: Request, env: unknown, ctx: unknown) {
     try {
       const nonce = generateNonce();
+      // Store nonce in global for access during SSR (src/routes/__root.tsx reads it via globalThis.__CSP_NONCE__)
+      globalThis.__CSP_NONCE__ = nonce;
 
       const handler = await getServerEntry();
       const response = await handler.fetch(request, env, ctx);
+
+      // Clear the global after render to avoid leaking across requests
+      globalThis.__CSP_NONCE__ = undefined;
       const normalizedResponse = await normalizeCatastrophicSsrResponse(response);
 
       // Apply security headers to the response
@@ -114,12 +123,30 @@ export default {
         headersToApply.set(key, value);
       }
 
-      // Inject nonce as a meta tag comment for React to pick up
-      // This is a workaround since we can't directly pass context through the Request
+      // Inject nonce meta tag and add nonce attributes to executable script tags for CSP compliance
       let body = await normalizedResponse.clone().text();
+
+      // Add nonce meta tag for client-side access
       if (body.includes("<head>")) {
         body = body.replace("<head>", `<head><meta name="csp-nonce" content="${nonce}" />`);
       }
+
+      // Add nonce attribute to all script tags that don't already have one and aren't JSON-LD data
+      body = body.replace(/<script([^>]*)>/g, (match) => {
+        // Skip if already has nonce
+        if (match.includes("nonce=")) return match;
+        // Skip JSON-LD and JSON data scripts
+        if (
+          match.includes('type="application/ld+json"') ||
+          match.includes("type='application/ld+json'") ||
+          match.includes('type="application/json"') ||
+          match.includes("type='application/json'")
+        ) {
+          return match;
+        }
+        // Add nonce to executable scripts
+        return match.replace(">", ` nonce="${nonce}">`);
+      });
 
       return new Response(body, {
         status: normalizedResponse.status,

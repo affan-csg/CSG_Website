@@ -1,5 +1,7 @@
 import { useEffect, useRef } from "react";
 
+import { PARTICLE_RGB } from "@/lib/theme-colors";
+
 /**
  * CustomCursor — Minimal professional cursor with subtle particle trail
  */
@@ -57,7 +59,7 @@ export function CustomCursor() {
 
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.size * p.life, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(200, 171, 110, ${p.life * 0.5})`;
+        ctx.fillStyle = `rgba(${PARTICLE_RGB}, ${p.life * 0.5})`;
         ctx.fill();
 
         return true;

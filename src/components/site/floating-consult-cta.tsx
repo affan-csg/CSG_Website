@@ -40,7 +40,7 @@ export function FloatingConsultCTA() {
         target="_blank"
         rel="noopener noreferrer"
         className={cn(
-          "group flex items-center gap-2 rounded-full bg-gold px-5 py-3 font-display text-sm font-semibold text-navy shadow-xl transition-all duration-300 hover:bg-cream hover:shadow-2xl",
+          "group flex items-center gap-2 rounded-full bg-cream px-5 py-3 font-display text-sm font-semibold text-navy shadow-xl transition-all duration-300 hover:bg-gold hover:shadow-2xl",
           "ring-1 ring-white/15",
         )}
       >

@@ -1,12 +1,16 @@
 # ============================================================================
 # DEPENDENCIES
 # ============================================================================
+# Project is pnpm-only (see package.json "packageManager") — pnpm-lock.yaml
+# is intentionally NOT ignored and must stay committed.
 node_modules/
 .pnp
 .pnp.js
 dist-ssr/
 package-lock.json
 yarn.lock
+bun.lock
+bunfig.toml
 
 # ============================================================================
 # BUILD OUTPUTS & CACHE

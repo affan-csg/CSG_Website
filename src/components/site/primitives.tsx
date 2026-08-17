@@ -213,15 +213,34 @@ export function PullQuote({ children }: { children: ReactNode }) {
   );
 }
 
-export function LogoWall({ logos }: { logos: readonly string[] }) {
+export type ClientLogo = { name: string; image?: string };
+
+export function LogoWall({ logos }: { logos: readonly ClientLogo[] }) {
   return (
     <div className="grid grid-cols-2 gap-px overflow-hidden rounded-md border border-border bg-border sm:grid-cols-3 lg:grid-cols-5">
       {logos.map((logo, i) => (
-        <Reveal key={logo} delay={i * 0.05}>
-          <div className="group flex h-28 items-center justify-center bg-card p-6 transition-colors duration-300 hover:bg-navy-soft">
-            <span className="font-display text-lg font-semibold tracking-tight text-muted-foreground/50 transition-all duration-300 group-hover:scale-105 group-hover:text-gold sm:text-xl">
-              {logo}
-            </span>
+        <Reveal key={logo.name} delay={i * 0.05}>
+          <div className="group flex h-40 flex-col items-center justify-center gap-3 bg-card p-5 transition-colors duration-300 hover:bg-navy-soft">
+            {logo.image ? (
+              <div className="flex h-16 w-full items-center justify-center rounded-md bg-white px-3 py-2 shadow-sm transition-transform duration-300 group-hover:scale-105">
+                <img
+                  src={logo.image}
+                  alt={logo.name}
+                  className="h-11 max-w-full object-contain saturate-150"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+            ) : (
+              <span className="font-display text-lg font-semibold tracking-tight text-muted-foreground/50 transition-all duration-300 group-hover:scale-105 group-hover:text-gold sm:text-xl">
+                {logo.name}
+              </span>
+            )}
+            {logo.image ? (
+              <span className="text-center text-sm font-medium tracking-wide text-muted-foreground/80">
+                {logo.name}
+              </span>
+            ) : null}
           </div>
         </Reveal>
       ))}

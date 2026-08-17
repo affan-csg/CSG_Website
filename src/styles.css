@@ -73,7 +73,7 @@
   --navy: oklch(0.208 0.042 265.7);
   --navy-soft: oklch(0.26 0.04 265);
   --cream: oklch(0.972 0.008 95);
-  --gold: oklch(0.79 0.082 85);
+  --gold: oklch(0.7 0.145 259);
   --electric: oklch(0.7 0.145 259);
 
   --background: var(--navy);

@@ -155,7 +155,9 @@ pnpm install
 # Start dev server with hot reload
 pnpm dev
 
-# Dev server runs at http://localhost:5173
+# Dev server runs at http://localhost:8080 (port is fixed by the shared
+# @lovable.dev/vite-tanstack-config; Vite picks the next free port, e.g.
+# 8081, if 8080 is already in use)
 ```
 
 ### Build & Preview
@@ -191,6 +193,10 @@ pnpm format
 .
 ├── src/
 │   ├── components/
+│   │   ├── animation/              # Lazy-loaded, network/motion-aware wrappers
+│   │   │   ├── lazy-hero-canvas.tsx     # Gates the Three.js particle canvas (idle callback, reduced-motion, slow-network checks)
+│   │   │   ├── lazy-scroll-progress.tsx
+│   │   │   └── ...
 │   │   ├── forms/                 # Form components
 │   │   │   ├── contact-form.tsx
 │   │   │   ├── requirement-form.tsx
@@ -198,8 +204,9 @@ pnpm format
 │   │   ├── site/                  # Site-specific components
 │   │   │   ├── site-nav.tsx       # Navigation
 │   │   │   ├── site-footer.tsx    # Footer
-│   │   │   ├── hero-particles.tsx # 3D particles
-│   │   │   ├── primitives.tsx     # Reusable page primitives
+│   │   │   ├── hero-canvas.tsx    # Three.js particle field (rendered via animation/lazy-hero-canvas.tsx)
+│   │   │   ├── hero-particles.tsx # Per-page hero particle wrapper
+│   │   │   ├── primitives.tsx     # Reusable page primitives (Section, LogoWall, StatGrid, ...)
 │   │   │   └── ...
 │   │   └── ui/                    # shadcn/ui components (50+)
 │   │
@@ -297,7 +304,7 @@ Row-level security is enabled on all three tables with staff-only `SELECT`; inse
 
 ### Tailwind & Typography
 
-- **Theme Colors:** Navy (0.17 lch), Cream (0.972 lch), Gold (0.79 lch)
+- **Theme Colors:** Navy (`oklch(0.208 0.042 265.7)`), Cream (`oklch(0.972 0.008 95)`), Gold/accent (`oklch(0.7 0.145 259)` / `#659ef7` — an electric blue, despite the `--gold` token name; this is intentional, confirmed). Components using the `--gold` CSS var (`text-gold`, `bg-gold`, `border-gold`, etc.) pick this up automatically. A handful of spots draw color outside the CSS cascade (canvas/SVG `fill`/`color` props, `filter:` hacks on raster logos) and do **not** auto-update — see the CHANGELOG "Changed" entry for 2026-08-14 for the full list before changing this color again.
 - **Font:** Manrope (all weights 400-800)
 - **Typography System:** See [TYPOGRAPHY.md](./TYPOGRAPHY.md)
 
@@ -334,16 +341,23 @@ Row-level security is enabled on all three tables with staff-only `SELECT`; inse
 #### ✅ Sitemap & Robots
 
 - **sitemap.xml** — static, includes every real page including individual blog posts; legacy redirect URLs correctly excluded
-- **robots.txt** — configured for crawlers
+- **robots.txt** — configured for crawlers, with explicit `Allow` rules for AI/answer-engine bots (GPTBot, ClaudeBot, PerplexityBot, Google-Extended, Applebot-Extended, etc.)
+- **llms.txt** — plain-language site summary for LLM-based answer engines, per the [llms.txt](https://llmstxt.org) convention
 - Legacy URL renames (`/about`, `/services`, `/why-csg`) 301-redirect to their new paths so link equity transfers
+
+#### ✅ AEO (Answer-Engine Optimization)
+
+- `public/llms.txt` gives ChatGPT/Claude/Perplexity-style crawlers a structured, accurate summary of the company and a linked directory of every real page — reduces the chance of an answer engine hallucinating facts about CSG from scraped HTML
+- FAQPage JSON-LD on `/faq` is written directly from the real Q&A content (`src/content/site.ts`), so answer engines citing CSG pull the same answers a human reader would see
 
 #### ✅ Performance
 
 - Server-side rendering (SSR) for fast initial loads
-- Lazy loading for images
+- All below-the-fold images use `loading="lazy" decoding="async"`; the homepage hero logo (the LCP element) uses `fetchPriority="high"` instead
+- All content images served as WebP — the 4 homepage feature images were originally ~2MB PNGs each (~8MB total) and are now ~90-150KB WebP (~93% smaller); see the CHANGELOG entry for 2026-08-14 if adding new large images
 - Optimized font loading (preconnect)
 - Minimal CSS/JS payloads
-- Caching headers for assets
+- Caching headers for assets (immutable, 1yr, via Vercel's `/assets/*` route in `vite.config.ts`'s Nitro output)
 
 ### Performance Metrics
 
@@ -430,5 +444,5 @@ Built with modern web technologies:
 - Three.js, GSAP, Framer Motion
 - Vercel for hosting and deployment
 
-**Last Updated:** August 13, 2026  
+**Last Updated:** August 14, 2026  
 **Current Version:** 2.0 (Supabase Forms Backend + Route Restructure) — see [CHANGELOG.md](./CHANGELOG.md) for full history

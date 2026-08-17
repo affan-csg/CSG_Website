@@ -208,7 +208,7 @@ describe("buildFaqJsonLd", () => {
     const questions = [{ question: "Test?", answer: "Yes" }];
     const result = buildFaqJsonLd(questions);
 
-    const firstQuestion = result.mainEntity[0];
+    const firstQuestion = result.mainEntity[0]!;
     expect(firstQuestion["@type"]).toBe("Question");
     expect(firstQuestion.name).toBe("Test?");
     expect(firstQuestion.acceptedAnswer).toBeDefined();
@@ -280,7 +280,7 @@ describe("buildBreadcrumbJsonLd", () => {
     ];
 
     const result = buildBreadcrumbJsonLd(items);
-    const firstItem = result.itemListElement[0];
+    const firstItem = result.itemListElement[0]!;
 
     expect(firstItem.position).toBe(1);
     expect(firstItem.name).toBe("Home");
@@ -391,8 +391,8 @@ describe("buildGeoTargetingMeta", () => {
     const result = buildGeoTargetingMeta("us");
 
     expect(result).toHaveLength(3);
-    expect(result[0].name).toBe("geo.position");
-    expect(result[2].name).toBe("geo.region");
+    expect(result[0]!.name).toBe("geo.position");
+    expect(result[2]!.name).toBe("geo.region");
   });
 
   it("should build LATAM geo targeting meta", () => {

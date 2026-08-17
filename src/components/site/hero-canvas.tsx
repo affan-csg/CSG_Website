@@ -3,6 +3,8 @@ import { useFrame } from "@react-three/fiber";
 import { useMemo, useRef } from "react";
 import type { Points } from "three";
 
+import { PARTICLE_HEX } from "@/lib/theme-colors";
+
 function ParticleField() {
   const ref = useRef<Points>(null);
 
@@ -39,7 +41,7 @@ function ParticleField() {
       <pointsMaterial
         size={0.027}
         sizeAttenuation
-        color="#c8ab6e"
+        color={PARTICLE_HEX}
         transparent
         opacity={1}
         depthWrite={false}
@@ -95,7 +97,7 @@ export default function HeroCanvas({ showRing = true }: { showRing?: boolean }) 
     <Canvas
       dpr={[1, 1.75]}
       camera={{ position: [0, 0, 10], fov: 45 }}
-      gl={{ antialias: true, alpha: true }}
+      gl={{ antialias: true, alpha: true, clearColor: "#0f172a" }}
       style={{ pointerEvents: "none" }}
     >
       <ParticleField />

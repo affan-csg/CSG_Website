@@ -11,7 +11,7 @@ import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
-import { getNonce } from "@/lib/get-nonce";
+import { getNonce, setServerNonce } from "@/lib/get-nonce";
 import { logCoreWebVitals } from "@/lib/performance-monitor";
 import { ErrorBoundary } from "@/components/error-boundary/error-boundary";
 import { SiteNav } from "@/components/site/site-nav";
@@ -22,6 +22,11 @@ import { LazyScrollProgress } from "@/components/animation/lazy-scroll-progress"
 import { CustomCursor } from "@/components/site/custom-cursor";
 import { LazyHeroCanvas } from "@/components/animation/lazy-hero-canvas";
 import { buildOrganizationJsonLd, buildLocalBusinessJsonLd } from "@/lib/seo";
+
+// Server-side: inject nonce during SSR. This is called from src/server.ts before rendering.
+if (typeof globalThis !== "undefined" && globalThis.__CSP_NONCE__) {
+  setServerNonce(globalThis.__CSP_NONCE__);
+}
 
 function NotFoundComponent() {
   return (

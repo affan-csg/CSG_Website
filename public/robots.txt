@@ -48,3 +48,38 @@ Allow: /
 
 User-agent: LinkedInBot
 Allow: /
+
+# AI answer-engine / assistant crawlers (ChatGPT, Claude, Perplexity, Google AI, Apple
+# Intelligence) — explicitly allowed so the site can be cited in AI-generated answers
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Perplexity-User
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+# LLM-facing site summary (see https://llmstxt.org)
+# llms.txt: https://careersourcegroup.com/llms.txt

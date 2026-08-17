@@ -1,15 +1,24 @@
 import { useEffect, useState } from "react";
 
+// Server-side only: injected by src/server.ts at request time
+let serverNonce: string | undefined;
+
+export function setServerNonce(nonce: string): void {
+  serverNonce = nonce;
+}
+
 export function getNonce(): string | undefined {
-  // First, try to get from meta tag (SSR + client)
-  if (typeof document !== "undefined") {
-    const meta = document.querySelector('meta[name="csp-nonce"]');
-    if (meta) {
-      return meta.getAttribute("content") ?? undefined;
-    }
+  // During SSR, return the server-side nonce if available
+  if (typeof document === "undefined") {
+    return serverNonce;
   }
 
-  // Fallback for server context (will be undefined during SSR head() call)
+  // On the client, fetch from the meta tag (set by server.ts's html injection)
+  const meta = document.querySelector('meta[name="csp-nonce"]');
+  if (meta) {
+    return meta.getAttribute("content") ?? undefined;
+  }
+
   return undefined;
 }
 

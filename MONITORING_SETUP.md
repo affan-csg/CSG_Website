@@ -7,6 +7,7 @@ This guide covers setting up error tracking, analytics, and accessibility testin
 ## 📋 Overview
 
 The project includes built-in infrastructure for:
+
 - **Error Tracking** — Capture unhandled errors and exceptions
 - **Performance Analytics** — Monitor Core Web Vitals and custom metrics
 - **Accessibility Testing** — Automated WCAG AA compliance checks
@@ -244,6 +245,7 @@ pnpm test:a11y -- --debug
 #### CI/CD Pipeline
 
 Accessibility tests run automatically on:
+
 - Push to `main` or `develop`
 - Pull requests
 
@@ -284,6 +286,7 @@ pnpm test:all
 ```
 
 This runs:
+
 1. Linting (`pnpm lint`)
 2. Type checking (`pnpm type-check`)
 3. Unit tests (`pnpm test`)
@@ -412,6 +415,7 @@ This runs:
 ## 🤝 Support
 
 For issues or questions:
+
 1. Check the troubleshooting section above
 2. Review error tracking service documentation
 3. Check analytics collector logs

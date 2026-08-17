@@ -16,23 +16,23 @@ const MotionArticle = lazy(() =>
 const MotionLi = lazy(() => import("motion/react").then((mod) => ({ default: mod.motion.li })));
 
 // Fallback components for SSR/no-JS
-function FallbackDiv({ children, className }: { children: ReactNode; className?: string }) {
+function FallbackDiv({ children, className }: { children?: ReactNode; className?: string }) {
   return <div className={className}>{children}</div>;
 }
 
-function FallbackSpan({ children, className }: { children: ReactNode; className?: string }) {
+function FallbackSpan({ children, className }: { children?: ReactNode; className?: string }) {
   return <span className={className}>{children}</span>;
 }
 
-function FallbackSection({ children, className }: { children: ReactNode; className?: string }) {
+function FallbackSection({ children, className }: { children?: ReactNode; className?: string }) {
   return <section className={className}>{children}</section>;
 }
 
-function FallbackArticle({ children, className }: { children: ReactNode; className?: string }) {
+function FallbackArticle({ children, className }: { children?: ReactNode; className?: string }) {
   return <article className={className}>{children}</article>;
 }
 
-function FallbackLi({ children, className }: { children: ReactNode; className?: string }) {
+function FallbackLi({ children, className }: { children?: ReactNode; className?: string }) {
   return <li className={className}>{children}</li>;
 }
 

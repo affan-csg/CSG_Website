@@ -132,6 +132,8 @@ function OurStoryPage() {
                   src={about.founder.image}
                   alt={about.founder.name}
                   className="h-full w-full object-cover"
+                  loading="lazy"
+                  decoding="async"
                 />
               </div>
               <p className="mt-4 font-display text-lg font-semibold">{about.founder.name}</p>
@@ -178,6 +180,8 @@ function OurStoryPage() {
                       src={member.image}
                       alt={member.name}
                       className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
+                      loading="lazy"
+                      decoding="async"
                     />
                   </div>
                   <h3 className="mt-4 font-display text-lg font-semibold">{member.name}</h3>

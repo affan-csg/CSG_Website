@@ -1,4 +1,4 @@
-import { Link } from "@tanstack/react-router";
+import { Link, useLocation } from "@tanstack/react-router";
 import { AnimatePresence, motion } from "motion/react";
 import { ChevronDown, Menu, X } from "lucide-react";
 import { useEffect, useState, useRef } from "react";
@@ -36,6 +36,7 @@ export function SiteNav() {
   const [scrolled, setScrolled] = useState(false);
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const isHome = useLocation({ select: (l) => l.pathname === "/" });
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 200);
@@ -86,9 +87,13 @@ export function SiteNav() {
           <motion.img
             src="/images/brand/CSG.png"
             alt="CSG"
-            className="h-12 w-auto shrink-0 object-contain [filter:invert(68%)_sepia(60%)_saturate(50%)_hue-rotate(5deg)_brightness(105%)] transition-all duration-300"
-            initial={{ opacity: 0, scale: 0.5, y: 20 }}
-            animate={scrolled ? { opacity: 1, scale: 1, y: 0 } : { opacity: 0, scale: 0.5, y: 20 }}
+            className="h-12 w-auto shrink-0 object-contain [filter:invert(100%)_sepia(33%)_saturate(130%)_hue-rotate(41deg)_brightness(105%)] transition-all duration-300"
+            initial={isHome ? { opacity: 0, scale: 0.5, y: 20 } : { opacity: 1, scale: 1, y: 0 }}
+            animate={
+              isHome && !scrolled
+                ? { opacity: 0, scale: 0.5, y: 20 }
+                : { opacity: 1, scale: 1, y: 0 }
+            }
             transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
             whileHover={{ scale: 1.1 }}
           />

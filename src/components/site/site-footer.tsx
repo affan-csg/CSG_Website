@@ -13,7 +13,9 @@ export function SiteFooter() {
               <img
                 src="/images/brand/CSG.png"
                 alt="CSG"
-                className="h-10 w-auto shrink-0 object-contain [filter:invert(68%)_sepia(60%)_saturate(50%)_hue-rotate(5deg)_brightness(105%)]"
+                className="h-10 w-auto shrink-0 object-contain [filter:invert(100%)_sepia(33%)_saturate(130%)_hue-rotate(41deg)_brightness(105%)]"
+                loading="lazy"
+                decoding="async"
               />
               <span className="font-display text-base font-semibold">Career Source Group</span>
             </Link>

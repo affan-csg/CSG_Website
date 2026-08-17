@@ -1,11 +1,11 @@
 import { motion, useReducedMotion } from "motion/react";
-import type { ReactNode } from "react";
+import type { ComponentType, ReactNode } from "react";
 
 type RevealProps = {
   children: ReactNode;
   delay?: number;
   y?: number;
-  className?: string;
+  className?: string | undefined;
   as?: "div" | "section" | "li" | "article" | "span";
 };
 
@@ -24,11 +24,21 @@ export default function RevealWithMotion({
   as = "div",
 }: RevealProps) {
   const prefersReducedMotion = useReducedMotion();
-  const Comp = motion[as as keyof typeof motion];
+  const Comp = motion[as as keyof typeof motion] as ComponentType<{
+    children?: ReactNode;
+    className?: string | undefined;
+    initial?: Record<string, number>;
+    whileInView?: Record<string, number>;
+    viewport?: { once: boolean; margin: string };
+    transition?: { duration: number; delay: number; ease: number[] };
+  }>;
 
   // Show static content for accessibility
   if (prefersReducedMotion) {
-    const StaticElement = as as keyof JSX.IntrinsicElements;
+    const StaticElement = as as unknown as ComponentType<{
+      children?: ReactNode;
+      className?: string | undefined;
+    }>;
     return <StaticElement className={className}>{children}</StaticElement>;
   }
 

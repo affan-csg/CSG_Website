@@ -57,7 +57,7 @@ export const whyCsg = {
     },
     {
       heading: "Enterprise delivery history.",
-      body: "Synovus. Deloitte. BCBS. M3. TK Elevators. We're not a low-cost offshore reseller that learned staffing last year.",
+      body: "We're not a low-cost offshore reseller that learned staffing last year — see who we've delivered for below.",
     },
   ],
   cta: { label: "Compare all three regions", to: "/global-delivery" },
@@ -78,8 +78,14 @@ export const about = {
   },
   delivered: {
     heading: "Who We've Delivered For",
-    body: "Synovus. Deloitte. BCBS. M3. TK Elevators. We're not a low-cost offshore reseller that learned staffing last year.",
-    logos: ["Synovus", "Deloitte", "BCBS", "M3", "TK Elevators"],
+    body: "We're not a low-cost offshore reseller that learned staffing last year.",
+    logos: [
+      { name: "Synovus", image: "/images/brand/Synovus.png" },
+      { name: "Deloitte", image: "/images/brand/deloitte-com-logo.png" },
+      { name: "BCBS", image: "/images/brand/BCBS.png" },
+      { name: "M3", image: "/images/brand/M3.png" },
+      { name: "TK Elevators", image: "/images/brand/TKE.png" },
+    ],
   },
   founder: {
     name: "Zohaib Khawaja",

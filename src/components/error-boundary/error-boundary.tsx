@@ -33,7 +33,7 @@ export class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoun
     return { hasError: true, error };
   }
 
-  componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
+  override componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
     this.setState({ errorInfo });
 
     // Report to error tracking
@@ -47,7 +47,7 @@ export class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoun
     this.props.onError?.(error, errorInfo);
 
     // Log to console in development
-    if (process.env.NODE_ENV === "development") {
+    if (process.env["NODE_ENV"] === "development") {
       console.error("Error Boundary caught:", error, errorInfo);
     }
   }
@@ -60,7 +60,7 @@ export class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoun
     });
   };
 
-  render() {
+  override render() {
     if (this.state.hasError && this.state.error) {
       // Use custom fallback if provided
       if (this.props.fallback) {
@@ -91,7 +91,7 @@ interface ErrorBoundaryFallbackProps {
  * Default error fallback UI with severity-based styling
  */
 function ErrorBoundaryFallback({ error, level, onReset }: ErrorBoundaryFallbackProps) {
-  const isDev = process.env.NODE_ENV === "development";
+  const isDev = process.env["NODE_ENV"] === "development";
 
   if (level === "page") {
     return (

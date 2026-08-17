@@ -181,34 +181,7 @@ export function buildBreadcrumbJsonLd(items: Array<{ name: string; url: string }
 }
 
 export function buildRegionalBusinessJsonLd(region: "us" | "latam" | "pakistan") {
-  const regionData = {
-    us: {
-      name: "Career Source Group - United States",
-      country: "US",
-      description:
-        "Direct hire staffing, contract staffing, and contract-to-hire talent acquisition across the United States.",
-      geo: { latitude: 34.0754, longitude: -84.2941 },
-      regions: ["United States"],
-    },
-    latam: {
-      name: "Career Source Group - LATAM Nearshore",
-      country: "Mexico",
-      description:
-        "Nearshore talent delivery and staffing solutions across Latin America with 30-70% cost savings.",
-      geo: { latitude: 23.6345, longitude: -102.5528 },
-      regions: ["Mexico", "Colombia", "Argentina", "Brazil"],
-    },
-    pakistan: {
-      name: "Career Source Group - Pakistan Offshore",
-      country: "Pakistan",
-      description:
-        "Offshore talent delivery and staffing solutions from Pakistan with 50-70% cost savings.",
-      geo: { latitude: 30.3753, longitude: 69.3451 },
-      regions: ["Pakistan"],
-    },
-  };
-
-  const data = regionData[region];
+  const data = REGION_INFO[region];
 
   return {
     "@context": "https://schema.org",
@@ -221,8 +194,8 @@ export function buildRegionalBusinessJsonLd(region: "us" | "latam" | "pakistan")
     priceRange: "$$",
     geo: {
       "@type": "GeoCoordinates",
-      latitude: data.geo.latitude,
-      longitude: data.geo.longitude,
+      latitude: data.latitude,
+      longitude: data.longitude,
     },
     areaServed: data.regions.map((r) => ({
       "@type": "Country",
@@ -234,6 +207,45 @@ export function buildRegionalBusinessJsonLd(region: "us" | "latam" | "pakistan")
     },
   };
 }
+
+const REGION_INFO = {
+  us: {
+    name: "Career Source Group - United States",
+    country: "US",
+    description:
+      "Direct hire staffing, contract staffing, and contract-to-hire talent acquisition across the United States.",
+    geoPosition: "34.0754, -84.2941",
+    latitude: 34.0754,
+    longitude: -84.2941,
+    placeType: "Country",
+    placeName: "United States",
+    regions: ["United States"],
+  },
+  latam: {
+    name: "Career Source Group - LATAM Nearshore",
+    country: "Mexico",
+    description:
+      "Nearshore talent delivery and staffing solutions across Latin America with 30-70% cost savings.",
+    geoPosition: "23.6345, -102.5528",
+    latitude: 23.6345,
+    longitude: -102.5528,
+    placeType: "Region",
+    placeName: "Latin America",
+    regions: ["Mexico", "Colombia", "Argentina", "Brazil"],
+  },
+  pakistan: {
+    name: "Career Source Group - Pakistan Offshore",
+    country: "Pakistan",
+    description:
+      "Offshore talent delivery and staffing solutions from Pakistan with 50-70% cost savings.",
+    geoPosition: "30.3753, 69.3451",
+    latitude: 30.3753,
+    longitude: 69.3451,
+    placeType: "Country",
+    placeName: "Pakistan",
+    regions: ["Pakistan"],
+  },
+} as const;
 
 export function buildArticleJsonLd(article: {
   title: string;
@@ -283,25 +295,7 @@ export function buildAggregateRatingJsonLd(
 }
 
 export function buildGeoTargetingMeta(region: "us" | "latam" | "pakistan") {
-  const regionData = {
-    us: {
-      geoPosition: "34.0754, -84.2941",
-      placeType: "Country",
-      placeName: "United States",
-    },
-    latam: {
-      geoPosition: "23.6345, -102.5528",
-      placeType: "Region",
-      placeName: "Latin America",
-    },
-    pakistan: {
-      geoPosition: "30.3753, 69.3451",
-      placeType: "Country",
-      placeName: "Pakistan",
-    },
-  };
-
-  const data = regionData[region];
+  const data = REGION_INFO[region];
 
   return [
     { name: "geo.position", content: data.geoPosition },

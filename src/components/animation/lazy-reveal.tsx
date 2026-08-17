@@ -1,4 +1,4 @@
-import { Suspense, lazy, ReactNode, useEffect, useRef, useState } from "react";
+import { Suspense, lazy, ReactNode, useEffect, useRef, useState, type ComponentType } from "react";
 
 // Lazy-load the heavy reveal animation component
 const RevealWithMotion = lazy(() => import("./reveal-with-motion"));
@@ -28,7 +28,7 @@ export function LazyReveal({
 
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) {
+        if (entry?.isIntersecting) {
           setShouldLoad(true);
           observer.disconnect();
         }
@@ -48,7 +48,10 @@ export function LazyReveal({
   }, [shouldLoad]);
 
   // Render static version during SSR and while loading
-  const StaticComponent = as as keyof JSX.IntrinsicElements;
+  const StaticComponent = as as unknown as ComponentType<{
+    children?: ReactNode;
+    className?: string | undefined;
+  }>;
 
   return (
     <div ref={ref}>
@@ -83,7 +86,7 @@ export function LazyRevealGroup({
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) {
+        if (entry?.isIntersecting) {
           setVisibleIndex(0);
           observer.disconnect();
         }

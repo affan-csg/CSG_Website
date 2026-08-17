@@ -70,6 +70,7 @@ export function collectCoreWebVitals(): CoreWebVitals {
             timestamp: Date.now(),
           };
         }
+        lcpObserver.disconnect();
       });
       lcpObserver.observe({ type: "largest-contentful-paint", buffered: true });
 
@@ -78,7 +79,7 @@ export function collectCoreWebVitals(): CoreWebVitals {
       const clsObserver = new PerformanceObserver((list) => {
         for (const entry of list.getEntries() as PerformanceEntry[]) {
           if ("hadRecentInput" in entry && !entry.hadRecentInput && "value" in entry) {
-            clsValue += (entry as Record<string, number>).value;
+            clsValue += (entry as Record<string, number>)["value"] ?? 0;
             vitals.CLS = {
               name: "CLS",
               value: clsValue,
@@ -100,6 +101,7 @@ export function collectCoreWebVitals(): CoreWebVitals {
           rating: getINPRating(maxDuration),
           timestamp: Date.now(),
         };
+        inpObserver.disconnect();
       });
       inpObserver.observe({ type: "interaction", buffered: true });
 
@@ -116,6 +118,7 @@ export function collectCoreWebVitals(): CoreWebVitals {
             };
           }
         }
+        fcpObserver.disconnect();
       });
       fcpObserver.observe({ type: "paint", buffered: true });
     } catch (error) {
@@ -146,7 +149,7 @@ export function collectCoreWebVitals(): CoreWebVitals {
  * Log Core Web Vitals to console (dev only)
  */
 export function logCoreWebVitals(): void {
-  if (process.env.NODE_ENV !== "production") {
+  if (process.env["NODE_ENV"] !== "production") {
     const vitals = collectCoreWebVitals();
 
     console.group("📊 Core Web Vitals");
@@ -185,7 +188,7 @@ export function sendCoreWebVitals(analyticsEndpoint: string, sessionId: string):
       const metrics = Object.entries(vitals)
         .filter(([, metric]) => metric !== undefined)
         .reduce((acc, [key, metric]) => {
-          acc[key] = metric;
+          acc[key as keyof CoreWebVitals] = metric;
           return acc;
         }, {} as CoreWebVitals);
 
@@ -211,18 +214,17 @@ export function sendCoreWebVitals(analyticsEndpoint: string, sessionId: string):
  * Track lazy-load events
  */
 export function trackLazyLoad(componentName: string, loadTime: number): void {
-  if (process.env.NODE_ENV !== "production") {
+  if (process.env["NODE_ENV"] !== "production") {
     console.log(`⏱️ [Lazy-Load] ${componentName}: ${loadTime.toFixed(2)}ms`);
   }
 
   // Send to analytics if available
-  const analyticsWindow = window as Record<string, unknown>;
+  const analyticsWindow = window as Window &
+    typeof globalThis & {
+      __ANALYTICS__?: { track?: (event: string, data: Record<string, unknown>) => void };
+    };
   if (typeof window !== "undefined" && analyticsWindow.__ANALYTICS__) {
-    const analytics = analyticsWindow.__ANALYTICS__ as Record<
-      string,
-      (event: string, data: Record<string, unknown>) => void
-    >;
-    analytics.track("lazy_load", {
+    analyticsWindow.__ANALYTICS__.track?.("lazy_load", {
       component: componentName,
       time: loadTime,
     });
@@ -255,7 +257,7 @@ export function markEnd(name: string): void {
     try {
       performance.measure(name, `${name}-start`, `${name}-end`);
       const measure = performance.getEntriesByName(name)[0];
-      if (measure && process.env.NODE_ENV !== "production") {
+      if (measure && process.env["NODE_ENV"] !== "production") {
         console.debug(`⏱️ ${name}: ${measure.duration.toFixed(2)}ms`);
       }
     } catch {

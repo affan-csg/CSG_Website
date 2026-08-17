@@ -111,7 +111,10 @@ function Hero() {
             <img
               src="/images/brand/CSG.png"
               alt="Career Source Group"
-              className="w-full drop-shadow-[0_0_20px_rgba(200,171,110,0.3)] transition-all duration-500 ease-out [filter:invert(68%)_sepia(60%)_saturate(50%)_hue-rotate(5deg)_brightness(105%)] hover:scale-110 hover:drop-shadow-[0_0_40px_rgba(200,171,110,0.6)] hover:[filter:invert(80%)_sepia(70%)_saturate(60%)_hue-rotate(0deg)_brightness(120%)]"
+              className="w-full drop-shadow-[0_0_20px_rgba(101,158,247,0.3)] transition-all duration-500 ease-out [filter:invert(100%)_sepia(33%)_saturate(130%)_hue-rotate(41deg)_brightness(105%)] hover:scale-110 hover:drop-shadow-[0_0_40px_rgba(101,158,247,0.6)] hover:[filter:invert(75%)_sepia(48%)_saturate(308%)_hue-rotate(62deg)_brightness(134%)]"
+              fetchPriority="high"
+              loading="eager"
+              decoding="async"
             />
           </Link>
         </Reveal>
@@ -160,9 +163,11 @@ function HomePage() {
             <Reveal>
               <div className="group relative overflow-hidden rounded-md border border-border transition-all duration-500 hover:border-gold/40 hover:shadow-lg hover:shadow-gold/5">
                 <img
-                  src="/images/who-we-are.png"
+                  src="/images/who-we-are.webp"
                   alt="Career Source Group team collaborating"
                   className="aspect-[4/3] w-full object-cover transition-transform duration-700 hover:scale-[1.02]"
+                  loading="lazy"
+                  decoding="async"
                 />
               </div>
             </Reveal>
@@ -260,9 +265,11 @@ function HomePage() {
             <Reveal delay={0.1}>
               <div className="overflow-hidden rounded-md border border-border">
                 <img
-                  src="/images/staffing.png"
+                  src="/images/staffing.webp"
                   alt="Career Source Group staffing overview"
                   className="aspect-[4/3] w-full object-cover transition-transform duration-700 hover:scale-[1.02]"
+                  loading="lazy"
+                  decoding="async"
                 />
               </div>
             </Reveal>
@@ -274,9 +281,11 @@ function HomePage() {
             <Reveal>
               <div className="overflow-hidden rounded-md border border-border">
                 <img
-                  src="/images/how-pod-models-work.png"
+                  src="/images/how-pod-models-work.webp"
                   alt="How CSG Pod models work"
                   className="aspect-[4/3] w-full object-cover transition-transform duration-700 hover:scale-[1.02]"
+                  loading="lazy"
+                  decoding="async"
                 />
               </div>
             </Reveal>
@@ -325,9 +334,11 @@ function HomePage() {
             <Reveal delay={0.1}>
               <div className="overflow-hidden rounded-md border border-border">
                 <img
-                  src="/images/how-we-differ.png"
+                  src="/images/how-we-differ.webp"
                   alt="How Career Source Group differs from competitors"
                   className="aspect-[4/3] w-full object-cover transition-transform duration-700 hover:scale-[1.02]"
+                  loading="lazy"
+                  decoding="async"
                 />
               </div>
             </Reveal>
