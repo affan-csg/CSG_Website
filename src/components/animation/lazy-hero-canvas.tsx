@@ -7,13 +7,11 @@ const HeroCanvasComponent = lazy(() => import("@/components/site/hero-canvas"));
 // Type for Network Information API
 interface NetworkInformation {
   saveData?: boolean;
-  effectiveType?: "slow-2g" | "2g" | "3g" | "4g";
 }
 
 /**
  * LazyHeroCanvas — Golden particle background that renders immediately on normal devices.
- * Respects: prefers-reduced-motion, slow networks (2G/3G/save-data).
- * CRITICAL: Particles render with opacity-50 blend for visual continuity.
+ * Skipped only when the device has explicitly opted into data-saver mode.
  */
 export function LazyHeroCanvas({ showRing = true }: { showRing?: boolean }) {
   const [isSlowNetwork, setIsSlowNetwork] = useState(false);
@@ -24,19 +22,13 @@ export function LazyHeroCanvas({ showRing = true }: { showRing?: boolean }) {
       return;
     }
 
-    // Check for slow network (if Network Information API available)
+    // Only respect an explicit data-saver opt-in — `effectiveType` is notoriously
+    // unreliable (frequently reports 2g/3g on fast connections behind a VPN or
+    // corporate proxy) and was hiding the golden particles for normal users.
     const nav = navigator as Navigator & {
-      deviceMemory?: number;
       connection?: NetworkInformation;
     };
-    const conn = nav.connection;
-    const slowNetwork =
-      conn?.saveData ||
-      conn?.effectiveType === "slow-2g" ||
-      conn?.effectiveType === "2g" ||
-      conn?.effectiveType === "3g";
-
-    if (slowNetwork) {
+    if (nav.connection?.saveData) {
       setIsSlowNetwork(true);
     }
   }, []);
