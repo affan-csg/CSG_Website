@@ -126,3 +126,229 @@ Once GA4 is running, you can create a dashboard in Looker Studio:
 
 Not adding it to .env.local/production right now keeps launch simple.
 When you're ready to track, create GA4 property, grab the ID, add it, done.
+
+---
+
+# ALL 4 OPTIONAL POST-LAUNCH TASKS
+
+## Task 1: Google Analytics 4 (GA4)
+
+**What it's for:** Track user behavior, page views, form submissions, traffic sources
+
+**How to do it:**
+
+1. Go to https://analytics.google.com
+2. Sign in with Google account
+3. Click **Admin** → **Create Property**
+4. Name: "Career Source Group Production"
+5. Select **Web**, enter URL: `https://careersourcegroup.com`
+6. Click **Create**
+7. Click **Data Streams** → your web stream
+8. Copy **Measurement ID** (looks like `G-XXXXXXXXXX`)
+9. Update `.env.production`:
+   ```
+   NEXT_PUBLIC_GA4_ID=G-XXXXXXXXXX
+   NEXT_PUBLIC_ENABLE_ANALYTICS=true
+   ```
+10. Redeploy site
+11. Wait 24 hours for data to appear in GA4 dashboard
+
+**Time to complete:** 10 minutes
+
+---
+
+## Task 2: Google Search Console
+
+**What it's for:** Monitor search visibility, see what Google knows about your site, fix indexing issues
+
+**How to do it:**
+
+1. Go to https://search.google.com/search-console
+2. Click **Add property**
+3. Select **URL prefix** → enter `https://careersourcegroup.com`
+4. Verify ownership (choose method):
+   - **HTML file:** Download file, upload to root of website
+   - **Domain name:** Add DNS record (easiest if you have DNS access)
+   - **Google Analytics:** If GA4 is set up (recommended)
+5. Click **Verify**
+6. Once verified, click **Sitemaps** (left menu)
+7. Enter: `https://careersourcegroup.com/sitemap.xml`
+8. Click **Submit**
+9. Check **Coverage** report to see which pages are indexed
+
+**Time to complete:** 15 minutes
+
+**Typical first-week results:**
+- Day 1-2: Pages discovered
+- Day 3-7: Most pages indexed
+- By end of week: 30-40 pages in Google index
+
+---
+
+## Task 3: Dashboard / BI Tool (Looker Studio)
+
+**What it's for:** Visualize analytics data, track form submissions, monitor traffic trends
+
+**How to do it:**
+
+1. Go to https://looker.studio
+2. Click **Create** → **Report**
+3. When prompted for data source, click **Create new data source**
+4. Select **Google Analytics 4**
+5. Choose your GA4 property
+6. Click **Connect**
+7. Name it: "Career Source Group Analytics"
+8. Click **Create Report**
+9. In the report, click **Insert** → **Table**
+10. Add charts for:
+    - **Sessions by date** (line chart)
+    - **Top landing pages** (table)
+    - **Form submissions** (metric card)
+    - **Traffic sources** (pie chart)
+11. Save the report
+12. Share link with team
+
+**Example dashboard metrics:**
+- Sessions (visitors)
+- Page views
+- Form submission rate
+- Top pages (where users spend time)
+- Traffic sources (Google, LinkedIn, direct)
+- Device breakdown (mobile vs desktop)
+
+**Time to complete:** 30 minutes
+
+**Pro tip:** Set up recurring email reports (Looker Studio can email dashboard daily/weekly)
+
+---
+
+## Task 4: Monitoring & Alerts (Error Tracking + Uptime)
+
+**What it's for:** Catch bugs in production, know when site goes down, get instant alerts
+
+**How to do it:**
+
+### Part A: Error Tracking (Sentry)
+
+1. Go to https://sentry.io
+2. Click **Sign Up** (or **Sign In** if you have account)
+3. Create organization: "Career Source Group"
+4. Create project: Select **Node.js** (backend), select **React** (frontend)
+5. For Node.js project:
+   - Copy **DSN** (looks like `https://xxx@sentry.io/xxx`)
+   - Add to `.env.production`:
+     ```
+     SENTRY_DSN=https://xxx@sentry.io/xxx
+     ```
+6. For React project:
+   - Follow setup guide to add to frontend code
+7. Redeploy site
+8. Any errors automatically sent to Sentry
+
+**How to use:** Go to Sentry dashboard, see errors grouped by type, click to see stack trace + user info
+
+### Part B: Uptime Monitoring (UptimeRobot or Pingdom)
+
+1. Go to https://uptimerobot.com (free tier available)
+2. Click **Sign Up**
+3. Click **Add New Monitor**
+4. Select **HTTP(s)**
+5. URL: `https://careersourcegroup.com`
+6. Friendly name: "Career Source Group Website"
+7. Check interval: Every 5 minutes
+8. Add alert contacts (email)
+9. Click **Create Monitor**
+
+**What happens:**
+- UptimeRobot pings your site every 5 minutes
+- If site doesn't respond for 2+ minutes → emails you immediately
+- Shows uptime history (target: 99.9%)
+
+### Part C: Slack Alerts (Optional)
+
+1. Connect Sentry to Slack:
+   - In Sentry, go **Settings** → **Integrations**
+   - Click **Slack**
+   - Authorize Slack workspace
+   - Errors now appear in a Slack channel automatically
+
+2. Connect UptimeRobot to Slack:
+   - In UptimeRobot, go **Settings** → **Alerts**
+   - Add **Slack** notification
+   - Downtime alerts appear in Slack immediately
+
+**Time to complete:** 45 minutes (both parts)
+
+**What you'll see:**
+- Sentry: Every error with stack trace, how many users affected, which page
+- UptimeRobot: Green checkmark = site up, Red X = site down
+- Slack: Instant alert when something breaks
+
+---
+
+## IMPLEMENTATION TIMELINE
+
+**Sep 1 (Launch day):** Launch without any of these
+
+**Sep 2-3 (Hypercare day 1-2):**
+- Set up GA4 (10 min)
+- Set up Google Search Console (15 min)
+- Set up Sentry error tracking (15 min)
+
+**Sep 4-5 (Hypercare day 3-4):**
+- Set up UptimeRobot (5 min)
+- Create Looker Studio dashboard (30 min)
+- Connect Slack alerts (10 min)
+
+**By Sep 8:** All monitoring in place, team can track everything
+
+---
+
+## COST BREAKDOWN
+
+| Tool | Cost | Notes |
+|------|------|-------|
+| GA4 | FREE | Unlimited data |
+| Search Console | FREE | Unlimited pages |
+| Looker Studio | FREE | Unlimited reports |
+| Sentry | FREE tier | 5K events/month (enough for most sites) |
+| UptimeRobot | FREE tier | 50 monitors, 5 min checks |
+| Slack integration | FREE | If you have Slack workspace |
+
+**Total cost for all 4 tools: $0** (until you scale)
+
+---
+
+## WHICH ONES MATTER MOST?
+
+**Priority 1 (do in first week):**
+- ✅ GA4 — Understand where traffic comes from
+- ✅ Search Console — Make sure Google is indexing you
+
+**Priority 2 (do in second week):**
+- ✅ Sentry — Catch bugs before users report them
+- ✅ UptimeRobot — Know if site is down
+
+**Priority 3 (nice to have):**
+- ✅ Looker Studio — Pretty dashboard for stakeholders
+- ✅ Slack alerts — Real-time notifications
+
+---
+
+## QUICK START (COPY/PASTE)
+
+```
+DAY 1 (Sep 2):
+1. GA4: https://analytics.google.com → Create property → Get G-XXXXXXXXXX
+2. Search Console: https://search.google.com/search-console → Verify domain → Submit sitemap
+
+DAY 2 (Sep 3):
+1. Sentry: https://sentry.io → Create project → Copy DSN → Add to .env
+2. Redeploy with Sentry DSN
+
+DAY 3 (Sep 4):
+1. UptimeRobot: https://uptimerobot.com → Add monitor → Set email alerts
+2. Looker Studio: https://looker.studio → Connect GA4 → Create charts
+
+Done! 🎉
+```
