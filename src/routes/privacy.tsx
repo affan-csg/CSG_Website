@@ -20,11 +20,19 @@ function PrivacyPage() {
 
       <Section>
         <div className="max-w-3xl">
+          <h2 className="font-display text-2xl font-semibold mb-6">Our Privacy Commitment</h2>
           <p className="text-[1.04rem] leading-[1.75] text-muted-foreground">
-            Please contact us for our full Privacy Policy.
+            Career Source Group, LLC is committed to protecting your privacy. Our Privacy Policy covers:
           </p>
-          <p className="mt-6 text-[1.04rem] leading-[1.75] text-muted-foreground">
-            For questions about our privacy practices, please{" "}
+          <ul className="mt-4 ml-6 space-y-2 text-[1.04rem] leading-[1.75] text-muted-foreground list-disc">
+            <li>What data we collect and why</li>
+            <li>How we use and protect your information</li>
+            <li>Your rights and choices regarding your data</li>
+            <li>Data retention and security practices</li>
+            <li>How to contact us about privacy concerns</li>
+          </ul>
+          <p className="mt-8 text-[1.04rem] leading-[1.75] text-muted-foreground">
+            For the complete Privacy Policy document and detailed information about our data practices, please{" "}
             <a
               href="mailto:hello@careersourcegroup.com"
               className="text-gold transition-colors hover:text-gold/80"
@@ -32,6 +40,16 @@ function PrivacyPage() {
               contact us
             </a>{" "}
             directly.
+          </p>
+          <p className="mt-6 text-[1.04rem] leading-[1.75] text-muted-foreground">
+            For candidates: see our{" "}
+            <a
+              href="/candidate-privacy"
+              className="text-gold transition-colors hover:text-gold/80"
+            >
+              Candidate Privacy Notice
+            </a>{" "}
+            for information specific to our talent network.
           </p>
         </div>
       </Section>

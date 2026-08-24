@@ -2,11 +2,9 @@ import { describe, it, expect } from "vitest";
 import {
   buildSeoMeta,
   buildOrganizationJsonLd,
-  buildLocalBusinessJsonLd,
   buildFaqJsonLd,
   buildStaffingJsonLd,
   buildBreadcrumbJsonLd,
-  buildRegionalBusinessJsonLd,
   buildArticleJsonLd,
   buildAggregateRatingJsonLd,
   buildGeoTargetingMeta,
@@ -141,12 +139,13 @@ describe("buildOrganizationJsonLd", () => {
     expect(result.url).toBe(SITE_URL);
   });
 
-  it("should include contact point information", () => {
+  it("should include areaServed for global operations", () => {
     const result = buildOrganizationJsonLd();
 
-    expect(result.contactPoint).toBeDefined();
-    expect(result.contactPoint["@type"]).toBe("ContactPoint");
-    expect(result.contactPoint.telephone).toBe("+1-443-875-9677");
+    expect(Array.isArray(result.areaServed)).toBe(true);
+    expect(result.areaServed).toContain("United States");
+    expect(result.areaServed).toContain("Latin America");
+    expect(result.areaServed).toContain("Pakistan");
   });
 
   it("should include social media links", () => {
@@ -155,38 +154,12 @@ describe("buildOrganizationJsonLd", () => {
     expect(Array.isArray(result.sameAs)).toBe(true);
     expect(result.sameAs.length).toBeGreaterThan(0);
   });
-});
 
-describe("buildLocalBusinessJsonLd", () => {
-  it("should build local business JSON-LD", () => {
-    const result = buildLocalBusinessJsonLd();
+  it("should not include street address or geo coordinates", () => {
+    const result = buildOrganizationJsonLd();
 
-    expect(result["@type"]).toBe("LocalBusiness");
-    expect(result.name).toBe("Career Source Group, LLC");
-    expect(result.address).toBeDefined();
-  });
-
-  it("should include address information", () => {
-    const result = buildLocalBusinessJsonLd();
-
-    expect(result.address.streetAddress).toBe("6040 Yorkridge Dr");
-    expect(result.address.addressLocality).toBe("Alpharetta");
-    expect(result.address.addressRegion).toBe("Georgia");
-  });
-
-  it("should include geo coordinates", () => {
-    const result = buildLocalBusinessJsonLd();
-
-    expect(result.geo).toBeDefined();
-    expect(result.geo.latitude).toBeCloseTo(34.0754, 3);
-    expect(result.geo.longitude).toBeCloseTo(-84.2941, 3);
-  });
-
-  it("should include area served", () => {
-    const result = buildLocalBusinessJsonLd();
-
-    expect(Array.isArray(result.areaServed)).toBe(true);
-    expect(result.areaServed.length).toBeGreaterThan(0);
+    expect("address" in result).toBe(false);
+    expect("geo" in result).toBe(false);
   });
 });
 
@@ -285,40 +258,6 @@ describe("buildBreadcrumbJsonLd", () => {
     expect(firstItem.position).toBe(1);
     expect(firstItem.name).toBe("Home");
     expect(firstItem.item).toBe(SITE_URL + "/");
-  });
-});
-
-describe("buildRegionalBusinessJsonLd", () => {
-  it("should build US regional business JSON-LD", () => {
-    const result = buildRegionalBusinessJsonLd("us");
-
-    expect(result.name).toContain("United States");
-    expect(result["@type"]).toBe("LocalBusiness");
-    expect(result.areaServed).toBeDefined();
-  });
-
-  it("should build LATAM regional business JSON-LD", () => {
-    const result = buildRegionalBusinessJsonLd("latam");
-
-    expect(result.name).toContain("LATAM");
-    expect(result.description).toContain("Nearshore");
-  });
-
-  it("should build Pakistan regional business JSON-LD", () => {
-    const result = buildRegionalBusinessJsonLd("pakistan");
-
-    expect(result.name).toContain("Pakistan");
-    expect(result.description).toContain("Offshore");
-  });
-
-  it("should include correct geo coordinates for each region", () => {
-    const us = buildRegionalBusinessJsonLd("us");
-    const latam = buildRegionalBusinessJsonLd("latam");
-    const pakistan = buildRegionalBusinessJsonLd("pakistan");
-
-    expect(us.geo.latitude).toBeCloseTo(34.0754, 3);
-    expect(latam.geo.latitude).toBeCloseTo(23.6345, 3);
-    expect(pakistan.geo.latitude).toBeCloseTo(30.3753, 3);
   });
 });
 

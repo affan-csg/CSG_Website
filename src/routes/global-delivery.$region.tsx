@@ -12,7 +12,7 @@ import {
   SectionHeading,
 } from "@/components/site/primitives";
 import { regionPages, prosCons, type RegionPage } from "@/content/delivery";
-import { buildBreadcrumbJsonLd, buildRegionalBusinessJsonLd, buildSeoMeta } from "@/lib/seo";
+import { buildBreadcrumbJsonLd, buildSeoMeta } from "@/lib/seo";
 
 function getRegionPage(region: string): RegionPage | undefined {
   return regionPages.find((p) => p.slug === region);
@@ -33,10 +33,6 @@ export const Route = createFileRoute("/global-delivery/$region")({
         path: `/global-delivery/${params.region}`,
       }),
       scripts: [
-        {
-          type: "application/ld+json",
-          children: JSON.stringify(buildRegionalBusinessJsonLd(region.slug)),
-        },
         {
           type: "application/ld+json",
           children: JSON.stringify(
@@ -221,7 +217,20 @@ function RegionDeliveryPage() {
       <FaqSection questions={regionData.faqQuestions} />
 
       {/* CTA */}
-      <CtaBand />
+      {regionData.cta ? (
+        <Section className="border-t border-border">
+          <div className="flex flex-col items-center justify-center text-center">
+            <Link
+              to={regionData.cta.to}
+              className="inline-flex items-center justify-center rounded-md bg-cream px-8 py-4 font-display text-base font-semibold text-navy transition-colors hover:bg-gold"
+            >
+              {regionData.cta.label}
+            </Link>
+          </div>
+        </Section>
+      ) : (
+        <CtaBand />
+      )}
     </>
   );
 }

@@ -11,6 +11,7 @@ export const Route = createFileRoute("/merchant-policies")({
       title: "Merchant Policies",
       description: "Merchant policies and payment information for Career Source Group.",
       path: "/merchant-policies",
+      noindex: true,
     }),
   component: MerchantPoliciesPage,
 });

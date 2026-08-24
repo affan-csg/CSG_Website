@@ -1,9 +1,9 @@
 export const home = {
   hero: {
-    words: ["Three continents. One contract.", "One person to call."],
-    sub: "US, LATAM, and Pakistan talent under a single relationship — so you stop managing four vendors to build one team.",
-    primary: { label: "Submit a Requirement", to: "/get-started" },
-    secondary: { label: "Join our bench", to: "/join-our-bench" },
+    words: ["Hire the technical talent", "your roadmap cannot wait for."],
+    sub: "Career Source Group connects US companies with vetted AI, Data, Cloud, Software, Product and GRC professionals across the United States, LATAM and Pakistan. Hire one specialist or build a dedicated team through one accountable partner.",
+    primary: { label: "Request Talent", to: "/get-started" },
+    secondary: { label: "See How We Deliver", to: "/global-delivery" },
   },
   who: {
     heading: "Who we are",
@@ -24,7 +24,7 @@ export const home = {
     items: [
       "Three regions, one partner. We place talent where it fits best — not where our commission is highest.",
       "10% direct hire fee. Industry charges 20-30%. Same vetting, same guarantee.",
-      "Trusted by Synovus, Deloitte, BCBS, M3, and TK Elevators.",
+      "Trusted by Verifone, GoodRco, Snapdocs, and Lilt.",
     ],
     cta: { label: "Why companies work with us", to: "/our-story", hash: "why-csg" },
   },
@@ -80,11 +80,10 @@ export const about = {
     heading: "Who We've Delivered For",
     body: "We're not a low-cost offshore reseller that learned staffing last year.",
     logos: [
-      { name: "Synovus", image: "/images/brand/Synovus.png" },
-      { name: "Deloitte", image: "/images/brand/deloitte-com-logo.png" },
-      { name: "BCBS", image: "/images/brand/BCBS.png" },
-      { name: "M3", image: "/images/brand/M3.png" },
-      { name: "TK Elevators", image: "/images/brand/TKE.png" },
+      { name: "Verifone" },
+      { name: "GoodRco" },
+      { name: "Snapdocs" },
+      { name: "Lilt" },
     ],
   },
   founder: {
@@ -138,11 +137,12 @@ export const specialtyOptions = [
   "Cloud Engineer / Architect",
   "Software Engineer",
   "Product / Project Manager",
+  "Cybersecurity & GRC",
 ] as const;
 
 export const bench = {
-  title: "Get vetted once. Get matched to work that's actually a fit.",
-  lead: "We place specialists and pods with clients who need AI/ML, MLOps, Data, DevOps, DevSecOps, Cloud, Software Development, and Product talent — on a contract or full-time basis. Apply once and we'll match you as opportunities open.",
+  title: "One profile. Relevant technical opportunities across CSG's client network.",
+  lead: "Join CSG's talent network for contract and full-time opportunities aligned to your skills, location, work authorization and compensation expectations. We contact you when a relevant requirement becomes available; joining does not guarantee placement. We do not submit your profile to a client without discussing the opportunity and receiving your permission.",
   what: {
     heading: "What working with us looks like",
     items: [
@@ -158,8 +158,8 @@ export const bench = {
 };
 
 export const getStarted = {
-  title: "Submit a Requirement",
-  lead: "Send us one open req you've been sitting on. We'll have profiles in front of you this week, before you commit to anything. No commitment, no retainer.",
+  title: "Tell us who you need. Get a realistic hiring plan within one business day.",
+  lead: "Share the role, critical skills, work arrangement and target start date. CSG will review the requirement and respond with market feedback, recommended delivery region and next steps. No obligation to engage.",
   benchNote: "Looking for work instead?",
   faqQuestions: [
     "Why do you charge 10% for direct hire when the industry charges 20-30%?",
@@ -170,7 +170,7 @@ export const getStarted = {
 
 export const contact = {
   title: "Contact us",
-  lead: "General inquiries. For a staffing requirement or a bench application, use the links below instead.",
+  lead: "Career Source Group, LLC — Headquartered in Alpharetta, Georgia — Serving clients across the United States. Meetings by appointment.",
   subjects: ["I need to hire talent", "I'm looking for work", "Something else"],
   botNotice: "Bot verification is not configured yet — this form cannot be submitted until it is.",
 };
@@ -178,20 +178,19 @@ export const contact = {
 export const legalPages = {
   terms: {
     title: "Terms & Conditions",
-    body: "Please contact us for our full Terms & Conditions.",
+    body: "These Terms & Conditions govern your use of careersourcegroup.com and our services. By accessing or using this site, you agree to be bound by these terms. Career Source Group reserves the right to modify these terms at any time. For the full Terms & Conditions document, please contact us at hello@careersourcegroup.com.",
   },
   refund: {
-    title: "Refund Policy",
-    body: "Please contact us for our full Refunds & Returns Policy.",
+    title: "Direct-Hire Guarantee",
+    body: "Career Source Group stands behind every direct-hire placement. For details on our replacement guarantee window, eligibility criteria, replacement terms, exclusions, and payment conditions, please contact our team at hello@careersourcegroup.com.",
   },
   legalNotice: {
     title: "Legal Notice",
     rows: [
       ["Business Name", "Career Source Group, LLC"],
-      ["Address", "6040 Yorkridge Dr, Alpharetta, Georgia, 30005, United States"],
       ["Registered Company Name", "Career Source Group, LLC"],
       ["Phone Number", "+14438759677"],
-      ["Registered Office Address", "6040 Yorkridge Dr, Alpharetta, Georgia, 30005, United States"],
+      ["Headquarters", "Alpharetta, Georgia"],
     ] as const,
   },
   merchant: {

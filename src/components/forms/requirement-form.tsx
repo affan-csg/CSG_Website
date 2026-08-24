@@ -57,8 +57,8 @@ export function RequirementForm({ defaultSkill, className }: RequirementFormProp
   if (status === "success") {
     return (
       <FormSuccess
-        title="Requirement received!"
-        message="We'll follow up shortly with potential candidates."
+        title="Thank you."
+        message="We will review your requirement and respond within one business day."
         resetLabel="Submit another requirement"
         onReset={() => setStatus("idle")}
       />
@@ -103,7 +103,6 @@ export function RequirementForm({ defaultSkill, className }: RequirementFormProp
           label="Phone"
           name="phone"
           type="tel"
-          required
           value={formData.phone}
           onChange={handleChange}
           placeholder="(443) 875-9677"

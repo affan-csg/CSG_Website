@@ -1,7 +1,7 @@
 export const company = {
   name: "Career Source Group",
   legalName: "Career Source Group, LLC",
-  address: "6040 Yorkridge Dr, Alpharetta, Georgia, 30005, United States",
+  headquarters: "Alpharetta, Georgia",
   phone: "(443) 875-9677",
   phoneHref: "tel:+14438759677",
   email: "hello@careersourcegroup.com",
@@ -16,6 +16,14 @@ export const company = {
     ["Saturday", "Closed"],
     ["Sunday", "Closed"],
   ] as const,
+  social: {
+    // import.meta.env (not process.env) — Vite bakes these in identically for
+    // both the server and client bundles, avoiding an SSR/hydration mismatch.
+    linkedin: (import.meta.env as any)["NEXT_PUBLIC_LINKEDIN_URL"] || null,
+    youtube: (import.meta.env as any)["NEXT_PUBLIC_YOUTUBE_URL"] || null,
+    facebook: (import.meta.env as any)["NEXT_PUBLIC_FACEBOOK_URL"] || null,
+    instagram: (import.meta.env as any)["NEXT_PUBLIC_INSTAGRAM_URL"] || null,
+  },
 };
 
 export const navLinks = [
@@ -64,6 +72,11 @@ export const specialties = [
     slug: "product",
     title: "Product & Project Management",
     tagline: "The fastest-growing salary line in tech, and almost nobody is watching it.",
+  },
+  {
+    slug: "cybersecurity-grc",
+    title: "Cybersecurity & GRC",
+    tagline: "Security and compliance talent that translates controls into action.",
   },
 ] as const;
 
@@ -191,46 +204,52 @@ export function faqsByQuestion(questions: string[]): Faq[] {
 }
 
 export const ctaBand = {
-  title: "Ready to see what this looks like for you?",
-  body: "Send us one open req you've been sitting on. We'll have profiles in front of you this week, before you commit to anything.",
-  primary: { label: "Send a Req", to: "/get-started" },
+  title: "Have a role open now?",
+  body: "Send the title, must-have skills and target start date. We will respond within one business day with market feedback and a delivery recommendation.",
+  primary: { label: "Send Us Your Role", to: "/get-started" },
   secondary: { label: "Contact Us", to: "/contact" },
 } as const;
 
 export const footerColumns = [
   {
-    title: "Specialized Roles",
-    links: specialties.map((s) => ({ label: s.title, to: `/staffing/${s.slug}` })),
+    title: "Solutions",
+    links: [
+      { label: "Contract Staffing", to: "/staffing/roles" },
+      { label: "Contract-to-Hire", to: "/staffing/roles" },
+      { label: "Direct Hire", to: "/staffing/roles" },
+      { label: "Dedicated Teams", to: "/staffing/pods" },
+    ],
   },
   {
-    title: "Delivery",
+    title: "Expertise",
     links: [
-      { label: "Compare Regions", to: "/global-delivery" },
-      { label: "US Staffing", to: "/global-delivery/us" },
+      { label: "AI & ML", to: "/staffing/ai-ml" },
+      { label: "Data", to: "/staffing/data" },
+      { label: "Cloud & DevOps", to: "/staffing/cloud" },
+      { label: "Cybersecurity & GRC", to: "/staffing/cybersecurity-grc" },
+      { label: "All Practices", to: "/staffing/specialized-roles" },
+    ],
+  },
+  {
+    title: "Global Talent",
+    links: [
+      { label: "United States", to: "/global-delivery/us" },
       { label: "LATAM Nearshore", to: "/global-delivery/latam" },
       { label: "Pakistan Offshore", to: "/global-delivery/pakistan" },
-      { label: "Staffing Roles", to: "/staffing/roles" },
-      { label: "Pods", to: "/staffing/pods" },
-      { label: "What your offer buys", to: "/offer-calibration" },
+      { label: "Compare Regions", to: "/global-delivery" },
     ],
   },
   {
     title: "Company",
     links: [
-      { label: "Our Story", to: "/our-story" },
-      { label: "Blog", to: "/blog" },
+      { label: "About CSG", to: "/our-story" },
+      { label: "Case Studies", to: "/case-studies" },
+      { label: "Insights", to: "/insights" },
       { label: "Contact", to: "/contact" },
-      { label: "FAQ", to: "/faq" },
-    ],
-  },
-  {
-    title: "Get Started",
-    links: [
-      { label: "Submit a Requirement", to: "/get-started" },
-      { label: "Join Our Bench", to: "/join-our-bench" },
-      { label: "Terms & Conditions", to: "/terms" },
-      { label: "Privacy Policy", to: "/privacy" },
-      { label: "Refund Policy", to: "/refund" },
+      { label: "Privacy", to: "/privacy" },
+      { label: "Candidate Privacy", to: "/privacy" },
+      { label: "Terms", to: "/terms" },
+      { label: "Accessibility", to: "/faq" },
     ],
   },
 ] as const;

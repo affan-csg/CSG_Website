@@ -250,6 +250,20 @@ export function BenchForm({ defaultSkill, className }: BenchFormProps) {
 
       <FormError message={errorMessage} />
 
+      <div className="space-y-3 rounded-md border border-border/50 bg-background/50 p-4 text-sm">
+        <p className="text-muted-foreground">
+          By submitting your application, you consent to Career Source Group retaining and reviewing your profile to match you with relevant opportunities. We will contact you only when a suitable role opens. Your information is handled according to our{" "}
+          <a href="/privacy" className="underline hover:text-gold">
+            Privacy Policy
+          </a>
+          {" "}and{" "}
+          <a href="/privacy#candidate-notice" className="underline hover:text-gold">
+            Candidate Privacy Notice
+          </a>
+          .
+        </p>
+      </div>
+
       <SubmitButton
         status={status}
         idleLabel="Submit application"

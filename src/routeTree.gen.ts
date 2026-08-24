@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AboutRouteImport } from './routes/about'
+import { Route as CaseStudiesRouteImport } from './routes/case-studies'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as FaqRouteImport } from './routes/faq'
 import { Route as GetStartedRouteImport } from './routes/get-started'
@@ -23,11 +24,14 @@ import { Route as PodsRouteImport } from './routes/pods'
 import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as RefundRouteImport } from './routes/refund'
 import { Route as TermsRouteImport } from './routes/terms'
+import { Route as WhoWeServeRouteImport } from './routes/who-we-serve'
 import { Route as WhyCsgRouteImport } from './routes/why-csg'
 import { Route as BlogIndexRouteImport } from './routes/blog.index'
 import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
 import { Route as GlobalDeliveryIndexRouteImport } from './routes/global-delivery.index'
 import { Route as GlobalDeliveryRegionRouteImport } from './routes/global-delivery.$region'
+import { Route as InsightsIndexRouteImport } from './routes/insights.index'
+import { Route as InsightsSlugRouteImport } from './routes/insights.$slug'
 import { Route as ServicesIndexRouteImport } from './routes/services.index'
 import { Route as ServicesSlugRouteImport } from './routes/services.$slug'
 import { Route as StaffingIndexRouteImport } from './routes/staffing.index'
@@ -44,6 +48,11 @@ const IndexRoute = IndexRouteImport.update({
 const AboutRoute = AboutRouteImport.update({
   id: '/about',
   path: '/about',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CaseStudiesRoute = CaseStudiesRouteImport.update({
+  id: '/case-studies',
+  path: '/case-studies',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ContactRoute = ContactRouteImport.update({
@@ -106,6 +115,11 @@ const TermsRoute = TermsRouteImport.update({
   path: '/terms',
   getParentRoute: () => rootRouteImport,
 } as any)
+const WhoWeServeRoute = WhoWeServeRouteImport.update({
+  id: '/who-we-serve',
+  path: '/who-we-serve',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const WhyCsgRoute = WhyCsgRouteImport.update({
   id: '/why-csg',
   path: '/why-csg',
@@ -129,6 +143,16 @@ const GlobalDeliveryIndexRoute = GlobalDeliveryIndexRouteImport.update({
 const GlobalDeliveryRegionRoute = GlobalDeliveryRegionRouteImport.update({
   id: '/global-delivery/$region',
   path: '/global-delivery/$region',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const InsightsIndexRoute = InsightsIndexRouteImport.update({
+  id: '/insights/',
+  path: '/insights/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const InsightsSlugRoute = InsightsSlugRouteImport.update({
+  id: '/insights/$slug',
+  path: '/insights/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ServicesIndexRoute = ServicesIndexRouteImport.update({
@@ -171,6 +195,7 @@ const StaffingSpecializedRolesRoute =
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/case-studies': typeof CaseStudiesRoute
   '/contact': typeof ContactRoute
   '/faq': typeof FaqRoute
   '/get-started': typeof GetStartedRoute
@@ -183,9 +208,11 @@ export interface FileRoutesByFullPath {
   '/privacy': typeof PrivacyRoute
   '/refund': typeof RefundRoute
   '/terms': typeof TermsRoute
+  '/who-we-serve': typeof WhoWeServeRoute
   '/why-csg': typeof WhyCsgRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/global-delivery/$region': typeof GlobalDeliveryRegionRoute
+  '/insights/$slug': typeof InsightsSlugRoute
   '/services/$slug': typeof ServicesSlugRoute
   '/staffing/$slug': typeof StaffingSlugRoute
   '/staffing/pods': typeof StaffingPodsRoute
@@ -193,12 +220,14 @@ export interface FileRoutesByFullPath {
   '/staffing/specialized-roles': typeof StaffingSpecializedRolesRoute
   '/blog/': typeof BlogIndexRoute
   '/global-delivery/': typeof GlobalDeliveryIndexRoute
+  '/insights/': typeof InsightsIndexRoute
   '/services/': typeof ServicesIndexRoute
   '/staffing/': typeof StaffingIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/case-studies': typeof CaseStudiesRoute
   '/contact': typeof ContactRoute
   '/faq': typeof FaqRoute
   '/get-started': typeof GetStartedRoute
@@ -211,9 +240,11 @@ export interface FileRoutesByTo {
   '/privacy': typeof PrivacyRoute
   '/refund': typeof RefundRoute
   '/terms': typeof TermsRoute
+  '/who-we-serve': typeof WhoWeServeRoute
   '/why-csg': typeof WhyCsgRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/global-delivery/$region': typeof GlobalDeliveryRegionRoute
+  '/insights/$slug': typeof InsightsSlugRoute
   '/services/$slug': typeof ServicesSlugRoute
   '/staffing/$slug': typeof StaffingSlugRoute
   '/staffing/pods': typeof StaffingPodsRoute
@@ -221,6 +252,7 @@ export interface FileRoutesByTo {
   '/staffing/specialized-roles': typeof StaffingSpecializedRolesRoute
   '/blog': typeof BlogIndexRoute
   '/global-delivery': typeof GlobalDeliveryIndexRoute
+  '/insights': typeof InsightsIndexRoute
   '/services': typeof ServicesIndexRoute
   '/staffing': typeof StaffingIndexRoute
 }
@@ -228,6 +260,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/case-studies': typeof CaseStudiesRoute
   '/contact': typeof ContactRoute
   '/faq': typeof FaqRoute
   '/get-started': typeof GetStartedRoute
@@ -240,9 +273,11 @@ export interface FileRoutesById {
   '/privacy': typeof PrivacyRoute
   '/refund': typeof RefundRoute
   '/terms': typeof TermsRoute
+  '/who-we-serve': typeof WhoWeServeRoute
   '/why-csg': typeof WhyCsgRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/global-delivery/$region': typeof GlobalDeliveryRegionRoute
+  '/insights/$slug': typeof InsightsSlugRoute
   '/services/$slug': typeof ServicesSlugRoute
   '/staffing/$slug': typeof StaffingSlugRoute
   '/staffing/pods': typeof StaffingPodsRoute
@@ -250,6 +285,7 @@ export interface FileRoutesById {
   '/staffing/specialized-roles': typeof StaffingSpecializedRolesRoute
   '/blog/': typeof BlogIndexRoute
   '/global-delivery/': typeof GlobalDeliveryIndexRoute
+  '/insights/': typeof InsightsIndexRoute
   '/services/': typeof ServicesIndexRoute
   '/staffing/': typeof StaffingIndexRoute
 }
@@ -258,6 +294,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/about'
+    | '/case-studies'
     | '/contact'
     | '/faq'
     | '/get-started'
@@ -270,9 +307,11 @@ export interface FileRouteTypes {
     | '/privacy'
     | '/refund'
     | '/terms'
+    | '/who-we-serve'
     | '/why-csg'
     | '/blog/$slug'
     | '/global-delivery/$region'
+    | '/insights/$slug'
     | '/services/$slug'
     | '/staffing/$slug'
     | '/staffing/pods'
@@ -280,12 +319,14 @@ export interface FileRouteTypes {
     | '/staffing/specialized-roles'
     | '/blog/'
     | '/global-delivery/'
+    | '/insights/'
     | '/services/'
     | '/staffing/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/about'
+    | '/case-studies'
     | '/contact'
     | '/faq'
     | '/get-started'
@@ -298,9 +339,11 @@ export interface FileRouteTypes {
     | '/privacy'
     | '/refund'
     | '/terms'
+    | '/who-we-serve'
     | '/why-csg'
     | '/blog/$slug'
     | '/global-delivery/$region'
+    | '/insights/$slug'
     | '/services/$slug'
     | '/staffing/$slug'
     | '/staffing/pods'
@@ -308,12 +351,14 @@ export interface FileRouteTypes {
     | '/staffing/specialized-roles'
     | '/blog'
     | '/global-delivery'
+    | '/insights'
     | '/services'
     | '/staffing'
   id:
     | '__root__'
     | '/'
     | '/about'
+    | '/case-studies'
     | '/contact'
     | '/faq'
     | '/get-started'
@@ -326,9 +371,11 @@ export interface FileRouteTypes {
     | '/privacy'
     | '/refund'
     | '/terms'
+    | '/who-we-serve'
     | '/why-csg'
     | '/blog/$slug'
     | '/global-delivery/$region'
+    | '/insights/$slug'
     | '/services/$slug'
     | '/staffing/$slug'
     | '/staffing/pods'
@@ -336,6 +383,7 @@ export interface FileRouteTypes {
     | '/staffing/specialized-roles'
     | '/blog/'
     | '/global-delivery/'
+    | '/insights/'
     | '/services/'
     | '/staffing/'
   fileRoutesById: FileRoutesById
@@ -343,6 +391,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
+  CaseStudiesRoute: typeof CaseStudiesRoute
   ContactRoute: typeof ContactRoute
   FaqRoute: typeof FaqRoute
   GetStartedRoute: typeof GetStartedRoute
@@ -355,9 +404,11 @@ export interface RootRouteChildren {
   PrivacyRoute: typeof PrivacyRoute
   RefundRoute: typeof RefundRoute
   TermsRoute: typeof TermsRoute
+  WhoWeServeRoute: typeof WhoWeServeRoute
   WhyCsgRoute: typeof WhyCsgRoute
   BlogSlugRoute: typeof BlogSlugRoute
   GlobalDeliveryRegionRoute: typeof GlobalDeliveryRegionRoute
+  InsightsSlugRoute: typeof InsightsSlugRoute
   ServicesSlugRoute: typeof ServicesSlugRoute
   StaffingSlugRoute: typeof StaffingSlugRoute
   StaffingPodsRoute: typeof StaffingPodsRoute
@@ -365,6 +416,7 @@ export interface RootRouteChildren {
   StaffingSpecializedRolesRoute: typeof StaffingSpecializedRolesRoute
   BlogIndexRoute: typeof BlogIndexRoute
   GlobalDeliveryIndexRoute: typeof GlobalDeliveryIndexRoute
+  InsightsIndexRoute: typeof InsightsIndexRoute
   ServicesIndexRoute: typeof ServicesIndexRoute
   StaffingIndexRoute: typeof StaffingIndexRoute
 }
@@ -383,6 +435,13 @@ declare module '@tanstack/react-router' {
       path: '/about'
       fullPath: '/about'
       preLoaderRoute: typeof AboutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/case-studies': {
+      id: '/case-studies'
+      path: '/case-studies'
+      fullPath: '/case-studies'
+      preLoaderRoute: typeof CaseStudiesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/contact': {
@@ -469,6 +528,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TermsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/who-we-serve': {
+      id: '/who-we-serve'
+      path: '/who-we-serve'
+      fullPath: '/who-we-serve'
+      preLoaderRoute: typeof WhoWeServeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/why-csg': {
       id: '/why-csg'
       path: '/why-csg'
@@ -502,6 +568,20 @@ declare module '@tanstack/react-router' {
       path: '/global-delivery/$region'
       fullPath: '/global-delivery/$region'
       preLoaderRoute: typeof GlobalDeliveryRegionRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/insights/': {
+      id: '/insights/'
+      path: '/insights'
+      fullPath: '/insights/'
+      preLoaderRoute: typeof InsightsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/insights/$slug': {
+      id: '/insights/$slug'
+      path: '/insights/$slug'
+      fullPath: '/insights/$slug'
+      preLoaderRoute: typeof InsightsSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/services/': {
@@ -559,6 +639,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
+  CaseStudiesRoute: CaseStudiesRoute,
   ContactRoute: ContactRoute,
   FaqRoute: FaqRoute,
   GetStartedRoute: GetStartedRoute,
@@ -571,9 +652,11 @@ const rootRouteChildren: RootRouteChildren = {
   PrivacyRoute: PrivacyRoute,
   RefundRoute: RefundRoute,
   TermsRoute: TermsRoute,
+  WhoWeServeRoute: WhoWeServeRoute,
   WhyCsgRoute: WhyCsgRoute,
   BlogSlugRoute: BlogSlugRoute,
   GlobalDeliveryRegionRoute: GlobalDeliveryRegionRoute,
+  InsightsSlugRoute: InsightsSlugRoute,
   ServicesSlugRoute: ServicesSlugRoute,
   StaffingSlugRoute: StaffingSlugRoute,
   StaffingPodsRoute: StaffingPodsRoute,
@@ -581,6 +664,7 @@ const rootRouteChildren: RootRouteChildren = {
   StaffingSpecializedRolesRoute: StaffingSpecializedRolesRoute,
   BlogIndexRoute: BlogIndexRoute,
   GlobalDeliveryIndexRoute: GlobalDeliveryIndexRoute,
+  InsightsIndexRoute: InsightsIndexRoute,
   ServicesIndexRoute: ServicesIndexRoute,
   StaffingIndexRoute: StaffingIndexRoute,
 }

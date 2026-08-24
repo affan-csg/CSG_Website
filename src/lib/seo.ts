@@ -64,21 +64,10 @@ export function buildOrganizationJsonLd() {
     url: SITE_URL,
     logo: SITE_URL + DEFAULT_OG_IMAGE,
     description:
-      "US staffing and talent delivery firm providing direct hire, contract, and contract-to-hire talent across the US, LATAM, and Pakistan.",
-    address: {
-      "@type": "PostalAddress",
-      streetAddress: "6040 Yorkridge Dr",
-      addressLocality: "Alpharetta",
-      addressRegion: "Georgia",
-      postalCode: "30005",
-      addressCountry: "US",
-    },
-    contactPoint: {
-      "@type": "ContactPoint",
-      telephone: "+1-443-875-9677",
-      contactType: "customer service",
-      availableLanguage: ["English", "Spanish"],
-    },
+      "Technology staffing and talent delivery across the US, LATAM and Pakistan.",
+    email: "hello@careersourcegroup.com",
+    telephone: "+1-443-875-9677",
+    areaServed: ["United States", "Latin America", "Pakistan"],
     sameAs: [
       "https://www.linkedin.com/in/zohaibkhawaja/",
       "https://www.facebook.com/61559974043500",
@@ -87,47 +76,6 @@ export function buildOrganizationJsonLd() {
   };
 }
 
-export function buildLocalBusinessJsonLd() {
-  return {
-    "@context": "https://schema.org",
-    "@type": "LocalBusiness",
-    name: "Career Source Group, LLC",
-    url: SITE_URL,
-    logo: SITE_URL + DEFAULT_OG_IMAGE,
-    description:
-      "US staffing and talent delivery firm providing direct hire, contract, and contract-to-hire talent across the US, LATAM, and Pakistan.",
-    address: {
-      "@type": "PostalAddress",
-      streetAddress: "6040 Yorkridge Dr",
-      addressLocality: "Alpharetta",
-      addressRegion: "Georgia",
-      postalCode: "30005",
-      addressCountry: "US",
-    },
-    telephone: "+1-443-875-9677",
-    priceRange: "$$",
-    openingHours: "Mo-Fr 09:00-18:00",
-    geo: {
-      "@type": "GeoCoordinates",
-      latitude: 34.0754,
-      longitude: -84.2941,
-    },
-    areaServed: [
-      {
-        "@type": "Country",
-        name: "United States",
-      },
-      {
-        "@type": "Country",
-        name: "Mexico",
-      },
-      {
-        "@type": "Country",
-        name: "Pakistan",
-      },
-    ],
-  };
-}
 
 export function buildFaqJsonLd(questions: Array<{ question: string; answer: string }>) {
   return {
@@ -177,34 +125,6 @@ export function buildBreadcrumbJsonLd(items: Array<{ name: string; url: string }
       name: item.name,
       item: SITE_URL + item.url,
     })),
-  };
-}
-
-export function buildRegionalBusinessJsonLd(region: "us" | "latam" | "pakistan") {
-  const data = REGION_INFO[region];
-
-  return {
-    "@context": "https://schema.org",
-    "@type": "LocalBusiness",
-    name: data.name,
-    url: SITE_URL,
-    logo: SITE_URL + DEFAULT_OG_IMAGE,
-    description: data.description,
-    telephone: "+1-443-875-9677",
-    priceRange: "$$",
-    geo: {
-      "@type": "GeoCoordinates",
-      latitude: data.latitude,
-      longitude: data.longitude,
-    },
-    areaServed: data.regions.map((r) => ({
-      "@type": "Country",
-      name: r,
-    })),
-    address: {
-      "@type": "PostalAddress",
-      addressCountry: data.country,
-    },
   };
 }
 

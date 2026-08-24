@@ -13,6 +13,7 @@ import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { getNonce, setServerNonce } from "@/lib/get-nonce";
 import { logCoreWebVitals } from "@/lib/performance-monitor";
+import { initializeAnalytics } from "@/lib/analytics";
 import { ErrorBoundary } from "@/components/error-boundary/error-boundary";
 import { SiteNav } from "@/components/site/site-nav";
 import { SiteFooter } from "@/components/site/site-footer";
@@ -21,7 +22,7 @@ import { SmoothScroll } from "@/components/site/smooth-scroll";
 import { LazyScrollProgress } from "@/components/animation/lazy-scroll-progress";
 import { CustomCursor } from "@/components/site/custom-cursor";
 import { LazyHeroCanvas } from "@/components/animation/lazy-hero-canvas";
-import { buildOrganizationJsonLd, buildLocalBusinessJsonLd } from "@/lib/seo";
+import { buildOrganizationJsonLd } from "@/lib/seo";
 
 // Server-side: inject nonce during SSR. This is called from src/server.ts before rendering.
 if (typeof globalThis !== "undefined" && globalThis.__CSP_NONCE__) {
@@ -128,11 +129,6 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
           ...(nonce && { nonce }),
           children: JSON.stringify(buildOrganizationJsonLd()),
         },
-        {
-          type: "application/ld+json",
-          ...(nonce && { nonce }),
-          children: JSON.stringify(buildLocalBusinessJsonLd()),
-        },
       ],
     };
   },
@@ -160,6 +156,8 @@ function RootComponent() {
   const { queryClient } = Route.useRouteContext();
 
   useEffect(() => {
+    // Initialize GA4 analytics
+    initializeAnalytics();
     // Log Core Web Vitals in development
     logCoreWebVitals();
   }, []);

@@ -53,10 +53,10 @@ function ContactPage() {
                 </div>
                 <div>
                   <p className="font-mono text-[0.66rem] uppercase tracking-[0.18em] text-muted-foreground">
-                    Address
+                    Headquarters
                   </p>
                   <p className="mt-1 text-[1.02rem] leading-relaxed text-muted-foreground">
-                    {company.address}
+                    {company.headquarters}
                   </p>
                 </div>
                 <div>
@@ -99,13 +99,13 @@ function ContactPage() {
             to="/get-started"
             className="inline-flex items-center justify-center rounded-md bg-cream px-6 py-3.5 font-display text-[0.88rem] font-semibold text-navy transition-all duration-300 hover:bg-gold"
           >
-            Submit a Requirement
+            Request Talent
           </Link>
           <Link
             to="/join-our-bench"
             className="inline-flex items-center justify-center rounded-md border border-border px-6 py-3.5 font-display text-[0.88rem] font-semibold text-foreground transition-all duration-300 hover:border-gold hover:text-gold"
           >
-            Join Our Bench
+            Find Opportunities
           </Link>
         </div>
       </Section>

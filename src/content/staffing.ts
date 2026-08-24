@@ -247,6 +247,36 @@ export const staffingRoles: StaffingRole[] = [
     ],
     faqQuestions: [],
   },
+  {
+    slug: "cybersecurity-grc",
+    title: "Cybersecurity & GRC",
+    tagline: "Security and compliance professionals who translate controls into operational action.",
+    blocks: [
+      {
+        heading: "Market reality",
+        body: "Cybersecurity and GRC roles are among the fastest-growing in tech. GRC specialists start at $95,000-$145,000; security architects run $130,000-$210,000. Enterprise compliance and regulatory requirements are driving demand faster than the market can supply talent.",
+      },
+      {
+        heading: "What we vet for",
+        body: "Hands-on compliance expertise (SOC2, ISO27001, GDPR, HIPAA). Third-party risk management and vendor assessment frameworks. Cloud security posture and IAM. Security automation and policy-as-code. Real incident response or audit experience, not just certification.",
+      },
+    ],
+    regions: [
+      {
+        region: "US",
+        body: "All three engagement models. Compliance-sensitive and regulated roles require US or senior LATAM talent.",
+      },
+      {
+        region: "LATAM",
+        body: "Contract. Strong for GRC support and compliance operations.",
+      },
+      {
+        region: "Pakistan",
+        body: "Contract. Best for security operations, compliance administration, and policy documentation support.",
+      },
+    ],
+    faqQuestions: [],
+  },
 ];
 
 export function getStaffingRole(slug: string) {
@@ -264,14 +294,12 @@ export const staffingHubPage = {
 };
 
 export const staffingRolesPage = {
-  title: "We Don't Sell Resumes. We Sell the Right Seat, in the Right Region, at the Right Number.",
+  title: "The right specialist, matched to the work and the way your team operates.",
   paragraphs: [
-    'Most staffing firms take your req, take your budget, and go looking. Then three weeks later they come back and explain why the market is "tight" and you need to raise the number.',
-    "We run it in the opposite order. Give us the offer — base, bonus, equity, remote flexibility, and how fast you need someone — and we'll tell you three things before we source a single candidate: what that offer realistically buys in the US market right now, and how long the search will take at that number; what the same offer buys in LATAM, usually two seniority levels higher, or two more people; and what the same offer buys in Pakistan, usually a small team instead of one hire.",
-    "Then you decide. Not us.",
-    "This is the conversation nobody in staffing is willing to have with you honestly, because most firms only sell one region and have to make that region be the answer. We sell three. Our incentive is to put your money where it goes furthest.",
+    "Share the role, must-have skills, work arrangement, target start date and budget. CSG will calibrate the requirement, recommend the best delivery market and return a search plan before recruiting begins.",
+    "Requirement calibration. Market feedback. Screening. Availability confirmation. Interview and offer support. Onboarding follow-up.",
   ],
-  cta: { label: "See what your offer actually buys", to: "/offer-calibration" },
+  cta: { label: "Calibrate a Role", to: "/staffing/roles" },
 };
 
 export const specializedRolesPage = {

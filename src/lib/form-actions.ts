@@ -1,6 +1,7 @@
 import { createServerFn } from "@tanstack/react-start";
 import { getRequestIP } from "@tanstack/react-start/server";
 
+import { syncLeadToCrm } from "@/lib/server/crm";
 import { sendNotificationEmail } from "@/lib/server/notify";
 import { checkEmailRateLimit, checkIpRateLimit } from "@/lib/server/rate-limit";
 import {
@@ -141,6 +142,14 @@ export const submitRequirementForm = createServerFn({ method: "POST" })
           message: "We could not save your requirement right now. Please try again shortly.",
         };
       }
+
+      await syncLeadToCrm({
+        email: parsed.data.email,
+        firstName: parsed.data.firstName,
+        lastName: parsed.data.lastName,
+        companyName: parsed.data.companyName,
+        phone: parsed.data.phone,
+      });
 
       await sendNotificationEmail(
         `New requirement: ${parsed.data.skillNeeded} (${parsed.data.companyName ?? "no company given"})`,

@@ -61,13 +61,6 @@
   </url>
 
   <url>
-    <loc>https://careersourcegroup.com/staffing/mlops</loc>
-    <lastmod>2026-08-12</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-
-  <url>
     <loc>https://careersourcegroup.com/staffing/data</loc>
     <lastmod>2026-08-12</lastmod>
     <changefreq>monthly</changefreq>
@@ -105,6 +98,13 @@
   <url>
     <loc>https://careersourcegroup.com/staffing/product</loc>
     <lastmod>2026-08-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://careersourcegroup.com/staffing/cybersecurity-grc</loc>
+    <lastmod>2026-08-22</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -175,54 +175,42 @@
     <priority>0.7</priority>
   </url>
 
-  <!-- Blog Pages (add dynamically as posts are added) -->
+  <!-- Insights Pages -->
   <url>
-    <loc>https://careersourcegroup.com/blog</loc>
-    <lastmod>2026-08-12</lastmod>
+    <loc>https://careersourcegroup.com/insights</loc>
+    <lastmod>2026-08-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
 
   <url>
-    <loc>https://careersourcegroup.com/blog/the-hidden-costs-of-a-bad-hire</loc>
-    <lastmod>2026-08-12</lastmod>
+    <loc>https://careersourcegroup.com/insights/the-hidden-costs-of-a-bad-hire</loc>
+    <lastmod>2026-08-24</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.6</priority>
   </url>
 
   <url>
-    <loc>https://careersourcegroup.com/blog/is-outsourcing-it-staffing-right-for-your-business</loc>
-    <lastmod>2026-08-12</lastmod>
+    <loc>https://careersourcegroup.com/insights/is-outsourcing-it-staffing-right-for-your-business</loc>
+    <lastmod>2026-08-24</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.6</priority>
   </url>
 
+  <!-- Case Studies -->
   <url>
-    <loc>https://careersourcegroup.com/blog/how-outsourcing-hr-can-save-your-business-time-and-money</loc>
-    <lastmod>2026-08-12</lastmod>
-    <changefreq>yearly</changefreq>
+    <loc>https://careersourcegroup.com/case-studies</loc>
+    <lastmod>2026-08-24</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
 
+  <!-- Who We Serve -->
   <url>
-    <loc>https://careersourcegroup.com/blog/how-to-find-the-perfect-staffing-solutions-for-healthcare</loc>
-    <lastmod>2026-08-12</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.6</priority>
-  </url>
-
-  <url>
-    <loc>https://careersourcegroup.com/blog/avoid-these-costly-staffing-mistakes-in-healthcare</loc>
-    <lastmod>2026-08-12</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.6</priority>
-  </url>
-
-  <url>
-    <loc>https://careersourcegroup.com/blog/cutting-edge-tips-for-streamlining-healthcare-staffing</loc>
-    <lastmod>2026-08-12</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.6</priority>
+    <loc>https://careersourcegroup.com/who-we-serve</loc>
+    <lastmod>2026-08-24</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
   </url>
 
   <!-- Legal Pages -->
@@ -254,11 +242,5 @@
     <priority>0.5</priority>
   </url>
 
-  <url>
-    <loc>https://careersourcegroup.com/merchant-policies</loc>
-    <lastmod>2026-08-10</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.5</priority>
-  </url>
 
 </urlset>

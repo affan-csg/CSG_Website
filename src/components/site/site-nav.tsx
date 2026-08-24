@@ -3,30 +3,69 @@ import { AnimatePresence, motion } from "motion/react";
 import { ChevronDown, Menu, X } from "lucide-react";
 import { useEffect, useState, useRef } from "react";
 
-import { regionCards, staffingSectionCards } from "@/content/site";
+import { regionCards, specialties } from "@/content/site";
 import { cn } from "@/lib/utils";
 
 const navItemsWithDropdowns = [
-  { label: "Our Story", to: "/our-story" },
   {
-    label: "Global Delivery",
-    to: "/global-delivery",
-    width: "min-w-[200px]",
-    children: regionCards.map((r) => ({
-      label: r.title,
-      to: r.to as string,
+    label: "Solutions",
+    to: "/staffing",
+    width: "min-w-[220px]",
+    children: [
+      { label: "Contract Staffing", to: "/staffing/roles" },
+      { label: "Contract-to-Hire", to: "/staffing/roles" },
+      { label: "Direct Hire", to: "/staffing/roles" },
+      { label: "Dedicated Teams & Pods", to: "/staffing/pods" },
+    ],
+  },
+  {
+    label: "Expertise",
+    to: "/staffing/specialized-roles",
+    width: "min-w-[260px]",
+    children: specialties.map((s) => ({
+      label: s.title,
+      to: `/staffing/${s.slug}` as string,
     })),
   },
   {
-    label: "Staffing",
-    to: "/staffing",
-    width: "min-w-[240px]",
+    label: "Global Talent",
+    to: "/global-delivery",
+    width: "min-w-[200px]",
     children: [
-      ...staffingSectionCards.map((c) => ({
-        label: c.title,
-        to: c.to as string,
+      ...regionCards.map((r) => ({
+        label: r.title,
+        to: r.to as string,
       })),
-      { label: "What your offer buys", to: "/offer-calibration" },
+      { label: "Compare Regions", to: "/global-delivery" },
+    ],
+  },
+  {
+    label: "Who We Serve",
+    to: "/who-we-serve",
+    width: "min-w-[220px]",
+    children: [
+      { label: "Startups", to: "/who-we-serve", hash: "startups" },
+      { label: "Small & Mid-Sized Businesses", to: "/who-we-serve", hash: "smb" },
+      { label: "Enterprises", to: "/who-we-serve", hash: "enterprises" },
+    ],
+  },
+  {
+    label: "Resources",
+    to: "/faq",
+    width: "min-w-[200px]",
+    children: [
+      { label: "Case Studies", to: "/case-studies" },
+      { label: "Insights", to: "/insights" },
+      { label: "FAQ", to: "/faq" },
+    ],
+  },
+  {
+    label: "Company",
+    to: "/our-story",
+    width: "min-w-[200px]",
+    children: [
+      { label: "About CSG", to: "/our-story" },
+      { label: "Contact", to: "/contact" },
     ],
   },
 ] as const;
@@ -78,7 +117,7 @@ export function SiteNav() {
           : "border-b border-transparent",
       )}
     >
-      <div className="container-page flex h-[4.5rem] items-center justify-between gap-6">
+      <div className="mx-auto flex h-[4.5rem] w-full max-w-[92rem] items-center justify-between gap-4 px-6 md:px-10">
         <Link
           to="/"
           className="group relative flex min-w-0 items-center gap-2"
@@ -109,7 +148,7 @@ export function SiteNav() {
         </Link>
 
         {/* Desktop Navigation */}
-        <nav className="hidden items-center gap-1 lg:flex">
+        <nav className="hidden shrink-0 items-center gap-0.5 lg:flex xl:gap-1">
           {navItemsWithDropdowns.map((item) => {
             const hasChildren = "children" in item && item.children && item.children.length > 0;
 
@@ -124,7 +163,7 @@ export function SiteNav() {
                   <Link
                     to={item.to}
                     className={cn(
-                      "gold-underline nav-text flex items-center gap-1 px-3 py-2 text-muted-foreground transition-colors hover:text-gold",
+                      "gold-underline nav-text flex items-center gap-1 whitespace-nowrap px-2 py-2 text-muted-foreground transition-colors hover:text-gold xl:px-2.5",
                       openDropdown === item.label && "text-foreground",
                     )}
                     activeProps={{ className: "text-foreground", "data-active": "true" }}
@@ -163,17 +202,21 @@ export function SiteNav() {
                             View All
                           </Link>
                           <div className="my-1 h-px bg-border" />
-                          {item.children.map((child) => (
-                            <Link
-                              key={child.to}
-                              to={child.to}
-                              onClick={() => setOpenDropdown(null)}
-                              className="block rounded-md px-3 py-2 form-input text-muted-foreground transition-colors hover:bg-accent hover:text-navy"
-                              activeProps={{ className: "text-gold" }}
-                            >
-                              {child.label}
-                            </Link>
-                          ))}
+                          {item.children.map((child) => {
+                            const hash = "hash" in child ? child.hash : undefined;
+                            return (
+                              <Link
+                                key={child.label}
+                                to={child.to}
+                                {...(hash ? { hash } : {})}
+                                onClick={() => setOpenDropdown(null)}
+                                className="block rounded-md px-3 py-2 form-input text-muted-foreground transition-colors hover:bg-accent hover:text-navy"
+                                activeProps={{ className: "text-gold" }}
+                              >
+                                {child.label}
+                              </Link>
+                            );
+                          })}
                         </div>
                       </motion.div>
                     )}
@@ -186,7 +229,7 @@ export function SiteNav() {
               <Link
                 key={item.label}
                 to={item.to}
-                className="gold-underline nav-text px-3 py-2 text-muted-foreground transition-colors hover:text-gold"
+                className="gold-underline nav-text whitespace-nowrap px-2 py-2 text-muted-foreground transition-colors hover:text-gold xl:px-2.5"
                 activeProps={{ className: "text-foreground", "data-active": "true" }}
               >
                 {item.label}
@@ -197,10 +240,16 @@ export function SiteNav() {
 
         <div className="flex shrink-0 items-center gap-3">
           <Link
+            to="/join-our-bench"
+            className="gold-underline nav-text hidden whitespace-nowrap px-2 py-2 text-muted-foreground transition-colors hover:text-gold xl:inline-block"
+          >
+            Find Opportunities
+          </Link>
+          <Link
             to="/get-started"
             className="hidden button-text items-center gap-2 rounded-md bg-cream px-5 py-2.5 font-display text-navy transition-all duration-300 hover:bg-gold xl:inline-flex"
           >
-            Submit a Requirement
+            Request Talent
           </Link>
           <button
             type="button"
@@ -252,14 +301,14 @@ export function SiteNav() {
                   onClick={() => setOpen(false)}
                   className="rounded-md bg-cream px-5 py-3 text-center button-text font-display text-navy"
                 >
-                  Submit a Requirement
+                  Request Talent
                 </Link>
                 <Link
                   to="/join-our-bench"
                   onClick={() => setOpen(false)}
                   className="rounded-md border border-border px-5 py-3 text-center button-text font-display"
                 >
-                  Join our bench
+                  Find Opportunities
                 </Link>
               </div>
             </div>
@@ -274,7 +323,11 @@ function MobileDropdown({
   item,
   onClose,
 }: {
-  item: { label: string; to: string; children?: readonly { label: string; to: string }[] };
+  item: {
+    label: string;
+    to: string;
+    children?: readonly { label: string; to: string; hash?: string }[];
+  };
   onClose: () => void;
 }) {
   const [expanded, setExpanded] = useState(false);
@@ -308,8 +361,9 @@ function MobileDropdown({
             <div className="flex flex-col gap-1 pb-4 pl-4">
               {item.children.map((child) => (
                 <Link
-                  key={child.to}
+                  key={child.label}
                   to={child.to}
+                  {...(child.hash ? { hash: child.hash } : {})}
                   onClick={onClose}
                   className="rounded-md py-2.5 form-input text-muted-foreground transition-colors hover:text-gold"
                   activeProps={{ className: "text-gold" }}

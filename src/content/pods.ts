@@ -1,5 +1,5 @@
 export const pods = {
-  title: "The Pod Model: We Don't Fill Seats. We Stand Up Teams.",
+  title: "Build a delivery team, not a collection of resumes.",
   problem: {
     heading: "The problem",
     body: "Here's the problem with traditional staffing when you're building a function instead of filling a chair: you run five separate searches, negotiate five separate rates, manage three separate vendors, and six months later you have four of the five people you needed and no one who owns how they work together.",

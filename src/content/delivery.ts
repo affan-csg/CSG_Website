@@ -112,6 +112,7 @@ export type RegionPage = {
   models?: { title: string; lead: string; when: string; get: string }[];
   sections?: { heading: string; body: string }[];
   pullQuote?: string;
+  cta?: { label: string; to: string };
   prosConsKey: "us" | "latam" | "pakistan";
   faqQuestions: string[];
   meta: { title: string; description: string };
@@ -120,7 +121,7 @@ export type RegionPage = {
 export const regionPages: RegionPage[] = [
   {
     slug: "us",
-    title: "US Staffing: Direct Hire, Contract, and Contract-to-Hire",
+    title: "US contract and direct-hire talent for roles where proximity, compliance and continuity matter.",
     models: [
       {
         title: "Direct Hire — 10% of first-year salary",
@@ -143,6 +144,7 @@ export const regionPages: RegionPage[] = [
     ],
     pullQuote:
       "Instead of betting a full-time offer on a gut feeling, put them on contract-to-hire. You get three to six months of real work before it's a permanent commitment. And if it's not working, you're not running a termination — you're just not converting.",
+    cta: { label: "Request US Talent", to: "/get-started" },
     prosConsKey: "us",
     faqQuestions: ["Do you place contract or full-time talent, or both?"],
     meta: {
@@ -153,7 +155,7 @@ export const regionPages: RegionPage[] = [
   },
   {
     slug: "latam",
-    title: "LATAM Nearshore: Senior Talent, Your Time Zone, 30-70% Less",
+    title: "Nearshore technical talent that works when your US team works.",
     intro: [
       "Nearshore hiring is not an experiment anymore. US remote hiring in Latin America grew 161% from 2023 through 2026, and the region's IT services market has crossed $71 billion.",
       "And it is not junior talent. 84% of LATAM placements in 2025 were mid-level or senior, with roughly a third at senior level including VPs and directors.",
@@ -178,6 +180,7 @@ export const regionPages: RegionPage[] = [
         body: "Contract only. Dedicated to your team, embedded in your sprint cycle, your tools, your rituals. We handle payroll, compliance, and employment infrastructure. You handle priorities and direction.",
       },
     ],
+    cta: { label: "Request LATAM Talent", to: "/get-started" },
     prosConsKey: "latam",
     faqQuestions: [
       "What's the difference between nearshore (LATAM) and offshore (Pakistan) staffing?",
@@ -190,7 +193,7 @@ export const regionPages: RegionPage[] = [
   },
   {
     slug: "pakistan",
-    title: "Pakistan Offshore: The Cost Advantage Nobody's Talking About Yet",
+    title: "Dedicated offshore engineering capacity for structured execution and extended coverage.",
     intro: [
       "Most US buyers still default to India or the Philippines when they think offshore. The data has moved and the market hasn't caught up.",
       "The International Labour Organisation ranks Pakistan as the world's second-largest supplier of digital labour services — ahead of both India and the Philippines. In December 2025, Pakistan recorded $437 million in IT and digital service exports in a single month, a milestone no forecast had projected arriving that soon.",
@@ -215,6 +218,7 @@ export const regionPages: RegionPage[] = [
         body: "Contract only. We pre-empt the two objections you're already thinking about — data security (NDAs, secure infrastructure, formal data-protection practices) and time zone (we staff for guaranteed daily overlap hours with your team, not \u201cwe'll figure it out\u201d).",
       },
     ],
+    cta: { label: "Request Pakistan Talent", to: "/get-started" },
     prosConsKey: "pakistan",
     faqQuestions: [
       "What's the difference between nearshore (LATAM) and offshore (Pakistan) staffing?",

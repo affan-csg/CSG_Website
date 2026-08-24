@@ -13,7 +13,7 @@ export const Route = createFileRoute("/join-our-bench")({
   },
   head: () =>
     buildSeoMeta({
-      title: "Join Our Bench | Contract & Full-Time AI, Data & Cloud Roles",
+      title: "Join Our Talent Network | Contract & Full-Time AI, Data & Cloud Roles",
       description:
         "Apply to join Career Source Group bench — AI/ML, MLOps, Data, DevOps, DevSecOps, Cloud, Software Development, and Product roles.",
       path: "/join-our-bench",
@@ -36,7 +36,7 @@ function JoinOurBenchPage() {
   const { skill } = Route.useSearch();
   return (
     <>
-      <PageHero eyebrow="Join our bench" title={bench.title} body={bench.lead} />
+      <PageHero eyebrow="Join Our Talent Network" title={bench.title} body={bench.lead} />
 
       <Section>
         <SectionHeading eyebrow="How it works" title={bench.what.heading} />
@@ -75,7 +75,7 @@ function JoinOurBenchPage() {
         <SectionHeading eyebrow="Apply now" title="Submit your application" align="center" />
         <Reveal className="mx-auto mt-10 max-w-2xl">
           <Panel>
-            <h3 className="font-display text-xl font-semibold">Join our bench</h3>
+            <h3 className="font-display text-xl font-semibold">Join Our Talent Network</h3>
             <p className="mt-2 text-sm text-muted-foreground">
               Apply once and we'll match you as opportunities open.
             </p>
@@ -93,7 +93,7 @@ function JoinOurBenchPage() {
             to="/get-started"
             className="inline-flex items-center justify-center rounded-md border border-border px-6 py-3.5 font-display text-[0.88rem] font-semibold text-foreground transition-all duration-300 hover:border-gold hover:text-gold"
           >
-            Submit a Requirement
+            Request Talent
           </Link>
         </Reveal>
       </Section>

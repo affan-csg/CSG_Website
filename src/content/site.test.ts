@@ -6,7 +6,7 @@ describe("Site Content", () => {
     it("should have required properties", () => {
       expect(company.name).toBeDefined();
       expect(company.legalName).toBeDefined();
-      expect(company.address).toBeDefined();
+      expect(company.headquarters).toBeDefined();
       expect(company.phone).toBeDefined();
       expect(company.email).toBeDefined();
     });

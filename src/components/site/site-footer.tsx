@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { Mail, MapPin, Phone } from "lucide-react";
+import { Mail, Phone, Linkedin, Youtube, Facebook, Instagram } from "lucide-react";
 
 import { company, footerColumns } from "@/content/site";
 
@@ -19,11 +19,10 @@ export function SiteFooter() {
               />
               <span className="font-display text-base font-semibold">Career Source Group</span>
             </Link>
-            <p className="mt-5 max-w-sm footer-text text-muted-foreground">{company.tagline}</p>
+            <p className="mt-5 max-w-sm footer-text text-muted-foreground">Career Source Group is a technology staffing and talent delivery company headquartered in Alpharetta, Georgia. We help US companies hire AI, Data, Cloud, Software, Product and GRC professionals across the United States, LATAM and Pakistan.</p>
             <div className="mt-7 space-y-3">
-              <p className="footer-text flex gap-3 text-muted-foreground">
-                <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-gold" />
-                <span>{company.address}</span>
+              <p className="footer-text text-muted-foreground">
+                Headquartered in Alpharetta, Georgia | Serving clients across the United States
               </p>
               <a
                 href={company.phoneHref}
@@ -48,9 +47,9 @@ export function SiteFooter() {
                 <h3 className="eyebrow">{col.title}</h3>
                 <ul className="mt-5 space-y-3">
                   {col.links.map((link) => (
-                    <li key={link.to}>
+                    <li key={link.label}>
                       <Link
-                        to={link.to}
+                        to={link.to as any}
                         className="footer-text text-muted-foreground transition-colors hover:text-foreground"
                       >
                         {link.label}
@@ -63,27 +62,69 @@ export function SiteFooter() {
           </div>
         </div>
 
-        <div className="mt-14 flex flex-col gap-4 border-t border-border pt-7 caption-text text-muted-foreground sm:flex-row sm:items-center sm:justify-between">
-          <p>
-            © {new Date().getFullYear()} {company.legalName}. All rights reserved.
-          </p>
-          <div className="flex flex-wrap items-center gap-x-6 gap-y-2">
-            <Link to="/legal-notice" className="hover:text-foreground">
-              Legal Notice
-            </Link>
-            <Link to="/merchant-policies" className="hover:text-foreground">
-              Merchant Policies
-            </Link>
-            <Link to="/privacy" className="hover:text-foreground">
-              Privacy Policy
-            </Link>
-            <span aria-hidden="true" className="text-border">
-              |
-            </span>
-            <span className="text-gold">
-              powered by <span className="font-bold">AJ</span>
-            </span>
+        <div className="mt-14 border-t border-border pt-7">
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between mb-7">
+            <p className="caption-text text-muted-foreground">
+              © {new Date().getFullYear()} {company.legalName}. All rights reserved.
+            </p>
+            <div className="flex flex-wrap items-center gap-x-6 gap-y-2 caption-text text-muted-foreground">
+              <Link to="/legal-notice" className="hover:text-foreground">
+                Legal Notice
+              </Link>
+              <Link to="/privacy" className="hover:text-foreground">
+                Privacy Policy
+              </Link>
+            </div>
           </div>
+
+          {(company.social.linkedin || company.social.youtube || company.social.facebook || company.social.instagram) && (
+            <div className="flex flex-wrap items-center gap-4">
+              {company.social.linkedin && (
+                <a
+                  href={company.social.linkedin}
+                  rel="noopener noreferrer"
+                  target="_blank"
+                  aria-label="Career Source Group on LinkedIn"
+                  className="text-muted-foreground transition-colors hover:text-gold"
+                >
+                  <Linkedin className="h-5 w-5" />
+                </a>
+              )}
+              {company.social.youtube && (
+                <a
+                  href={company.social.youtube}
+                  rel="noopener noreferrer"
+                  target="_blank"
+                  aria-label="Career Source Group on YouTube"
+                  className="text-muted-foreground transition-colors hover:text-gold"
+                >
+                  <Youtube className="h-5 w-5" />
+                </a>
+              )}
+              {company.social.facebook && (
+                <a
+                  href={company.social.facebook}
+                  rel="noopener noreferrer"
+                  target="_blank"
+                  aria-label="Career Source Group on Facebook"
+                  className="text-muted-foreground transition-colors hover:text-gold"
+                >
+                  <Facebook className="h-5 w-5" />
+                </a>
+              )}
+              {company.social.instagram && (
+                <a
+                  href={company.social.instagram}
+                  rel="noopener noreferrer"
+                  target="_blank"
+                  aria-label="Career Source Group on Instagram"
+                  className="text-muted-foreground transition-colors hover:text-gold"
+                >
+                  <Instagram className="h-5 w-5" />
+                </a>
+              )}
+            </div>
+          )}
         </div>
       </div>
     </footer>

@@ -13,9 +13,9 @@ export const Route = createFileRoute("/get-started")({
   },
   head: () =>
     buildSeoMeta({
-      title: "Submit a Requirement",
+      title: "Request Talent",
       description:
-        "Tell us what you need — AI/ML, MLOps, Data, DevOps, DevSecOps, Cloud, Software Development, or Product talent, contract or full-time.",
+        "Tell us who you need. Get a realistic hiring plan within one business day. Share the role, critical skills, work arrangement and target start date.",
       path: "/get-started",
     }),
   component: GetStartedPage,
@@ -46,7 +46,7 @@ function GetStartedPage() {
                 to="/join-our-bench"
                 className="inline-flex items-center justify-center rounded-md border border-border px-6 py-3.5 font-display text-[0.88rem] font-semibold text-foreground transition-all duration-300 hover:border-gold hover:text-gold"
               >
-                Join Our Bench
+                Find Opportunities
               </Link>
 
               <div className="mt-12">
