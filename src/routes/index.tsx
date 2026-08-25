@@ -188,7 +188,7 @@ function HomePage() {
                 {[
                   { value: "10%", label: "Our direct-hire fee" },
                   { value: "20-30%", label: "What the market charges" },
-                  { value: "$75K-$150K", label: "Saved across five $150K hires" },
+                  { value: "$75K-150K", label: "Your savings (5 hires)" },
                 ].map((s) => (
                   <div key={s.label} className="bg-card p-7">
                     <p className="font-display text-3xl font-semibold text-gold">{s.value}</p>

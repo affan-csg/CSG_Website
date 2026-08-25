@@ -83,7 +83,7 @@ export function BenchForm({ defaultSkill, className }: BenchFormProps) {
   }
 
   return (
-    <form onSubmit={handleSubmit} className={cn("space-y-5", className)}>
+    <form onSubmit={handleSubmit} className={cn("space-y-5 rounded-2xl border border-white/10 bg-card p-8 shadow-2xl shadow-black/60", className)}>
       <div className="grid gap-5 sm:grid-cols-2">
         <TextField
           label="First name"
@@ -232,7 +232,7 @@ export function BenchForm({ defaultSkill, className }: BenchFormProps) {
               setFormData((prev) => ({ ...prev, resume: file }));
             }
           }}
-          className="w-full rounded-md border border-input bg-background px-4 py-3 text-sm text-foreground file:mr-4 file:rounded-md file:border-0 file:bg-gold/20 file:px-4 file:py-2 file:text-sm file:font-semibold file:text-gold hover:file:bg-gold/30"
+          className="w-full rounded-md border border-white/15 bg-white/5 px-4 py-3 text-sm text-foreground shadow-inner shadow-black/20 transition-colors hover:border-white/25 file:mr-4 file:rounded-md file:border-0 file:bg-gold/20 file:px-4 file:py-2 file:text-sm file:font-semibold file:text-gold hover:file:bg-gold/30"
         />
         <p className="mt-1 text-xs text-muted-foreground">PDF or Word document, 5 MB max.</p>
       </div>
@@ -250,15 +250,11 @@ export function BenchForm({ defaultSkill, className }: BenchFormProps) {
 
       <FormError message={errorMessage} />
 
-      <div className="space-y-3 rounded-md border border-border/50 bg-background/50 p-4 text-sm">
+      <div className="space-y-3 rounded-md border border-white/10 bg-black/20 p-4 text-sm">
         <p className="text-muted-foreground">
           By submitting your application, you consent to Career Source Group retaining and reviewing your profile to match you with relevant opportunities. We will contact you only when a suitable role opens. Your information is handled according to our{" "}
           <a href="/privacy" className="underline hover:text-gold">
             Privacy Policy
-          </a>
-          {" "}and{" "}
-          <a href="/privacy#candidate-notice" className="underline hover:text-gold">
-            Candidate Privacy Notice
           </a>
           .
         </p>

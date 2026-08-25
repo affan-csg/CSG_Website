@@ -1,19 +1,28 @@
 # ============================================================================
+# ENVIRONMENT FILES (SECRETS — NEVER COMMIT)
+# ============================================================================
+.env
+.env.local
+.env.*.local
+.env.development
+.env.development.local
+.env.test.local
+.env.production
+.env.production.local
+
+# ============================================================================
 # DEPENDENCIES
 # ============================================================================
-# Project is pnpm-only (see package.json "packageManager") — pnpm-lock.yaml
-# is intentionally NOT ignored and must stay committed.
 node_modules/
 .pnp
 .pnp.js
-dist-ssr/
 package-lock.json
 yarn.lock
 bun.lock
 bunfig.toml
 
 # ============================================================================
-# BUILD OUTPUTS & CACHE
+# BUILD OUTPUT & CACHE
 # ============================================================================
 dist/
 build/
@@ -24,18 +33,7 @@ build/
 .cache/
 .next/
 out/
-
-# ============================================================================
-# ENVIRONMENT FILES (NEVER COMMIT SECRETS)
-# ============================================================================
-.env
-.env.local
-.env.*.local
-.env.development.local
-.env.test.local
-.env.production.local
-.env.production
-.env.development
+dist-ssr/
 
 # ============================================================================
 # IDE & EDITOR
@@ -47,11 +45,6 @@ out/
 *.swn
 *~
 .DS_Store
-.AppleDouble
-.LSOverride
-*.sublime-workspace
-*.sublime-project
-.vscode-test
 .history/
 .elixir_ls/
 
@@ -60,12 +53,11 @@ out/
 # ============================================================================
 Thumbs.db
 desktop.ini
-.windows/
-.osx/
 
 # ============================================================================
-# DEBUG & LOG FILES
+# LOGS & DEBUG
 # ============================================================================
+*.log
 npm-debug.log*
 npm-error.log*
 yarn-debug.log*
@@ -73,24 +65,17 @@ yarn-error.log*
 pnpm-debug.log*
 pnpm-error.log*
 lerna-debug.log*
-*.log
 debug.log
-.npm
-.eslintcache
 
 # ============================================================================
 # TESTING & COVERAGE
 # ============================================================================
 coverage/
 .nyc_output/
-.mocha/
 test-results/
-*.lcov
 playwright-report/
 .playwright/
-.auth/
 blob-report/
-playwright/.cache/
 
 # ============================================================================
 # DEPLOYMENT & HOSTING
@@ -100,22 +85,16 @@ playwright/.cache/
 .wrangler/
 
 # ============================================================================
-# SUPABASE (LOCAL CLI STATE)
-# ============================================================================
-supabase/.branches/
-supabase/.temp/
-
-# ============================================================================
-# LOCAL DEVELOPMENT
+# LOCAL STATE
 # ============================================================================
 .turbo/
-.env.example.local
-
-# ============================================================================
-# MISC
-# ============================================================================
+.auth/
 *.local
 *.bak
 *.tmp
 *.temp
-.editorconfig.local
+
+# ============================================================================
+# LOCAL REFERENCE DOCS (planning artifacts, not project source)
+# ============================================================================
+implementation_plan.docx

@@ -27,12 +27,19 @@ function RefundPage() {
           <p className="mt-6 text-[1.04rem] leading-[1.75] text-muted-foreground">
             For questions about our refund policy, please{" "}
             <a
-              href="mailto:hello@careersourcegroup.com"
+              href="/contact"
               className="text-gold transition-colors hover:text-gold/80"
             >
               contact us
             </a>{" "}
-            directly.
+            or email{" "}
+            <a
+              href="mailto:hello@careersourcegroup.com"
+              className="text-gold transition-colors hover:text-gold/80"
+            >
+              hello@careersourcegroup.com
+            </a>
+            .
           </p>
         </div>
       </Section>

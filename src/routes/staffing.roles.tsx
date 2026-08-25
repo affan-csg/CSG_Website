@@ -1,14 +1,16 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { ArrowUpRight } from "lucide-react";
 
 import { Reveal } from "@/components/site/reveal";
 import {
   ArrowLink,
   CtaBand,
   PageHero,
+  Panel,
   Section,
   SectionHeading,
 } from "@/components/site/primitives";
-import { staffingRolesPage } from "@/content/staffing";
+import { engagementModels, staffingRolesPage } from "@/content/staffing";
 import { buildBreadcrumbJsonLd, buildSeoMeta } from "@/lib/seo";
 
 export const Route = createFileRoute("/staffing/roles")({
@@ -51,6 +53,30 @@ function StaffingRolesPage() {
         </div>
         <div className="mt-10">
           <ArrowLink to={staffingRolesPage.cta.to} label={staffingRolesPage.cta.label} />
+        </div>
+      </Section>
+
+      <Section className="border-t border-border">
+        <SectionHeading eyebrow="Hiring a specialist" title="Choose your engagement model" />
+        <div className="mt-12 grid gap-6 lg:grid-cols-3">
+          {engagementModels.map((model, i) => (
+            <Reveal key={model.title} delay={i * 0.07}>
+              <Link to={model.to} className="group block h-full">
+                <Panel className="flex h-full flex-col">
+                  <div className="flex items-start justify-between gap-4">
+                    <h3 className="font-display text-xl font-semibold">{model.title}</h3>
+                    <ArrowUpRight className="h-5 w-5 shrink-0 text-muted-foreground transition-all duration-300 group-hover:-translate-y-0.5 group-hover:text-gold" />
+                  </div>
+                  <p className="mt-5 grow text-[0.98rem] leading-relaxed text-muted-foreground">
+                    {model.body}
+                  </p>
+                  <span className="mt-7 font-display text-sm font-semibold text-gold">
+                    {model.cta}
+                  </span>
+                </Panel>
+              </Link>
+            </Reveal>
+          ))}
         </div>
       </Section>
 

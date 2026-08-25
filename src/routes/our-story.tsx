@@ -73,30 +73,6 @@ function OurStoryPage() {
       </Section>
 
       <Section className="border-t border-border">
-        <div className="grid gap-12 lg:grid-cols-2 lg:items-center">
-          <SectionHeading
-            eyebrow="Fee structure"
-            title="10% for direct hire. The market charges 20-30%."
-            body="Same vetting. Same guarantee. A third of the fee. On a $150,000 hire, that's $15,000 instead of $30,000-$45,000. On five hires a year, that's a quarter of a million dollars back in your budget."
-          />
-          <Reveal delay={0.1}>
-            <div className="grid gap-px overflow-hidden rounded-md border border-border bg-border sm:grid-cols-3">
-              {[
-                { value: "10%", label: "Our direct-hire fee" },
-                { value: "20-30%", label: "What the market charges" },
-                { value: "$75K-$150K", label: "Saved across five $150K hires a year" },
-              ].map((s) => (
-                <div key={s.label} className="bg-card p-7">
-                  <p className="font-display text-3xl font-semibold text-gold">{s.value}</p>
-                  <p className="mt-3 text-sm leading-snug text-muted-foreground">{s.label}</p>
-                </div>
-              ))}
-            </div>
-          </Reveal>
-        </div>
-      </Section>
-
-      <Section className="border-t border-border">
         <SectionHeading
           eyebrow="Communication"
           title="We score communication before we score anything else."
@@ -109,17 +85,6 @@ function OurStoryPage() {
             first, then on technical skill against the client's actual stack.
           </p>
         </Reveal>
-      </Section>
-
-      <Section className="border-t border-border">
-        <SectionHeading
-          eyebrow="Enterprise"
-          title={about.delivered.heading}
-          body={about.delivered.body}
-        />
-        <div className="mt-8">
-          <LogoWall logos={about.delivered.logos} />
-        </div>
       </Section>
 
       <Section className="border-t border-border">

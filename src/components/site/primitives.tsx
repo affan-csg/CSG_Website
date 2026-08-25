@@ -217,7 +217,7 @@ export type ClientLogo = { name: string; image?: string };
 
 export function LogoWall({ logos }: { logos: readonly ClientLogo[] }) {
   return (
-    <div className="grid grid-cols-2 gap-px overflow-hidden rounded-md border border-border bg-border sm:grid-cols-3 lg:grid-cols-5">
+    <div className="grid grid-cols-2 gap-px overflow-hidden rounded-md border border-border bg-border sm:grid-cols-4">
       {logos.map((logo, i) => (
         <Reveal key={logo.name} delay={i * 0.05}>
           <div className="group flex h-40 flex-col items-center justify-center gap-3 bg-card p-5 transition-colors duration-300 hover:bg-navy-soft">

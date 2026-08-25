@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils";
 import type { FormStatus } from "@/lib/forms";
 
 const inputClass =
-  "form-input w-full rounded-md border border-input bg-background px-4 py-3 text-foreground placeholder:text-muted-foreground/70 transition-colors focus:border-gold focus:ring-2 focus:ring-gold/30 focus:outline-none";
+  "form-input w-full rounded-md border border-white/15 bg-white/5 px-4 py-3 text-foreground placeholder:text-muted-foreground/60 shadow-inner shadow-black/20 transition-colors hover:border-white/25 focus:border-gold focus:bg-white/[0.07] focus:ring-2 focus:ring-gold/30 focus:outline-none";
 
 const selectClass = cn(inputClass, "appearance-none pr-10");
 

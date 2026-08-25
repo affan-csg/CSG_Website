@@ -10,11 +10,9 @@ const navItemsWithDropdowns = [
   {
     label: "Solutions",
     to: "/staffing",
-    width: "min-w-[220px]",
+    width: "min-w-[240px]",
     children: [
-      { label: "Contract Staffing", to: "/staffing/roles" },
-      { label: "Contract-to-Hire", to: "/staffing/roles" },
-      { label: "Direct Hire", to: "/staffing/roles" },
+      { label: "Type of Roles", to: "/staffing/roles" },
       { label: "Dedicated Teams & Pods", to: "/staffing/pods" },
     ],
   },
@@ -76,6 +74,7 @@ export function SiteNav() {
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
   const isHome = useLocation({ select: (l) => l.pathname === "/" });
+  const pathname = useLocation({ select: (l) => l.pathname });
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 200);
@@ -120,13 +119,13 @@ export function SiteNav() {
       <div className="mx-auto flex h-[4.5rem] w-full max-w-[92rem] items-center justify-between gap-4 px-6 md:px-10">
         <Link
           to="/"
-          className="group relative flex min-w-0 items-center gap-2"
+          className="group relative -ml-2 flex min-w-0 items-center gap-2 md:-ml-4"
           activeProps={{ className: "logo-active" }}
         >
           <motion.img
             src="/images/brand/CSG.png"
             alt="CSG"
-            className="h-12 w-auto shrink-0 object-contain [filter:invert(100%)_sepia(33%)_saturate(130%)_hue-rotate(41deg)_brightness(105%)] transition-all duration-300"
+            className="h-10 w-auto shrink-0 object-contain [filter:invert(100%)_sepia(33%)_saturate(130%)_hue-rotate(41deg)_brightness(105%)] transition-all duration-300"
             initial={isHome ? { opacity: 0, scale: 0.5, y: 20 } : { opacity: 1, scale: 1, y: 0 }}
             animate={
               isHome && !scrolled
@@ -148,9 +147,15 @@ export function SiteNav() {
         </Link>
 
         {/* Desktop Navigation */}
-        <nav className="hidden shrink-0 items-center gap-0.5 lg:flex xl:gap-1">
+        <nav className="hidden shrink-0 items-center gap-0 lg:flex">
           {navItemsWithDropdowns.map((item) => {
             const hasChildren = "children" in item && item.children && item.children.length > 0;
+            const isCurrentDropdownActive =
+              hasChildren &&
+              (pathname === (item.to as string) ||
+                ("children" in item &&
+                  item.children &&
+                  item.children.some((child) => pathname === (child.to as string))));
 
             if (hasChildren) {
               return (
@@ -163,10 +168,9 @@ export function SiteNav() {
                   <Link
                     to={item.to}
                     className={cn(
-                      "gold-underline nav-text flex items-center gap-1 whitespace-nowrap px-2 py-2 text-muted-foreground transition-colors hover:text-gold xl:px-2.5",
-                      openDropdown === item.label && "text-foreground",
+                      "gold-underline nav-text flex items-center gap-1 whitespace-nowrap px-1.5 py-2 text-muted-foreground transition-colors hover:text-gold xl:px-2",
+                      (openDropdown === item.label || isCurrentDropdownActive) && "text-foreground [&::after]:transform [&::after]:scaleX-100 [&::after]:origin-left",
                     )}
-                    activeProps={{ className: "text-foreground", "data-active": "true" }}
                   >
                     {item.label}
                     <ChevronDown
@@ -194,14 +198,18 @@ export function SiteNav() {
                             item.width || "min-w-[220px]",
                           )}
                         >
-                          <Link
-                            to={item.to}
-                            onClick={() => setOpenDropdown(null)}
-                            className="block rounded-md px-3 py-2 button-text text-foreground transition-colors hover:bg-accent"
-                          >
-                            View All
-                          </Link>
-                          <div className="my-1 h-px bg-border" />
+                          {item.label !== "Resources" && item.label !== "Company" && (
+                            <>
+                              <Link
+                                to={item.to}
+                                onClick={() => setOpenDropdown(null)}
+                                className="block rounded-md px-3 py-2 button-text text-foreground transition-colors hover:bg-accent"
+                              >
+                                View All
+                              </Link>
+                              <div className="my-1 h-px bg-border" />
+                            </>
+                          )}
                           {item.children.map((child) => {
                             const hash = "hash" in child ? child.hash : undefined;
                             return (
@@ -229,7 +237,7 @@ export function SiteNav() {
               <Link
                 key={item.label}
                 to={item.to}
-                className="gold-underline nav-text whitespace-nowrap px-2 py-2 text-muted-foreground transition-colors hover:text-gold xl:px-2.5"
+                className="gold-underline nav-text whitespace-nowrap px-1.5 py-2 text-muted-foreground transition-colors hover:text-gold xl:px-2"
                 activeProps={{ className: "text-foreground", "data-active": "true" }}
               >
                 {item.label}
@@ -241,13 +249,15 @@ export function SiteNav() {
         <div className="flex shrink-0 items-center gap-3">
           <Link
             to="/join-our-bench"
-            className="gold-underline nav-text hidden whitespace-nowrap px-2 py-2 text-muted-foreground transition-colors hover:text-gold xl:inline-block"
+            className="hidden button-text items-center gap-2 whitespace-nowrap rounded-md border border-border px-3 py-1.5 font-display text-foreground transition-all duration-300 hover:border-gold hover:bg-gold/15 hover:text-gold hover:shadow-lg hover:shadow-gold/20 xl:inline-flex"
+            activeProps={{ className: "border-gold text-gold" }}
           >
             Find Opportunities
           </Link>
           <Link
             to="/get-started"
-            className="hidden button-text items-center gap-2 rounded-md bg-cream px-5 py-2.5 font-display text-navy transition-all duration-300 hover:bg-gold xl:inline-flex"
+            className="hidden button-text items-center gap-2 rounded-md bg-cream px-3 py-1.5 font-display text-navy transition-all duration-300 hover:bg-gold xl:inline-flex"
+            activeProps={{ className: "bg-gold ring-2 ring-gold/30" }}
           >
             Request Talent
           </Link>

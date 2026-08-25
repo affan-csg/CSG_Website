@@ -34,22 +34,19 @@ function PrivacyPage() {
           <p className="mt-8 text-[1.04rem] leading-[1.75] text-muted-foreground">
             For the complete Privacy Policy document and detailed information about our data practices, please{" "}
             <a
-              href="mailto:hello@careersourcegroup.com"
+              href="/contact"
               className="text-gold transition-colors hover:text-gold/80"
             >
               contact us
             </a>{" "}
-            directly.
-          </p>
-          <p className="mt-6 text-[1.04rem] leading-[1.75] text-muted-foreground">
-            For candidates: see our{" "}
+            or email{" "}
             <a
-              href="/candidate-privacy"
+              href="mailto:hello@careersourcegroup.com"
               className="text-gold transition-colors hover:text-gold/80"
             >
-              Candidate Privacy Notice
-            </a>{" "}
-            for information specific to our talent network.
+              hello@careersourcegroup.com
+            </a>
+            .
           </p>
         </div>
       </Section>

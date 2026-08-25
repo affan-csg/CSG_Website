@@ -293,13 +293,34 @@ export const staffingHubPage = {
     "Every engagement we run falls into one of three shapes: an individual specialist placed into a specific staffing role, a purpose-built pod standing up a whole function at once, or a deep technical specialty where the hire itself is the hard part. Same contract, same invoice, same point of contact, whichever shape fits.",
 };
 
+export const engagementModels = [
+  {
+    title: "Contract Staffing",
+    body: "Flexible talent without long-term commitment. Perfect for sprint work, temporary capacity, or evaluating talent before permanent hire. Full flexibility to ramp up or down.",
+    cta: "Learn More",
+    to: "/get-started",
+  },
+  {
+    title: "Contract-to-Hire",
+    body: "Try before you commit. Hire on a 90-day contract, then convert to permanent. You get real work performance data before making a permanent offer.",
+    cta: "Learn More",
+    to: "/get-started",
+  },
+  {
+    title: "Direct Hire",
+    body: "Permanent technical talent. We charge 10% of first-year salary—half the market rate. Same vetting, same 90-day guarantee.",
+    cta: "Learn More",
+    to: "/get-started",
+  },
+];
+
 export const staffingRolesPage = {
   title: "The right specialist, matched to the work and the way your team operates.",
   paragraphs: [
     "Share the role, must-have skills, work arrangement, target start date and budget. CSG will calibrate the requirement, recommend the best delivery market and return a search plan before recruiting begins.",
     "Requirement calibration. Market feedback. Screening. Availability confirmation. Interview and offer support. Onboarding follow-up.",
   ],
-  cta: { label: "Calibrate a Role", to: "/staffing/roles" },
+  cta: { label: "Calibrate a Role", to: "/get-started" },
 };
 
 export const specializedRolesPage = {

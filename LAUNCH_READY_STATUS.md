@@ -15,22 +15,23 @@
 ## ✅ ALREADY COMPLETE
 
 ### Code & Infrastructure
-- [x] Production Supabase project created
-- [x] All 5 SQL migrations run (tables exist, schema ready)
-- [x] Form end-to-end tested (Supabase → email → CRM verified working)
-- [x] Code audit complete (all 23 sections)
-- [x] 145/145 tests passing
-- [x] Production build successful
+- ✓ Production Supabase project created
+- ✓ All 5 SQL migrations run (tables exist, schema ready)
+- ✓ Form end-to-end tested (Supabase → email → CRM verified working)
+- ✓ Code audit complete (all 23 sections)
+- ✓ 145/145 tests passing
+- ✓ Production build successful
 
-### Integrations (Ready to Copy to .env.production)
-- [x] Social media profiles (LinkedIn, YouTube, Facebook, Instagram)
-- [x] CRM: HubSpot endpoint + API key (tested, working)
-- [x] Email: Resend API key (configured, verified)
-- [x] Bot protection: Turnstile keys (configured)
-- [x] Calendly booking link (configured)
+### Integrations & Configuration
+- ✓ Social media profiles (LinkedIn, YouTube, Facebook, Instagram)
+- ✓ CRM: HubSpot endpoint + API key (tested, working)
+- ✓ Email: Resend API key (configured, verified)
+- ✓ Bot protection: Turnstile keys (configured)
+- ✓ Calendly booking link (configured)
+- ✓ **.env.production created** with all credentials + GA4 ID
 
 ### Deferred (Not Needed for Launch)
-- [x] ATS integration — deferred, candidate data saves to Supabase safely
+- ✓ ATS integration — deferred, candidate data saves to Supabase safely
 
 ---
 
@@ -39,10 +40,11 @@
 These are nice-to-have monitoring/analytics tools — NOT blocking launch:
 
 - [ ] **Production domain + SSL** — DevOps team handles this separately
-- [ ] **Google Analytics 4** — Optional, can add anytime (see GA4_SETUP_GUIDE.md)
+- [ ] **Google Analytics 4** — DSN obtained ✅ | Enable tracking during hypercare (Sep 2-8)
 - [ ] **Google Search Console** — Can verify within 48 hours of launch
 - [ ] **Dashboard/BI** — Can set up during hypercare week
-- [ ] **Monitoring & alerts** — Can configure during hypercare week
+- [ ] **Uptime Monitoring (UptimeRobot)** — Optional, can set up during hypercare
+- [ ] **Slack Alerts** — Optional, can connect during hypercare
 
 ---
 
@@ -57,7 +59,7 @@ These are nice-to-have monitoring/analytics tools — NOT blocking launch:
 ✅ HubSpot CRM connected & working
 ✅ Email notifications working
 ✅ Bot protection enabled
-✅ All credentials in .env.local (just copy to .env.production)
+✅ .env.production created (all credentials + GA4 ID)
 ✅ No bugs blocking launch
 ✅ Compliance checks passed (no addresses, privacy links added)
 ```
@@ -66,55 +68,20 @@ These are nice-to-have monitoring/analytics tools — NOT blocking launch:
 
 ## NEXT STEPS (DevOps/Infrastructure)
 
-1. **Set up production domain**
-   - DNS pointing to production server
-   - SSL certificate installed
+1. **Set up production domain in Vercel**
+   - Add `careersourcegroup.com` as a custom domain on the Vercel project
+   - Vercel provisions and renews SSL automatically once DNS is pointed at it
 
-2. **Create .env.production**
-   ```
-   # Copy from .env.local:
-   NEXT_PUBLIC_SUPABASE_URL=...
-   NEXT_PUBLIC_SUPABASE_ANON_KEY=...
-   SUPABASE_SERVICE_ROLE_KEY=...
-   RESEND_API_KEY=...
-   RESEND_FROM_EMAIL=noreply@careersourcegroup.com
-   CONTACT_NOTIFICATION_EMAIL=hello@careersourcegroup.com
-   NEXT_PUBLIC_TURNSTILE_SITE_KEY=...
-   TURNSTILE_SECRET_KEY=...
-   NEXT_PUBLIC_LINKEDIN_URL=https://www.linkedin.com/company/career-source-group-llc/
-   NEXT_PUBLIC_YOUTUBE_URL=https://www.youtube.com/@careersourcegroup
-   NEXT_PUBLIC_FACEBOOK_URL=https://www.facebook.com/careersourcegroup
-   NEXT_PUBLIC_INSTAGRAM_URL=https://www.instagram.com/careersourcegroup
-   NEXT_PUBLIC_CALENDLY_URL=https://calendly.com/affan-careersourcegroup/30min
-   CRM_ENDPOINT_URL=https://api.hubapi.com/crm/v3/objects/contacts
-   CRM_API_KEY=REDACTED
-   NEXT_PUBLIC_SITE_URL=https://careersourcegroup.com
-   
-   # Leave these empty (optional):
-   NEXT_PUBLIC_GA4_ID=  (add later if desired)
-   ATS_ENDPOINT_URL=    (not needed yet)
-   ATS_API_KEY=         (not needed yet)
-   ```
+2. **Deploy to production**
+   - Set the env vars from `.env.production` in the Vercel project settings
+   - Push to the connected branch (or `vercel --prod`) to deploy
 
-3. **Deploy to production**
-   - Copy .env.production to production server
-   - Deploy latest commit (bf8d59a or later)
-
-4. **Quick test**
+3. **Quick test**
    - Load https://careersourcegroup.com
    - Submit test form via /get-started
    - Verify: Supabase saved data ✓ + email sent ✓ + HubSpot received ✓
 
-5. **Launch!** 🚀
-
----
-
-## COMMITS READY
-
-| Commit | What |
-|--------|------|
-| e54a158 | Deployment guides (CRITICAL_PATH, GA4 setup) |
-| bf8d59a | Production-ready release (full implementation) |
+4. **Launch!** 🚀
 
 ---
 
@@ -126,8 +93,8 @@ These are nice-to-have monitoring/analytics tools — NOT blocking launch:
 
 ## FINAL STATUS
 
-🟢 **CODE IS 100% READY**  
-Only thing left: infrastructure setup (domain/SSL) by DevOps team.  
+🟢 **CODE IS 100% READY**
+Only thing left: pointing the domain at Vercel and setting production env vars.
 Everything else is done and tested.
 
 **Ship it.** ✅

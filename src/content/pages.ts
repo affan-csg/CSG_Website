@@ -80,10 +80,10 @@ export const about = {
     heading: "Who We've Delivered For",
     body: "We're not a low-cost offshore reseller that learned staffing last year.",
     logos: [
-      { name: "Verifone" },
-      { name: "GoodRco" },
-      { name: "Snapdocs" },
-      { name: "Lilt" },
+      { name: "Verifone", image: "/images/brand/verifone.png" },
+      { name: "GoodRco", image: "/images/brand/goodRco.png" },
+      { name: "Snapdocs", image: "/images/brand/snapdocs.png" },
+      { name: "Lilt", image: "/images/brand/lilt.png" },
     ],
   },
   founder: {

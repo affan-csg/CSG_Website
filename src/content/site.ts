@@ -297,10 +297,7 @@ export const footerColumns = [
       { label: "Case Studies", to: "/case-studies" },
       { label: "Insights", to: "/insights" },
       { label: "Contact", to: "/contact" },
-      { label: "Privacy", to: "/privacy" },
-      { label: "Candidate Privacy", to: "/privacy" },
       { label: "Terms", to: "/terms" },
-      { label: "Accessibility", to: "/faq" },
     ],
   },
 ] as const;
