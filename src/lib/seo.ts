@@ -224,6 +224,33 @@ export function buildGeoTargetingMeta(region: "us" | "latam" | "pakistan") {
   ];
 }
 
+export function buildRegionalBusinessJsonLd(region: "us" | "latam" | "pakistan") {
+  const data = REGION_INFO[region];
+
+  return {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    name: data.name,
+    description: data.description,
+    url: SITE_URL + `/global-delivery/${region}`,
+    areaServed: data.regions,
+    geo: {
+      "@type": "GeoCoordinates",
+      latitude: data.latitude,
+      longitude: data.longitude,
+    },
+    priceRange: region === "us" ? "$$" : "$",
+    image: SITE_URL + DEFAULT_OG_IMAGE,
+    telephone: "+1-443-875-9677",
+    email: "hello@careersourcegroup.com",
+    sameAs: [
+      "https://www.linkedin.com/company/career-source-group-llc/",
+      "https://www.facebook.com/61559974043500",
+      "https://www.instagram.com/careersourcegroup",
+    ],
+  };
+}
+
 export function buildHreflangLinks(currentPath: string) {
   return [
     { rel: "canonical", href: SITE_URL + currentPath },

@@ -197,6 +197,57 @@ export const faqs: Faq[] = [
     q: "What do you vet for?",
     a: "Communication before anything else — people in standups, client calls, and architecture debates are assessed differently than people executing against a well-defined ticket. Technical skill is vetted against the client's actual stack rather than a keyword match: real code review, stack-specific depth, and system design at their scale.",
   },
+  // AEO-optimized questions (for AI search results)
+  {
+    audience: "clients",
+    q: "How much does it cost to hire a software developer?",
+    a: "US direct-hire software developers run $100,000-$200,000 annually depending on specialization. Our fee is 10% of first-year salary ($10,000-$20,000 total), far below the industry standard 20-30% ($20,000-$60,000). Nearshore LATAM developers run $30,000-$70,000 annually. Offshore Pakistan developers run $15,000-$40,000 annually. We provide market pricing before you commit.",
+  },
+  {
+    audience: "clients",
+    q: "What is the difference between staff augmentation and dedicated team?",
+    a: "Staff augmentation provides individual specialists managed by you. A dedicated team (pod model) is a purpose-built unit delivered under one contract with one owner responsible for how they work together. Staff aug needs five separate searches and five vendors; a pod needs one SOW, one invoice, and one point of contact.",
+  },
+  {
+    audience: "clients",
+    q: "How long does it take to hire a developer?",
+    a: "US direct-hire cycles typically run four to six months start-to-finish — the slowest path across the market. We provide shortlists within days to one week after you send a role description. LATAM nearshore and Pakistan offshore ramping starts within days to weeks. Our guarantee means no timeline delays if a placement doesn't work.",
+  },
+  {
+    audience: "clients",
+    q: "How do I choose between US, LATAM, and Pakistan staffing?",
+    a: "Choose by collaboration need, not by label. US suits roles requiring in-room presence or deep client integration. LATAM nearshore (one to three hours time overlap) suits daily collaboration and 30-70% cost savings. Pakistan offshore (requires scheduled overlap hours) delivers 50-70% savings for execution-heavy, maintenance, or overnight work. We recommend the right split based on your role.",
+  },
+  {
+    audience: "clients",
+    q: "What is nearshore vs offshore staffing?",
+    a: "Nearshore means neighboring countries with time zone overlap — LATAM for US companies, typically one to three hours different. Offshore means distant countries — Pakistan is 10-13 hours different from the US. Nearshore suits collaboration-heavy work; offshore suits structured project work. Nearshore saves 30-70% versus US; offshore saves 50-70%.",
+  },
+  {
+    audience: "clients",
+    q: "Can I hire contractors in another country legally?",
+    a: "Yes, with the right structure. We handle employment, payroll, compliance, and benefits for all LATAM and Pakistan placements. You receive one bill rate and one invoice monthly; we manage all contractor infrastructure and legal requirements for their country. US direct-hire placements follow US employment law.",
+  },
+  {
+    audience: "talent",
+    q: "How much do remote jobs pay for developers outside the US?",
+    a: "Rates depend on specialization, experience, and location. LATAM developers placed in US client teams earn $30,000-$70,000 annually on contract. Pakistan developers earn $15,000-$40,000 annually on contract. All placements pay significantly above local market rates while remaining cost-effective for US clients. Salary is paid in USD monthly.",
+  },
+  {
+    audience: "talent",
+    q: "How do I apply for a remote developer position?",
+    a: "Visit our join-bench page and complete the candidate profile form with your specialty, experience level, work authorization status, and availability. We screen for communication before technical skill, and assess technical depth against real code review and your client's actual stack. You'll hear back within one to two weeks.",
+  },
+  {
+    audience: "clients",
+    q: "What happens if I'm not happy with a placement?",
+    a: "All direct-hire placements carry a 90-day guarantee — if the fit isn't right, we replace the hire at no additional fee. Contract placements can be ramped down or swapped for different candidates without penalty. We own the outcome, not just the placement.",
+  },
+  {
+    audience: "clients",
+    q: "Do you hire for roles outside software development?",
+    a: "Yes. Beyond our eight technical practices (AI/ML, MLOps, data, DevOps, DevSecOps, cloud, software dev, product), we place non-technical operations roles: customer success, revenue operations, finance and accounting operations, and back-office support. Full list available on our staffing specialties page.",
+  },
 ];
 
 export function faqsByQuestion(questions: string[]): Faq[] {

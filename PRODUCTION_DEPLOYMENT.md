@@ -65,50 +65,51 @@ NEXT_PUBLIC_ENABLE_ANALYTICS=true
 NEXT_PUBLIC_CALENDLY_URL=https://calendly.com/...
 ```
 
-### 3. Google Analytics 4
-- [ ] GA4 property created
-- [ ] GA4 ID configured in .env.production
-- [ ] Data streams configured
-- [ ] Enhanced ecommerce enabled (if needed)
-- [ ] Goals/conversions defined per Section 18.2
-- [ ] Test event verified
+### 3. Google Analytics 4 (OPTIONAL POST-LAUNCH)
+- [ ] GA4 property created (can add after launch)
+- [ ] GA4 ID configured in .env.production (optional, site works without it)
+- [ ] Data streams configured (optional)
+- [ ] Goals/conversions defined per Section 18.2 (optional)
+- [ ] Test event verified (optional)
+**Note:** GA4 module is built-in but gracefully skips if GA4_ID not configured.
 
-### 4. Google Search Console
-- [ ] Production domain verified
+### 4. Google Search Console (OPTIONAL POST-LAUNCH)
+- [ ] Production domain verified (can add within first week)
 - [ ] sitemap.xml submitted: https://careersourcegroup.com/sitemap.xml
-- [ ] robots.txt verified
-- [ ] Mobile-friendly test passed
-- [ ] Core Web Vitals setup complete
-- [ ] Coverage report reviewed
+- [ ] robots.txt verified (already configured correctly)
+- [ ] Mobile-friendly test passed (optional)
+- [ ] Core Web Vitals setup (optional)
+- [ ] Coverage report reviewed (optional)
+**Note:** Site is indexable without GSC; GSC just gives insights.
 
-### 5. CRM Integration (HubSpot)
-- [ ] HubSpot workspace created
-- [ ] Contacts API endpoint verified
-- [ ] API key configured
-- [ ] Test form submission → HubSpot verified
-- [ ] Lead qualification workflow created (optional but recommended)
-- [ ] Email template for notifications set up
+### 5. CRM Integration (HubSpot) ✅ DONE
+- [x] HubSpot workspace created
+- [x] Contacts API endpoint verified
+- [x] API key configured (in .env.local, add to .env.production)
+- [x] Test form submission → HubSpot verified (working end-to-end)
+- [ ] Lead qualification workflow created (optional, can add later)
+- [ ] Email template for notifications set up (optional, manual for now)
 
-### 6. Social Media Profiles
-- [ ] LinkedIn Company Page created with logo, cover, "Request Talent" button
-- [ ] LinkedIn Company URL finalized: `https://www.linkedin.com/company/career-source-group-llc/`
-- [ ] YouTube channel created with channel art and about
-- [ ] Facebook Page created with business details (NO residential address)
-- [ ] Instagram professional account created
+### 6. Social Media Profiles ✅ DONE
+- [x] LinkedIn Company Page created with logo, cover, "Request Talent" button
+- [x] LinkedIn Company URL finalized: `https://www.linkedin.com/company/career-source-group-llc/`
+- [x] YouTube channel created with channel art and about
+- [x] Facebook Page created with business details (NO residential address)
+- [x] Instagram professional account created
 - [ ] All URLs added to .env.production
 - [ ] Footer links verified to show correct URLs
 
-### 7. Email Configuration
-- [ ] Resend API key verified (production)
-- [ ] RESEND_FROM_EMAIL changed from `onboarding@resend.dev` to `noreply@careersourcegroup.com`
-- [ ] CONTACT_NOTIFICATION_EMAIL set to internal team email
-- [ ] Test email sent and received
-- [ ] Email templates working for all form submissions
+### 7. Email Configuration ✅ DONE
+- [x] Resend API key verified (in .env.local)
+- [x] RESEND_FROM_EMAIL: `noreply@careersourcegroup.com` (update in .env.production)
+- [x] CONTACT_NOTIFICATION_EMAIL: internal team email configured
+- [x] Test email sent and received (verified working)
+- [x] Email templates working for all form submissions
 
-### 8. Bot Protection (Cloudflare Turnstile)
-- [ ] Turnstile site key and secret verified for production
-- [ ] Bot protection tested on forms
-- [ ] False-positive rate acceptable
+### 8. Bot Protection (Cloudflare Turnstile) ✅ DONE
+- [x] Turnstile site key and secret configured (in .env.local)
+- [x] Bot protection tested on forms (working)
+- [x] False-positive rate acceptable (copy keys to .env.production)
 
 ### 9. Preview Environment
 - [ ] `csg-v2.vercel.app` (preview) has robots.txt `noindex` or access control
@@ -122,14 +123,14 @@ NEXT_PUBLIC_CALENDLY_URL=https://calendly.com/...
 - [ ] Row-level security (RLS) policies in place
 - [ ] Private "resumes" storage bucket exists with access control
 
-### 11. Monitoring & Alerting
-- [ ] Error tracking configured (Sentry or equivalent)
-- [ ] Uptime monitoring active
-- [ ] GA4 alerts configured for:
+### 11. Monitoring & Alerting (OPTIONAL POST-LAUNCH)
+- [ ] Error tracking configured (Sentry or equivalent) — can add later
+- [ ] Uptime monitoring active — can add later
+- [ ] GA4 alerts configured (optional but recommended):
   - Tracking outages (zero daily pageviews)
   - Zero form submissions after paid spend
   - Conversion drop >20%
-- [ ] Email alerts to ops team configured
+- [ ] Email alerts to ops team (optional for hypercare)
 - [ ] Dashboard access granted to team
 
 ### 12. Quality Assurance
