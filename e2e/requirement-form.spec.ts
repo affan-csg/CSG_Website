@@ -10,7 +10,7 @@ test.describe("Requirement Form E2E Tests (Get Started)", () => {
 
   test("should load get-started page with requirement form", async ({ page }) => {
     // Verify page title
-    await expect(page).toHaveTitle(/get.?started|requirement/i);
+    await expect(page).toHaveTitle(/request talent|career source group/i);
 
     // Verify form elements exist
     await expect(page.locator('input[name="firstName"]')).toBeVisible();
@@ -72,10 +72,13 @@ test.describe("Requirement Form E2E Tests (Get Started)", () => {
     // Wait for success message
     await expect(page.locator("text=/Requirement received/i")).toBeVisible({ timeout: 5000 });
 
-    // Verify success state styling (green border)
+    // Verify success state styling — several ancestor divs also contain the
+    // success text, so take the innermost (last in document order): the
+    // component's own root div.
     const successBox = page
       .locator("div")
-      .filter({ has: page.locator("text=/Requirement received/i") });
+      .filter({ has: page.locator("text=/Requirement received/i") })
+      .last();
     await expect(successBox).toHaveClass(/border-green-500/);
   });
 
@@ -205,13 +208,13 @@ test.describe("Requirement Form E2E Tests (Get Started)", () => {
   });
 
   test("should prevent spam with honeypot field", async ({ page }) => {
-    // The honeypot field should not be visible to users
+    // The honeypot field lives inside an off-screen, aria-hidden wrapper —
+    // it's still in the DOM (bots fill it), just visually and semantically hidden.
     const honeypot = page.locator('input[name="website"]');
-    await expect(honeypot).toHaveClass(/left-\[-9999px\]/);
+    await expect(honeypot).toHaveAttribute("tabindex", "-1");
 
-    // It should have aria-hidden
-    const ariaHidden = await page.locator('[aria-hidden="true"]').locator('input[name="website"]');
-    await expect(ariaHidden).toBeVisible();
+    const wrapper = page.locator('[aria-hidden="true"]').filter({ has: honeypot });
+    await expect(wrapper).toHaveClass(/left-\[-9999px\]/);
   });
 
   test("should work on mobile viewport", async ({ page }) => {
@@ -260,9 +263,14 @@ test.describe("Requirement Form E2E Tests (Get Started)", () => {
     await page.selectOption('select[name="engagementType"]', { index: 1 });
     await page.selectOption('select[name="basis"]', { index: 1 });
 
-    // Intercept and mock failed response (simulate API error)
-    await page.route("**/api/**", (route) => {
-      route.abort("failed");
+    // Intercept and abort the form's POST request (TanStack Start server
+    // functions aren't under /api/ — target by method instead of path).
+    await page.route("**/*", (route) => {
+      if (route.request().method() === "POST") {
+        void route.abort("failed");
+      } else {
+        void route.continue();
+      }
     });
 
     await page.locator('button[type="submit"]').click();
